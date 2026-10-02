@@ -147,7 +147,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-010 | Implement No-VCS Discovery                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-010) |
 | OT-011 | Implement Configuration Loader            | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-011) |
 | OT-012 | Implement Configuration Resolution        | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-012) |
-| OT-013 | **Implement Protected Key Validation**    | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-013) |
+| OT-013 | Implement Protected Key Validation        | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-013) |
 | OT-014 | **Implement UUID Generation**             | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-014) |
 | OT-015 | **Implement Short Identifier Generation** | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-015) |
 | OT-016 | **Implement Identifier Resolution**       | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-016) |
@@ -357,16 +357,16 @@ Implement Configuration Loader for reading and parsing JSON configuration files 
 **Description:**
 Implement Configuration Resolution layer merging with precedence rules (local > project > global > vcs > env > defaults) and dot-path lookup. Implemented in src/ot/config.py and tested in tests/test_config.py.
 
-<a id="ot-013" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-013" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Implement Protected Key Validation
 **ID:** OT-013
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Implement Protected Key Validation to detect and warn against improper local overrides of shared project configuration (types, statuses, sizes, meeting types). Implemented in src/ot/config.py and tested in tests/test_config.py.
 
 <a id="ot-014" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Implement UUID Generation
