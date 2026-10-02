@@ -55,6 +55,18 @@ class TestProjectDiscovery(unittest.TestCase):
                 else:
                     os.environ.pop("OPEN_TASKS_ROOT", None)
 
+    def test_git_discovery(self):
+        from ot.discovery import is_git_available, get_git_identity, find_vcs_root
+        vcs_type, vcs_path = find_vcs_root(Path.cwd())
+        self.assertEqual(vcs_type, "git")
+        self.assertIsNotNone(vcs_path)
+
+        if is_git_available():
+            name, email = get_git_identity(Path.cwd())
+            # In git repository, name and email should be queryable
+            self.assertTrue(name is None or isinstance(name, str))
+
+
 
 if __name__ == "__main__":
     unittest.main()

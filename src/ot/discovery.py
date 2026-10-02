@@ -71,3 +71,41 @@ def discover_root(start_dir: Optional[Path | str] = None, allow_fallback: bool =
         return current.parent if current.is_file() else current
 
     raise FileNotFoundError("Could not locate Open Tasks project root (.ot).")
+
+
+def is_git_available() -> bool:
+    """Check if git binary is available on PATH."""
+    try:
+        res = subprocess.run(["git", "--version"], capture_output=True, text=True)
+        return res.returncode == 0
+    except Exception:
+        return False
+
+
+def get_git_config(key: str, repo_dir: Optional[Path | str] = None) -> Optional[str]:
+    """Query git config for a specific key."""
+    if not is_git_available():
+        return None
+    try:
+        cmd = ["git", "config", key]
+        cwd = str(repo_dir) if repo_dir else None
+        res = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, check=False)
+        if res.returncode == 0:
+            val = res.stdout.strip()
+            return val if val else None
+    except Exception:
+        pass
+    return None
+
+
+def get_git_identity(repo_dir: Optional[Path | str] = None) -> Tuple[Optional[str], Optional[str]]:
+    """Get (name, email) from git configuration."""
+    name = get_git_config("user.name", repo_dir)
+    email = get_git_config("user.email", repo_dir)
+    return name, email
+
+
+def get_git_editor(repo_dir: Optional[Path | str] = None) -> Optional[str]:
+    """Get preferred editor from git configuration (core.editor)."""
+    return get_git_config("core.editor", repo_dir)
+

@@ -143,7 +143,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-006 | Define Relationship Format                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-006) |
 | OT-007 | Produce Example WorkItem Documents        | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-007) |
 | OT-008 | Implement Project Discovery               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-008) |
-| OT-009 | **Implement Git Discovery**               | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-009) |
+| OT-009 | Implement Git Discovery                   | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-009) |
 | OT-010 | **Implement No-VCS Discovery**            | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-010) |
 | OT-011 | **Implement Configuration Loader**        | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-011) |
 | OT-012 | **Implement Configuration Resolution**    | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-012) |
@@ -313,16 +313,16 @@ Produce example WorkItem documents in examples/sample-project/.ot/tasks/ illustr
 **Description:**
 Implement project root discovery by directory tree traversal, environment variable overrides, and fallback resolution. Implemented in src/ot/discovery.py and tested in tests/test_discovery.py.
 
-<a id="ot-009" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-009" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Implement Git Discovery
 **ID:** OT-009
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Implement Git discovery: git root detection, querying git config for user name, email, and core.editor. Implemented in src/ot/discovery.py and tested in tests/test_discovery.py.
 
 <a id="ot-010" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Implement No-VCS Discovery
