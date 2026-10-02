@@ -544,7 +544,22 @@ def cmd_upgrade(args: argparse.Namespace, config: Config) -> int:
         return 1
 
 
+def cmd_version(args: argparse.Namespace, config: Config) -> int:
+    """Print version information."""
+    from ot import __version__
+    print(f"Open Tasks v{__version__}")
+    if config.project_root:
+        from ot.version import discover_installed_version, discover_project_version
+        cfg_v = discover_project_version(config.project_root)
+        inst_v = discover_installed_version(config.project_root)
+        print(f"Project root:       {config.project_root}")
+        print(f"Configured version: {cfg_v or 'Not specified'}")
+        print(f"Installed version:  {inst_v or 'Not installed'}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
+    from ot import __version__
     parser = argparse.ArgumentParser(prog="ot", description="Open Tasks (ot) CLI")
     parser.add_argument(
         "--project-dir",
@@ -552,11 +567,21 @@ def build_parser() -> argparse.ArgumentParser:
         type=str,
         help="Path to project directory (default: discover from cwd)",
     )
+    parser.add_argument(
+        "--version",
+        "-V",
+        action="version",
+        version=f"Open Tasks v{__version__}",
+    )
 
     subparsers = parser.add_subparsers(dest="category")
 
+    # ot version
+    subparsers.add_parser("version", help="Show version information")
+
     # ot init ...
     init_parser = subparsers.add_parser("init", help="Initialize a new Open Tasks project")
+
     init_parser.add_argument("directory", nargs="?", default=".", help="Directory to initialize (default: current)")
     init_parser.add_argument("--name", "-n", help="Project name")
     init_parser.add_argument("--version", "-v", help="Initial tool version")
@@ -644,6 +669,9 @@ def main(args: Optional[List[str]] = None) -> int:
 
     config = load_config(parsed.project_dir)
 
+    if parsed.category == "version":
+        return cmd_version(parsed, config)
+
     if parsed.category == "init":
         return cmd_init(parsed, config)
 
@@ -652,6 +680,7 @@ def main(args: Optional[List[str]] = None) -> int:
 
     if parsed.category == "check":
         return cmd_check(parsed, config)
+
 
     if parsed.category == "task":
         if parsed.command == "list":
