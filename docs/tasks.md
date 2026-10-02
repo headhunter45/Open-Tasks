@@ -175,7 +175,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-038 | Implement Project Installation          | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-038) |
 | OT-039 | Implement Version Downloads             | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-039) |
 | OT-040 | Implement Transactional Upgrades        | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-040) |
-| OT-041 | **Implement ot upgrade**                | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-041) |
+| OT-041 | Implement ot upgrade                    | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-041) |
 | OT-042 | **Build Cache Management**              | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-042) |
 | OT-043 | **Implement Download Verification**     | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-043) |
 | OT-044 | **Build Release Pipeline**              | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-044) |
@@ -702,16 +702,17 @@ Implement Version Downloads for fetching, caching, and staging release zipapps a
 **Description:**
 Implement Transactional Upgrades with isolated temporary staging, semver downgrade prevention, non-destructive template preservation, validation checks, and atomic commit on success. Implemented in src/ot/upgrade.py and tested in tests/test_upgrade.py.
 
-<a id="ot-041" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="distribution"></a>
+<a id="ot-041" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
 ### Implement ot upgrade
 **ID:** OT-041
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 
 **Description:**
+Implement 'ot upgrade' CLI command supporting --version <v>, --mirror <dir>, and --dry-run flags for automated project upgrades. Implemented in src/ot/cli.py, src/ot/upgrade.py, and tested in tests/test_upgrade.py.
 
 <a id="ot-042" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="distribution"></a>
 ### Build Cache Management
