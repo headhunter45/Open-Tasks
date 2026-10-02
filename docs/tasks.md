@@ -156,7 +156,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-019 | Preserve Unknown Content                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-019) |
 | OT-020 | Implement Repository Scanner            | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-020) |
 | OT-021 | Implement WorkItem Index                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-021) |
-| OT-022 | **Implement Task Listing**              | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-022) |
+| OT-022 | Implement Task Listing                  | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-022) |
 | OT-023 | **Implement Task Display**              | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-023) |
 | OT-024 | **Implement Task Creation**             | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-024) |
 | OT-025 | **Implement Task Editing**              | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-025) |
@@ -456,16 +456,16 @@ Implement Repository Scanner to discover and load all WorkItem markdown document
 **Description:**
 Implement WorkItem Index for fast query by UUID, unique short prefix, title, parent/child hierarchy traversal, and dependency graph navigation. Implemented in src/ot/scanner.py and tested in tests/test_scanner.py.
 
-<a id="ot-022" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-022" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Implement Task Listing
 **ID:** OT-022
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Implement 'ot task list' with options for filtering by status, type, size, tag, author, and --json output. Implemented in src/ot/cli.py and tested in tests/test_cli.py.
 
 <a id="ot-023" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Implement Task Display
