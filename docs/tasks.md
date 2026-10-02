@@ -150,7 +150,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-013 | Implement Protected Key Validation      | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-013) |
 | OT-014 | Implement UUID Generation               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-014) |
 | OT-015 | Implement Short Identifier Generation   | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-015) |
-| OT-016 | **Implement Identifier Resolution**     | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-016) |
+| OT-016 | Implement Identifier Resolution         | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-016) |
 | OT-017 | **Implement WorkItem Reader**           | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-017) |
 | OT-018 | **Implement WorkItem Writer**           | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-018) |
 | OT-019 | **Preserve Unknown Content**            | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-019) |
@@ -390,16 +390,16 @@ Implement UUID Generation (RFC 4122 v4 canonical lowercase string generation and
 **Description:**
 Implement Git-style Short Identifier Generation with adaptive prefix expansion to guarantee repository-wide uniqueness. Implemented in src/ot/identifiers.py and tested in tests/test_identifiers.py.
 
-<a id="ot-016" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-016" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Implement Identifier Resolution
 **ID:** OT-016
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Implement Identifier Resolution for exact UUID, short unique prefix, and unique title matches, raising explicit AmbiguousIdentifierError or IdentifierNotFoundError when required. Implemented in src/ot/identifiers.py and tested in tests/test_identifiers.py.
 
 <a id="ot-017" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Implement WorkItem Reader
