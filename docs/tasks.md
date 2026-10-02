@@ -177,7 +177,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-040 | Implement Transactional Upgrades        | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-040) |
 | OT-041 | Implement ot upgrade                    | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-041) |
 | OT-042 | Build Cache Management                  | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-042) |
-| OT-043 | **Implement Download Verification**     | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-043) |
+| OT-043 | Implement Download Verification         | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-043) |
 | OT-044 | **Build Release Pipeline**              | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-044) |
 | OT-045 | *Initialize Using Open Tasks*           | Open Tasks | Self Hosting and Bootstrap      | Triage  | [Feature](#ot-045) |
 | OT-046 | *Create WorkItem Templates*             | Open Tasks | Self Hosting and Bootstrap      | Triage  | [Feature](#ot-046) |
@@ -726,16 +726,17 @@ Implement 'ot upgrade' CLI command supporting --version <v>, --mirror <dir>, and
 **Description:**
 Build global cache management in ~/.ot/cache/ and ~/.ot/versions/ for local caching of downloaded zipapps, manifests, and artifacts. Implemented in src/ot/cache.py and tested in tests/test_upgrade.py.
 
-<a id="ot-043" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="distribution"></a>
+<a id="ot-043" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
 ### Implement Download Verification
 **ID:** OT-043
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 
 **Description:**
+Implement Download Verification using cryptographic SHA-256 validation to prevent corrupted or tampered downloads from being unpacked or executed. Implemented in src/ot/cache.py and tested in tests/test_upgrade.py.
 
 <a id="ot-044" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="distribution"></a>
 ### Build Release Pipeline
