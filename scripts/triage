@@ -40,7 +40,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Triage a task in Documentation/Tasks.md using an AI CLI agent. Requires status to be 'planning' or 'triage'."
     )
-    parser.add_argument("task_id", help="Task ID or number (e.g. 94, OT-094, ot-094)")
+    parser.add_argument("task_id", help="Task number or prefixed ID (e.g. 94, PREFIX-094)")
     add_common_agent_arguments(parser)
 
     args = parser.parse_args()

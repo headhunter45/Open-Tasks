@@ -55,6 +55,8 @@ def build_workflow_prompt(
     """Construct a standardized, high-fidelity prompt for an AI agent."""
     desc = task["description"].strip() if task.get("description") else "(No description provided yet)"
     subproj_line = f"- Subproject: {task['subproject']}\n" if task.get("subproject") else ""
+    epic_line = f"- Epic: {task.get('epic_label', task['epic'])} ({task['epic']})\n" if task.get("epic") else ""
+    epic_arg = f" --epic={task['epic']}" if task.get("epic") else ""
 
     prompt = f"""You are {workflow_name} task {task['id']} in the PlanBForGreatJustice repository.
 
@@ -62,7 +64,7 @@ def build_workflow_prompt(
 - ID: {task['id']}
 - Title: {task['title']}
 - Project: {task['project']}
-{subproj_line}- Current Status: {task['status']}
+{subproj_line}{epic_line}- Current Status: {task['status']}
 - Type: {task['type']}
 
 ### Current Description & Checklist:
@@ -71,7 +73,7 @@ def build_workflow_prompt(
 ### Repository Context & Guidelines:
 1. SSoT & Task Management (GEMINI.md):
    - You MUST use `./scripts/update-task {task['id']} ...` to update task metadata, description, title, or checklist items.
-   - If this task needs to be split into subtasks, use `./scripts/add-task "Subtask Title" --project={task['project']} --type={task['type']}`.
+   - If this task needs to be split into subtasks, use `./scripts/add-task "Subtask Title" --project={task['project']} --type={task['type']}{epic_arg}`.
    - Do NOT edit docs/tasks.md manually.
 2. Architecture Overview:
    - C++ Story Engine: Engine/PlanB/Engine/ (Actions, Expressions, Sequences, GameState, StoryModel).

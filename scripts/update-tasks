@@ -3,11 +3,11 @@
 update-tasks
 
 Synchronizes and regenerates Documentation/Tasks.md:
-1. Parses YAML frontmatter for projects, task-statuses, and task-types.
+1. Parses YAML frontmatter for projects, epics, task-statuses, task-types, and task-id-prefix.
 2. Extracts all task chunks and sorts the Detailed Tasks section strictly by numeric task ID.
 3. Updates the Detailed Tasks section:
    - Normalizes all task IDs to uniform digit width (minimum 3 digits, e.g. OT-001).
-   - Synchronizes task detail blocks (### Title, **ID:**, **Project:**, **Status:**, **Type:**) with anchor tags (SSOT).
+   - Synchronizes task detail blocks (including optional **Epic:**) with anchor tags (SSOT).
 4. Re-renders the Overall Progress Table (tasks-list) from the sorted, updated task details:
    - Bold (**Title**) for pending tasks
    - Italic (*Title*) for planning and triage tasks
@@ -27,6 +27,7 @@ from pathlib import Path
 
 
 def find_tasks_file(explicit_path=None):
+    explicit_path = explicit_path or os.environ.get("TASKS_FILE")
     if explicit_path:
         p = Path(explicit_path)
         if p.is_file():
@@ -64,7 +65,12 @@ def parse_yaml_frontmatter(fm_text):
     current_item = None
 
     for line in fm_text.splitlines():
-        if line and not line.startswith(" ") and line.endswith(":"):
+        if line and not line.startswith(" ") and ":" in line and not line.endswith(":"):
+            key, value = line.split(":", 1)
+            sections[key.strip()] = value.strip().strip("\"'")
+            current_section = None
+            current_item = None
+        elif line and not line.startswith(" ") and line.endswith(":"):
             current_section = line[:-1].strip()
             sections[current_section] = []
             current_item = None
@@ -86,6 +92,55 @@ def parse_yaml_frontmatter(fm_text):
                     current_item[k.strip()] = v.strip().strip("\"'")
 
     return sections
+
+
+TASK_ID_PATTERN = r'\bid=["\']([a-z][a-z0-9_-]*-(\d+))["\']'
+TASK_ANCHOR_PATTERN = r'<(?:a\s+)?([^>]*' + TASK_ID_PATTERN + r'[^>]*)>'
+
+
+def read_frontmatter(text):
+    match = re.match(r"^---\n(.*?)\n---", text, re.DOTALL)
+    if not match:
+        raise ValueError("YAML frontmatter not found in tasks.md")
+    return parse_yaml_frontmatter(match.group(1))
+
+
+def get_task_id_prefix(fm_data):
+    prefix = os.environ.get("TASK_ID_PREFIX", fm_data.get("task-id-prefix", "OT"))
+    if not isinstance(prefix, str) or not re.fullmatch(r"[A-Za-z][A-Za-z0-9_-]*", prefix):
+        raise ValueError("Task ID prefix must start with a letter and contain only letters, digits, underscores, or hyphens")
+    return prefix.upper()
+
+
+def format_task_id(number, prefix, digit_width=3):
+    return f"{prefix}-{number:0{max(3, digit_width, len(str(number)))}d}"
+
+
+def parse_task_id(id_str):
+    match = re.fullmatch(r"(?:[a-z][a-z0-9_-]*-)?(\d+)", str(id_str).strip(), re.IGNORECASE)
+    if not match:
+        raise ValueError(f"Invalid task ID '{id_str}'; expected a task number or PREFIX-number")
+    return int(match.group(1))
+
+
+def task_id_matches(id_str, anchor_id, prefix):
+    number = parse_task_id(id_str)
+    task_id = str(id_str).strip()
+    anchor_prefix, anchor_number = anchor_id.rsplit("-", 1)
+    return number == int(anchor_number) and (
+        task_id.isdigit() or task_id.rsplit("-", 1)[0].lower() in (anchor_prefix.lower(), prefix.lower())
+    )
+
+
+def resolve_epic(epic, fm_data):
+    if epic is None or epic.strip().lower() in ("", "none", "null", "clear"):
+        return "", ""
+    for item in fm_data.get("epics", []):
+        value = item.get("value", "").strip()
+        label = item.get("label", "").strip() or value.replace("-", " ").replace("_", " ").title()
+        if value and epic.strip().lower() in (value.lower(), label.lower()):
+            return value, label
+    raise ValueError(f"Unknown epic '{epic}'; use a value or label from frontmatter epics")
 
 
 def build_markdown_table(headers, rows, alignments=None):
@@ -133,8 +188,10 @@ def update_tasks_document(tasks_path):
 
     fm_text = fm_match.group(1)
     fm_data = parse_yaml_frontmatter(fm_text)
+    prefix = get_task_id_prefix(fm_data)
 
     project_list = fm_data.get("projects", [])
+    epic_list = fm_data.get("epics", [])
     subproject_list = fm_data.get("subprojects", [])
     status_list = fm_data.get("task-statuses", [])
     type_list = fm_data.get("task-types", [])
@@ -224,11 +281,14 @@ def update_tasks_document(tasks_path):
 
     extracted_chunks = []
     for chunk in task_chunks:
-        m = re.search(r'id=["\']ot-(\d+)["\']', chunk, re.IGNORECASE)
+        m = re.search(TASK_ID_PATTERN, chunk, re.IGNORECASE)
         if not m:
             raise ValueError(f"Could not find task ID in chunk:\n{chunk[:150]}")
-        num = int(m.group(1))
+        num = int(m.group(2))
         extracted_chunks.append((num, chunk))
+
+    if len({num for num, _ in extracted_chunks}) != len(extracted_chunks):
+        raise ValueError("Duplicate numeric task IDs found in Detailed Tasks")
 
     # Sort task detail section chunks by numeric ID
     extracted_chunks.sort(key=lambda x: x[0])
@@ -240,10 +300,11 @@ def update_tasks_document(tasks_path):
     updated_detailed_chunks = []
     updated_task_records = []
 
-    header_block_pattern = r'<(?:a\s+[^>]*\bid=|\bid=)["\']ot-\d+["\'][^>]*></a>\s*\n###\s+[^\n]+\n\*\*ID:\*\*[^\n]+\n\*\*Project:\*\*[^\n]+(?:\n\*\*Subproject:\*\*[^\n]+)?\n\*\*Status:\*\*[^\n]+\n\*\*Type:\*\*[^\n]+'
+    header_block_pattern = r'<(?:a\s+[^>]*\bid=|\bid=)["\'][a-zA-Z][a-zA-Z0-9_-]*-\d+["\'][^>]*></a>\s*\n###\s+[^\n]+\n\*\*ID:\*\*[^\n]+\n\*\*Project:\*\*[^\n]+(?:\n\*\*(?:Subproject|Epic):\*\*[^\n]*)*\n\*\*Status:\*\*[^\n]+\n\*\*Type:\*\*[^\n]+'
+    anchor_replacements = {}
 
     for num, chunk in extracted_chunks:
-        anchor_match = re.search(r'<(?:a\s+)?([^>]*\bid=["\']ot-\d+["\'][^>]*)>', chunk, re.IGNORECASE)
+        anchor_match = re.search(TASK_ANCHOR_PATTERN, chunk, re.IGNORECASE)
         if not anchor_match:
             raise ValueError(f"Anchor tag missing in task chunk {num}")
         anchor_tag = anchor_match.group(1)
@@ -252,6 +313,8 @@ def update_tasks_document(tasks_path):
         subproj_m = re.search(r'data-subproject=["\']([^"\']*)["\']', anchor_tag)
         status_m = re.search(r'data-status=["\']([^"\']+)["\']', anchor_tag)
         type_m = re.search(r'data-task-type=["\']([^"\']+)["\']', anchor_tag)
+        epic_m = re.search(r'data-epic=["\']([^"\']*)["\']', anchor_tag)
+        epic_key, expected_epic = resolve_epic(epic_m.group(1) if epic_m else None, fm_data)
 
         # Also check for **Subproject:** in chunk if anchor tag didn't have data-subproject
         if not subproj_m:
@@ -281,8 +344,9 @@ def update_tasks_document(tasks_path):
         title_m = re.search(r'^###\s+(.+)$', chunk, re.MULTILINE)
         title = title_m.group(1).strip() if title_m else f"Task {num}"
 
-        normalized_id = f"OT-{num:0{digit_width}d}"
-        normalized_aid = f"ot-{num:0{digit_width}d}"
+        normalized_id = format_task_id(num, prefix, digit_width)
+        normalized_aid = normalized_id.lower()
+        anchor_replacements[anchor_match.group(2).lower()] = normalized_aid
 
         if subproj_key:
             anchor_tag_str = f'<a id="{normalized_aid}" class="task" data-project="{proj_key}" data-subproject="{subproj_key}" data-status="{status_key}" data-task-type="{type_key}"></a>'
@@ -291,12 +355,17 @@ def update_tasks_document(tasks_path):
             anchor_tag_str = f'<a id="{normalized_aid}" class="task" data-project="{proj_key}" data-status="{status_key}" data-task-type="{type_key}"></a>'
             subproj_line = ""
 
+        if epic_key:
+            anchor_tag_str = anchor_tag_str.replace('></a>', f' data-epic="{epic_key}"></a>')
+        epic_line = f"**Epic:** {expected_epic}\n" if epic_key else ""
+
         new_header_block = (
             f'{anchor_tag_str}\n'
             f"### {title}\n"
             f"**ID:** {normalized_id}\n"
             f"**Project:** {expected_proj}\n"
             f"{subproj_line}"
+            f"{epic_line}"
             f"**Status:** {expected_status}\n"
             f"**Type:** {expected_type}"
         )
@@ -317,6 +386,7 @@ def update_tasks_document(tasks_path):
             "title": title,
             "project": expected_proj,
             "subproject": expected_subproj or "",
+            "epic": expected_epic,
             "status": expected_status,
             "type": expected_type,
         })
@@ -332,6 +402,10 @@ def update_tasks_document(tasks_path):
     else:
         summary_headers = ["ID", "Title", "Project", "Status", "Type"]
         alignments = [":---", ":---", ":---", ":---", ":---"]
+    has_epics = bool(epic_list)
+    if has_epics:
+        summary_headers.insert(-2, "Epic")
+        alignments.insert(-2, ":---")
 
     summary_rows = []
 
@@ -354,10 +428,13 @@ def update_tasks_document(tasks_path):
             formatted_title = clean_title
 
         formatted_type = f"[{task['type']}](#{task['aid']})"
+        row = [task["id"], formatted_title, task["project"]]
         if has_subprojects:
-            summary_rows.append([task["id"], formatted_title, task["project"], task["subproject"], task["status"], formatted_type])
-        else:
-            summary_rows.append([task["id"], formatted_title, task["project"], task["status"], formatted_type])
+            row.append(task["subproject"])
+        if has_epics:
+            row.append(task["epic"])
+        row.extend([task["status"], formatted_type])
+        summary_rows.append(row)
 
     new_summary_table = build_markdown_table(
         summary_headers, summary_rows, alignments=alignments
@@ -401,6 +478,12 @@ def update_tasks_document(tasks_path):
         subprojects_table = build_markdown_table(subproject_headers, subproject_rows, [":---", ":---", ":---"]).strip()
         subproject_section = f"\n\n#### Subprojects (Rendered from frontmatter subprojects)\n{subprojects_table}"
 
+    epic_section = ""
+    if epic_list:
+        epic_rows = [[e.get("value", ""), e.get("label", ""), e.get("description", "")] for e in epic_list]
+        epics_table = build_markdown_table(["Value", "Label", "Description"], epic_rows).strip()
+        epic_section = f"\n\n#### Epics (Rendered from frontmatter epics)\n{epics_table}"
+
     # Replace enum tables in end_text
     enum_tables_pattern = r"(#### Projects \(Rendered from frontmatter projects\)\n).*?(<!-- Table Sort Injection -->)"
     new_enum_tables = (
@@ -410,7 +493,7 @@ def update_tasks_document(tasks_path):
         f"{statuses_table}\n\n"
         "#### Task Types (Rendered from frontmatter task-types)\n"
         f"{types_table}"
-        f"{subproject_section}\n\n"
+        f"{subproject_section}{epic_section}\n\n"
         r"\2"
     )
 
@@ -425,6 +508,12 @@ def update_tasks_document(tasks_path):
         + sorted_detailed_tasks
         + "\n\n"
         + updated_end_text.lstrip("\n")
+    )
+    new_full_text = re.sub(
+        r'(\]\(|href=["\']|^\[[^\]\n]+\]:[ \t]*)#([a-z][a-z0-9_-]*-\d+)(?=[\s)"\']|$)',
+        lambda m: m.group(1) + "#" + anchor_replacements.get(m.group(2).lower(), m.group(2)),
+        new_full_text,
+        flags=re.IGNORECASE | re.MULTILINE,
     )
 
     with open(tasks_path, "w", encoding="utf-8") as f:

@@ -32,6 +32,8 @@ esac
 # Export Repo & Tasks Context
 export REPO_ROOT
 export TASKS_FILE="$REPO_ROOT/docs/tasks.md"
+# Optional document-wide prefix override; unset uses frontmatter, then OT.
+# export TASK_ID_PREFIX="OT"
 
 # Define Aliases
 alias run-editor='(cd Editor/App && npm run tauri dev -- -- "../../Content/Episodes/Episode 1/Episode.xml")'

@@ -36,10 +36,7 @@ def load_update_tasks_module():
 
 
 def parse_task_id(id_str):
-    m = re.search(r'(\d+)', id_str)
-    if not m:
-        raise ValueError(f"Could not parse numeric task ID from '{id_str}'")
-    return int(m.group(1))
+    return load_update_tasks_module().parse_task_id(id_str)
 
 
 def update_task_detail(
@@ -58,6 +55,8 @@ def update_task_detail(
     uncheck_all=False,
     sync=True,
     tasks_file=None,
+    epic=None,
+    clear_epic=False,
 ):
     update_mod = load_update_tasks_module()
     tasks_path = update_mod.find_tasks_file(tasks_file)
@@ -65,7 +64,9 @@ def update_task_detail(
     with open(tasks_path, "r", encoding="utf-8") as f:
         text = f.read()
 
-    target_num = parse_task_id(str(task_id_input))
+    fm_data = update_mod.read_frontmatter(text)
+    prefix = update_mod.get_task_id_prefix(fm_data)
+    target_num = update_mod.parse_task_id(task_id_input)
 
     detail_header_marker = "## Detailed Tasks\n"
     detail_start = text.find(detail_header_marker)
@@ -87,10 +88,10 @@ def update_task_detail(
         chunk_clean = chunk.strip()
         if not chunk_clean:
             continue
-        m = re.search(r'id=["\']ot-(\d+)["\']', chunk_clean, re.IGNORECASE)
-        if m and int(m.group(1)) == target_num:
+        m = re.search(update_mod.TASK_ID_PATTERN, chunk_clean, re.IGNORECASE)
+        if m and int(m.group(2)) == target_num and update_mod.task_id_matches(task_id_input, m.group(1), prefix):
             found = True
-            anchor_match = re.search(r'<(?:a\s+)?([^>]*\bid=["\']ot-\d+["\'][^>]*)>', chunk_clean, re.IGNORECASE)
+            anchor_match = re.search(update_mod.TASK_ANCHOR_PATTERN, chunk_clean, re.IGNORECASE)
             if not anchor_match:
                 raise ValueError(f"Anchor tag missing in task {target_num}")
             anchor_tag = anchor_match.group(1)
@@ -100,6 +101,9 @@ def update_task_detail(
             subproj_m = re.search(r'data-subproject=["\']([^"\']*)["\']', anchor_tag)
             status_m = re.search(r'data-status=["\']([^"\']+)["\']', anchor_tag)
             type_m = re.search(r'data-task-type=["\']([^"\']+)["\']', anchor_tag)
+            epic_m = re.search(r'data-epic=["\']([^"\']*)["\']', anchor_tag)
+            epic_input = epic if epic is not None else (epic_m.group(1) if epic_m else None)
+            new_epic, epic_label = update_mod.resolve_epic(None if clear_epic else epic_input, fm_data)
 
             if not subproj_m:
                 subproj_field_m = re.search(r'^\*\*Subproject:\*\*\s*([^\n]+)$', chunk_clean, re.MULTILINE)
@@ -173,9 +177,9 @@ def update_task_detail(
                                 desc_lines[i] = re.sub(r'-\s*\[[\s x]\]', '- [ ]', line, count=1)
                 new_desc = "\n".join(desc_lines)
 
-            digit_width = max(3, len(str(target_num)))
-            normalized_id = f"OT-{target_num:0{digit_width}d}"
-            normalized_aid = f"ot-{target_num:0{digit_width}d}"
+            digit_width = max(3, len(m.group(1).rsplit("-", 1)[1]))
+            normalized_id = update_mod.format_task_id(target_num, prefix, digit_width)
+            normalized_aid = m.group(1)
 
             # Assemble modified chunk (update-tasks will format headers/labels upon sync)
             if new_subproj:
@@ -185,12 +189,17 @@ def update_task_detail(
                 anchor_tag_str = f'<a id="{normalized_aid}" class="task" data-project="{new_proj}" data-status="{new_status}" data-task-type="{new_type}"></a>'
                 subproj_line = ""
 
+            if new_epic:
+                anchor_tag_str = anchor_tag_str.replace('></a>', f' data-epic="{new_epic}"></a>')
+            epic_line = f"**Epic:** {epic_label}\n" if new_epic else ""
+
             updated_chunk = (
                 f'{anchor_tag_str}\n'
                 f"### {new_title}\n"
                 f"**ID:** {normalized_id}\n"
                 f"**Project:** {new_proj.capitalize()}\n"
                 f"{subproj_line}"
+                f"{epic_line}"
                 f"**Status:** {new_status.capitalize()}\n"
                 f"**Type:** {new_type.capitalize()}\n\n"
                 f"**Description:**\n"
@@ -201,7 +210,7 @@ def update_task_detail(
             new_chunks.append(chunk_clean)
 
     if not found:
-        raise KeyError(f"Task with ID {target_num} (OT-{target_num:03d}) was not found in {tasks_path}")
+        raise KeyError(f"Task {task_id_input} ({update_mod.format_task_id(target_num, prefix)}) was not found in {tasks_path}")
 
     # Reconstruct document
     new_detail_body = "\n\n".join(new_chunks) + "\n"
@@ -213,13 +222,14 @@ def update_task_detail(
     if sync:
         update_mod.update_tasks_document(tasks_path)
 
-    digit_width = max(3, len(str(target_num)))
-    return f"OT-{target_num:0{digit_width}d}", tasks_path
+    return update_mod.format_task_id(target_num, prefix, digit_width), tasks_path
 
 
 def main():
     parser = argparse.ArgumentParser(description="Modify task details and synchronize tasks.md")
-    parser.add_argument("task_id", help="Task ID (e.g. 18, OT-018, ot-018)")
+    parser.add_argument("task_id", help="Task number or prefixed ID (e.g. 18, PREFIX-018)")
+    parser.add_argument("--epic", default=None, help="Update epic using a frontmatter value or label")
+    parser.add_argument("--clear-epic", action="store_true", help="Remove epic from task")
     parser.add_argument("-T", "--title", default=None, help="Update task title")
     parser.add_argument("-p", "--project", default=None, help="Update project (e.g. android, editor, shared, story-engine)")
     parser.add_argument("-S", "--subproject", default=None, help="Update subproject (e.g. actions, expressions, schema)")
@@ -260,6 +270,8 @@ def main():
             uncheck_all=args.uncheck_all,
             sync=not args.no_sync,
             tasks_file=args.file,
+            epic=args.epic,
+            clear_epic=args.clear_epic,
         )
         print(f"Successfully updated task {formatted_id} in {path}")
     except Exception as e:
