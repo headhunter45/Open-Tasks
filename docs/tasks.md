@@ -173,7 +173,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-036 | Implement Version Validation            | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-036) |
 | OT-037 | Implement ot init                       | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-037) |
 | OT-038 | Implement Project Installation          | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-038) |
-| OT-039 | **Implement Version Downloads**         | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-039) |
+| OT-039 | Implement Version Downloads             | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-039) |
 | OT-040 | **Implement Transactional Upgrades**    | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-040) |
 | OT-041 | **Implement ot upgrade**                | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-041) |
 | OT-042 | **Build Cache Management**              | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-042) |
@@ -678,16 +678,17 @@ Implement 'ot init' command for initializing new Open Tasks projects with direct
 **Description:**
 Implement Project Installation mechanism to install versioned executable zipapp, manifest, and optional root wrapper scripts (otw, otw.bat) in .ot/bin/. Implemented in src/ot/installation.py and tested in tests/test_installation.py.
 
-<a id="ot-039" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="distribution"></a>
+<a id="ot-039" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
 ### Implement Version Downloads
 **ID:** OT-039
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 
 **Description:**
+Implement Version Downloads for fetching, caching, and staging release zipapps and manifests from mirrors or release builds. Implemented in src/ot/upgrade.py and tested in tests/test_upgrade.py.
 
 <a id="ot-040" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="distribution"></a>
 ### Implement Transactional Upgrades

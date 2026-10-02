@@ -521,6 +521,29 @@ def cmd_init(args: argparse.Namespace, config: Config) -> int:
         return 1
 
 
+from ot.upgrade import perform_transactional_upgrade
+
+
+def cmd_upgrade(args: argparse.Namespace, config: Config) -> int:
+    """Upgrade project to target version."""
+    if not config.project_root:
+        print("Error: No Open Tasks project found (.ot).", file=sys.stderr)
+        return 1
+
+    try:
+        res = perform_transactional_upgrade(
+            project_root=config.project_root,
+            target_version=args.version,
+            mirror_dir=args.mirror,
+            dry_run=args.dry_run,
+        )
+        print(res["message"])
+        return 0
+    except Exception as e:
+        print(f"Upgrade failed: {e}", file=sys.stderr)
+        return 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="ot", description="Open Tasks (ot) CLI")
     parser.add_argument(
@@ -540,6 +563,12 @@ def build_parser() -> argparse.ArgumentParser:
     init_parser.add_argument("--description", "-d", help="Project description")
     init_parser.add_argument("--no-binary", action="store_true", help="Skip installing executable zipapp")
     init_parser.add_argument("--no-wrappers", action="store_true", help="Skip creating otw / otw.bat scripts")
+
+    # ot upgrade ...
+    upgrade_parser = subparsers.add_parser("upgrade", help="Upgrade project Open Tasks installation")
+    upgrade_parser.add_argument("--version", "-v", required=True, help="Target version to upgrade to")
+    upgrade_parser.add_argument("--mirror", "-m", help="Directory containing pre-packaged version artifacts")
+    upgrade_parser.add_argument("--dry-run", action="store_true", help="Validate without applying changes")
 
     # ot check ...
     check_parser = subparsers.add_parser("check", help="Validate project state and configuration")
@@ -618,6 +647,9 @@ def main(args: Optional[List[str]] = None) -> int:
     if parsed.category == "init":
         return cmd_init(parsed, config)
 
+    if parsed.category == "upgrade":
+        return cmd_upgrade(parsed, config)
+
     if parsed.category == "check":
         return cmd_check(parsed, config)
 
@@ -649,5 +681,6 @@ def main(args: Optional[List[str]] = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
 
 
