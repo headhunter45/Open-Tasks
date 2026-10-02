@@ -139,6 +139,17 @@ class WorkItemMetadata:
         )
 
 
+from enum import Enum
+from pathlib import Path
+
+
+class RelationshipType(str, Enum):
+    PARENT = "parent"
+    CHILD = "child"
+    DEPENDS_ON = "depends_on"
+    BLOCKS = "blocks"
+
+
 @dataclass
 class Comment:
     """A comment on a WorkItem."""
@@ -180,4 +191,49 @@ class Comment:
             timestamp=str(data.get("timestamp") or now_iso()),
             body=str(data.get("body") or ""),
         )
+
+
+@dataclass
+class WorkItem:
+    """Represents a loaded WorkItem document."""
+
+    meta: WorkItemMetadata
+    body: str = ""
+    comments: List[Comment] = field(default_factory=list)
+    path: Optional[Path] = None
+
+    @property
+    def id(self) -> str:
+        return self.meta.id
+
+    @property
+    def title(self) -> str:
+        return self.meta.title
+
+    @property
+    def type(self) -> str:
+        return self.meta.type
+
+    @property
+    def status(self) -> str:
+        return self.meta.status
+
+    @property
+    def parent_id(self) -> Optional[str]:
+        return self.meta.parent
+
+    @property
+    def dependencies(self) -> List[str]:
+        return self.meta.dependencies
+
+    def add_dependency(self, target_id: str) -> None:
+        if target_id not in self.meta.dependencies and target_id != self.id:
+            self.meta.dependencies.append(target_id)
+
+    def remove_dependency(self, target_id: str) -> bool:
+        if target_id in self.meta.dependencies:
+            self.meta.dependencies.remove(target_id)
+            return True
+        return False
+
 

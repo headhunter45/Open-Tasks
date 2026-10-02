@@ -1,7 +1,7 @@
 """Tests for WorkItem data models."""
 
 import unittest
-from ot.models import WorkItemMetadata, Author, Comment, generate_uuid
+from ot.models import WorkItemMetadata, Author, Comment, WorkItem, RelationshipType, generate_uuid
 
 
 class TestWorkItemMetadata(unittest.TestCase):
@@ -74,6 +74,29 @@ class TestComment(unittest.TestCase):
         self.assertEqual(c2.body, "Test body")
 
 
+class TestWorkItemRelationships(unittest.TestCase):
+    def test_dependency_management(self):
+        meta = WorkItemMetadata(id="task-1", title="Task 1")
+        item = WorkItem(meta=meta)
+        self.assertEqual(item.dependencies, [])
+
+        item.add_dependency("task-2")
+        self.assertEqual(item.dependencies, ["task-2"])
+
+        # No duplicates
+        item.add_dependency("task-2")
+        self.assertEqual(item.dependencies, ["task-2"])
+
+        # Cannot depend on self
+        item.add_dependency("task-1")
+        self.assertEqual(item.dependencies, ["task-2"])
+
+        # Removal
+        self.assertTrue(item.remove_dependency("task-2"))
+        self.assertEqual(item.dependencies, [])
+        self.assertFalse(item.remove_dependency("task-2"))
+
 
 if __name__ == "__main__":
     unittest.main()
+
