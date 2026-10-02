@@ -203,6 +203,23 @@ class TaskScriptsTest(unittest.TestCase):
         self.path.write_text(text.replace("\n---\n\n## Notes", chunk + "\n---\n\n## Notes"))
         self.assertIn("Duplicate numeric task IDs", self.run_cli("update-tasks", success=False).stderr)
 
+    def test_summary_table_conflict_handling(self):
+        text = self.path.read_text()
+        # Inject conflict markers surrounding and within the summary table
+        conflicted = text.replace(
+            "| ID | Title |",
+            "<<<<<<< HEAD\n| ID | Title |\n=======\n| ID | Title | Project |\n>>>>>>> branch",
+        )
+        self.path.write_text(conflicted)
+        self.run_cli("update-tasks")
+        updated = self.path.read_text()
+        self.assertNotIn("<<<<<<<", updated)
+        self.assertNotIn("=======", updated)
+        self.assertNotIn(">>>>>>>", updated)
+        self.assertIn("OT-001", updated)
+        self.assertIn("Original", updated)
+
+
     def test_listing_epic_filters_and_selection_fallback(self):
         self.run_cli("update-task", "1", "--epic", "release")
         self.run_cli("add-task", "Second", "--epic", "poc")

@@ -249,28 +249,49 @@ def update_tasks_document(tasks_path):
                 type_value_map[lbl.lower()] = val
 
     # 2. Locate boundaries
-    table_start_marker = "| ID"
-    table_start = text.find(table_start_marker)
-    if table_start == -1:
-        raise ValueError("Overall Progress Table (| ID) not found")
-
-    detail_header_marker = "## Detailed Tasks\n"
-    detail_start = text.find(detail_header_marker)
-    if detail_start == -1:
+    m_detail = re.search(r"^## Detailed Tasks\s*$", text, re.MULTILINE)
+    if not m_detail:
         raise ValueError("## Detailed Tasks heading not found")
+    detail_start = m_detail.start()
+    detail_header_len = len(m_detail.group(0))
 
-    notes_marker = "\n---\n\n## Notes\n"
-    notes_start = text.find(notes_marker)
-    if notes_start == -1:
+    m_notes = re.search(r"(?:\n\s*---\s*)?\n\s*## Notes\s*$", text, re.MULTILINE)
+    if not m_notes:
         raise ValueError("## Notes section marker not found")
+    notes_start = m_notes.start()
 
-    part_a = text[:table_start]
-    table_end = text.find("\n\n---\n", table_start)
-    if table_end == -1:
-        raise ValueError("End of summary table not found")
+    # Determine part_a (everything before the summary table)
+    tasks_list_m = re.search(r'<a\s+[^>]*\bid=["\']tasks-list["\'][^>]*></a>', text, re.IGNORECASE)
+    progress_m = re.search(r'^## Overall Progress\s*$', text, re.MULTILINE)
 
-    part_c = text[table_end : detail_start + len(detail_header_marker)]
-    detail_body = text[detail_start + len(detail_header_marker) : notes_start]
+    if tasks_list_m and tasks_list_m.start() < detail_start:
+        part_a = text[:tasks_list_m.end()].rstrip() + "\n\n"
+        table_search_start = tasks_list_m.end()
+    elif progress_m and progress_m.start() < detail_start:
+        part_a = text[:progress_m.end()].rstrip() + "\n\n"
+        table_search_start = progress_m.end()
+    else:
+        table_start_marker = "| ID"
+        table_start = text.find(table_start_marker)
+        if table_start == -1 or table_start >= detail_start:
+            raise ValueError("Overall Progress Table (| ID) not found")
+        # Strip any leading git conflict markers right before | ID from part_a
+        raw_part_a = text[:table_start]
+        raw_part_a = re.sub(r'<{7}\s+[^\n]*\n*$', '', raw_part_a)
+        part_a = raw_part_a.rstrip() + "\n\n"
+        table_search_start = table_start
+
+    # Determine part_c (the transition into ## Detailed Tasks)
+    # Check if <a id="task-details"></a> was present between table and ## Detailed Tasks
+    between_table_and_detail = text[table_search_start:detail_start]
+    has_task_details_anchor = bool(re.search(r'<a\s+[^>]*\bid=["\']task-details["\'][^>]*>', between_table_and_detail, re.IGNORECASE))
+
+    if has_task_details_anchor:
+        part_c = "\n\n---\n\n<a id=\"task-details\"></a>\n\n## Detailed Tasks\n"
+    else:
+        part_c = "\n\n---\n\n## Detailed Tasks\n"
+
+    detail_body = text[detail_start + detail_header_len : notes_start]
 
     # 3. Extract and Sort Task Chunks by Numeric ID
     task_chunks = re.split(r"(?=<a\s+[^>]*\bid=|<id=)", detail_body)

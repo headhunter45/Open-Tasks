@@ -113,3 +113,37 @@ def build_zipapp_artifact(
     manifest_path.write_text(json.dumps(manifest.to_dict(), indent=2), encoding="utf-8")
 
     return manifest
+
+
+def main(args: Optional[List[str]] = None) -> int:
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser(description="Package Open Tasks release artifact")
+    parser.add_argument("--version", "-v", required=True, help="Release version (e.g. 0.1.0)")
+    parser.add_argument("--src-dir", "-s", default="src", help="Source directory containing ot/ package")
+    parser.add_argument("--output-dir", "-o", default="dist", help="Output directory for packaged release")
+    parser.add_argument("--artifact-name", default="ot.zipapp", help="Output artifact filename")
+
+    parsed = parser.parse_args(args)
+
+    out_file = Path(parsed.output_dir) / parsed.artifact_name
+    try:
+        manifest = build_zipapp_artifact(
+            src_dir=parsed.src_dir,
+            output_path=out_file,
+            version=parsed.version,
+        )
+        print(f"Successfully packaged Open Tasks v{manifest.version}")
+        print(f"Artifact: {out_file}")
+        print(f"SHA-256:  {manifest.sha256}")
+        return 0
+    except Exception as e:
+        print(f"Packaging failed: {e}", file=sys.stderr)
+        return 1
+
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())
+
