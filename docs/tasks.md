@@ -59,9 +59,12 @@ task-types:
     description: 'The task is a routine maintenance or administrative task.'
 ---
 
-# Project Task Tracker
+# Project Task Tracker (Archived)
 
-This document serves as the Single Source of Truth (SSOT) for tracking tasks, features, bugs, chores, and lint issues across the project.
+> [!NOTE]
+> **ARCHIVED**: This single-file tracker document has been archived. Open Tasks is now fully self-hosted! All work items and epics are maintained directly in repository-native files under [`.ot/tasks/`](file:///Users/tom/Projects/OpenTasks/.ot/tasks/) and managed via `./otw` or the `ot` CLI.
+
+This document serves as the historical record for bootstrap and initial project phases.
 
 ## Instructions for Working with Tasks
 
@@ -188,7 +191,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-051 | Begin Creating Tasks Using Open Tasks | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-051) |
 | OT-052 | Begin Updating Tasks Using Open Tasks | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-052) |
 | OT-053 | Retire Legacy Scripts                 | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-053) |
-| OT-054 | **Archive Legacy Tracker**            | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-054) |
+| OT-054 | Archive Legacy Tracker                | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-054) |
 | OT-055 | **Run First Grooming Meeting**        | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-055) |
 | OT-056 | **Record First Meeting Notes**        | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-056) |
 | OT-057 | **Plan First Release**                | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-057) |
@@ -847,15 +850,16 @@ Adopted 'otw task status', 'otw task comment', 'otw task add-dependency', and 'o
 **Description:**
 Retired legacy Markdown tracker scripts in scripts/ (get-tasks, get-task, add-task, update-task, update-tasks) in favor of the self-hosted Open Tasks CLI (otw / ot). Documented retirement and migration mapping in scripts/README.md.
 
-<a id="ot-054" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
+<a id="ot-054" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
 ### Archive Legacy Tracker
 **ID:** OT-054
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 **Description:**
+Archived docs/tasks.md single-file tracker with an archival header notice directing all task management workflows to repository-native .ot/tasks/ and the otw CLI.
 
 <a id="ot-055" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
 ### Run First Grooming Meeting
