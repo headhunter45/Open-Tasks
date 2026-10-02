@@ -48,7 +48,8 @@ while [[ $# -gt 0 ]]; do
             echo "  -h, --help            Show this help message and exit"
             echo "  -p, --planning        Show tasks in Triage and Planning status"
             echo "  --all                 Show all tasks regardless of status"
-            echo "  --accept PREDICATE    Include rows matching predicate (e.g. 'Status:Fixed', 'Project:Engine', 'Epic:Proof of Concept')"
+            echo "  --accept PREDICATE    Include rows matching predicate (e.g. 'Status:Fixed', 'Project:Engine', 'Epic:poc')"
+            echo "                       Epic filters accept frontmatter values or labels"
             echo "  --reject PREDICATE    Exclude rows matching predicate (e.g. 'Status:Cancelled')"
             echo "  --sort [asc|desc]     Sort order by task ID (default: desc)"
             echo "  -s, --select COLS     Columns to display (e.g. 'ID,Title,Project,Epic,Status')"
@@ -143,6 +144,22 @@ if [ ${#ACCEPTS[@]} -eq 0 ]; then
     else
         ACCEPTS+=("Status:Pending")
     fi
+fi
+
+if [ $((${#ACCEPTS[@]} + ${#REJECTS[@]})) -gt 0 ]; then
+    ACCEPT_COUNT=${#ACCEPTS[@]}
+    NORMALIZED_PREDICATES="$(python3 "$SCRIPT_DIR/lib/filter_predicates.py" "$TASKS_FILE" "${ACCEPTS[@]}" "${REJECTS[@]}")"
+    ACCEPTS=()
+    REJECTS=()
+    PREDICATE_INDEX=0
+    while IFS= read -r predicate; do
+        if [ "$PREDICATE_INDEX" -lt "$ACCEPT_COUNT" ]; then
+            ACCEPTS+=("$predicate")
+        else
+            REJECTS+=("$predicate")
+        fi
+        PREDICATE_INDEX=$((PREDICATE_INDEX + 1))
+    done <<< "$NORMALIZED_PREDICATES"
 fi
 
 if command -v filter-table >/dev/null 2>&1; then

@@ -219,6 +219,20 @@ class TaskScriptsTest(unittest.TestCase):
         output = self.run_cli("get-tasks", "--all", "--reject", "Epic:Proof of Concept", env=env).stdout
         self.assertNotIn("OT-002", output)
         self.assertIn("OT-001", output)
+        for value in ("poc", "POC", "Proof of Concept"):
+            with self.subTest(value=value):
+                output = self.run_cli("get-tasks", "--accept", f"Epic:{value}", env=env).stdout
+                self.assertIn("OT-002", output)
+                self.assertNotIn("OT-001", output)
+        output = self.run_cli("get-tasks", "--all", "--reject", "Epic:poc", env=env).stdout
+        self.assertNotIn("OT-002", output)
+        self.assertIn("OT-001", output)
+        output = self.run_cli(
+            "get-tasks", "--accept", "Epic:poc,release", "--accept", "Status:Triage", env=env,
+        ).stdout
+        self.assertIn("OT-002", output)
+        self.assertNotIn("OT-001", output)
+        self.assertNotIn("OT-001", self.run_cli("get-tasks", "--accept", "Epic:missing", env=env).stdout)
 
     def test_listing_external_filter_table_selects_epic(self):
         self.run_cli("update-tasks")
@@ -229,6 +243,20 @@ class TaskScriptsTest(unittest.TestCase):
         output = self.run_cli("get-tasks", "--all", "--accept", "Epic:Proof of Concept", env=env).stdout
         self.assertIn("ID,Title,Project,Subproject,Epic,Status", output)
         self.assertIn("Epic:Proof of Concept", output)
+        output = self.run_cli(
+            "get-tasks", "--all", "--accept", "epic:POC,release", "--reject", "Epic:release",
+            "--accept", "Status:Pending", env=env,
+        ).stdout
+        self.assertIn("Epic:Proof of Concept,Team's Release", output)
+        self.assertIn("Epic:Team's Release", output)
+        self.assertIn("Status:Pending", output)
+        self.assertNotIn("Epic:release", output)
+
+    def test_filter_frontmatter_errors_are_reported(self):
+        self.path.write_text("No frontmatter\n")
+        env = {**self.env, "PATH": "/usr/bin:/bin"}
+        result = self.run_cli("get-tasks", "--accept", "Epic:poc", env=env, success=False)
+        self.assertIn("Error normalizing task filters: YAML frontmatter not found", result.stderr)
 
     def test_workflow_surfaces(self):
         self.run_cli("update-task", "1", "--epic", "poc")

@@ -87,7 +87,8 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
   - `get-planning-tasks` (or `get-tasks --planning`): Show tasks in *Planning* or *Triage* status.
   - `get-tasks --all`: List all tasks regardless of status.
   - `get-tasks --accept "Status:In Progress"` / `get-tasks --reject "Project:Example"`: Filter tasks.
-  - `get-tasks --all --accept "Epic:Proof of Concept" --select "ID,Title,Epic"`: Filter or select the Epic column using its frontmatter label.
+  - `get-tasks --all --accept "Epic:poc" --select "ID,Title,Epic"`: Filter or select the Epic column. Epic filters accept frontmatter values (`poc`) or labels (`Proof of Concept`), case-insensitively.
+  - `get-tasks --all --reject "Epic:poc"`: Exclude an Epic by value or label; comma-separated lists such as `Epic:poc,bootstrap` also work.
 - **View a specific task**:
   - `get-task OT-001` (or `./scripts/get-task 1`): Inspect task details, requirements, and metadata.
   - `get-task OT-001 --json`: Output task data in JSON format, including `epic` (value) and `epic_label`.
