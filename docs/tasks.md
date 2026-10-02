@@ -145,7 +145,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-008 | Implement Project Discovery               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-008) |
 | OT-009 | Implement Git Discovery                   | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-009) |
 | OT-010 | Implement No-VCS Discovery                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-010) |
-| OT-011 | **Implement Configuration Loader**        | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-011) |
+| OT-011 | Implement Configuration Loader            | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-011) |
 | OT-012 | **Implement Configuration Resolution**    | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-012) |
 | OT-013 | **Implement Protected Key Validation**    | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-013) |
 | OT-014 | **Implement UUID Generation**             | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-014) |
@@ -335,16 +335,16 @@ Implement Git discovery: git root detection, querying git config for user name, 
 **Description:**
 Implement No-VCS discovery and fallbacks for environments without Git or Mercurial, resolving system username, email, and platform default editor. Implemented in src/ot/discovery.py and tested in tests/test_discovery.py.
 
-<a id="ot-011" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-011" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Implement Configuration Loader
 **ID:** OT-011
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Implement Configuration Loader for reading and parsing JSON configuration files (.ot/config.json, .ot/config.local.json, ~/.ot/config.json). Implemented in src/ot/config.py and tested in tests/test_config.py.
 
 <a id="ot-012" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Implement Configuration Resolution
