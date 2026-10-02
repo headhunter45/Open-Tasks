@@ -187,7 +187,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-050 | Validate Migrated Tasks               | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-050) |
 | OT-051 | Begin Creating Tasks Using Open Tasks | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-051) |
 | OT-052 | Begin Updating Tasks Using Open Tasks | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-052) |
-| OT-053 | **Retire Legacy Scripts**             | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-053) |
+| OT-053 | Retire Legacy Scripts                 | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-053) |
 | OT-054 | **Archive Legacy Tracker**            | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-054) |
 | OT-055 | **Run First Grooming Meeting**        | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-055) |
 | OT-056 | **Record First Meeting Notes**        | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-056) |
@@ -836,15 +836,16 @@ Adopted 'otw task create' for creating new repository-native tasks with automate
 **Description:**
 Adopted 'otw task status', 'otw task comment', 'otw task add-dependency', and 'otw task edit' for updating and progressing WorkItems directly in the repository.
 
-<a id="ot-053" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
+<a id="ot-053" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
 ### Retire Legacy Scripts
 **ID:** OT-053
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 **Description:**
+Retired legacy Markdown tracker scripts in scripts/ (get-tasks, get-task, add-task, update-task, update-tasks) in favor of the self-hosted Open Tasks CLI (otw / ot). Documented retirement and migration mapping in scripts/README.md.
 
 <a id="ot-054" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
 ### Archive Legacy Tracker
