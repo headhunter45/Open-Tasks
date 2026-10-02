@@ -287,8 +287,15 @@ def update_tasks_document(tasks_path):
         num = int(m.group(2))
         extracted_chunks.append((num, chunk))
 
-    if len({num for num, _ in extracted_chunks}) != len(extracted_chunks):
-        raise ValueError("Duplicate numeric task IDs found in Detailed Tasks")
+    seen_nums = {}
+    for num, chunk in extracted_chunks:
+        seen_nums.setdefault(num, []).append(chunk)
+
+    duplicates = [num for num, chunks in seen_nums.items() if len(chunks) > 1]
+    if duplicates:
+        prefix = get_task_id_prefix(fm_data)
+        dup_ids = [format_task_id(num, prefix) for num in sorted(duplicates)]
+        raise ValueError(f"Duplicate numeric task IDs found in Detailed Tasks: {', '.join(dup_ids)}")
 
     # Sort task detail section chunks by numeric ID
     extracted_chunks.sort(key=lambda x: x[0])
