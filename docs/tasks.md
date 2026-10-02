@@ -172,7 +172,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-035 | Implement Version Discovery             | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-035) |
 | OT-036 | Implement Version Validation            | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-036) |
 | OT-037 | Implement ot init                       | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-037) |
-| OT-038 | **Implement Project Installation**      | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-038) |
+| OT-038 | Implement Project Installation          | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-038) |
 | OT-039 | **Implement Version Downloads**         | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-039) |
 | OT-040 | **Implement Transactional Upgrades**    | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-040) |
 | OT-041 | **Implement ot upgrade**                | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-041) |
@@ -666,16 +666,17 @@ Implement Version Validation for checking semantic version conformance and detec
 **Description:**
 Implement 'ot init' command for initializing new Open Tasks projects with directory structure, system.toolVersion, project configuration, and default templates. Implemented in src/ot/installation.py, src/ot/cli.py, and tested in tests/test_installation.py.
 
-<a id="ot-038" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="distribution"></a>
+<a id="ot-038" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
 ### Implement Project Installation
 **ID:** OT-038
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 
 **Description:**
+Implement Project Installation mechanism to install versioned executable zipapp, manifest, and optional root wrapper scripts (otw, otw.bat) in .ot/bin/. Implemented in src/ot/installation.py and tested in tests/test_installation.py.
 
 <a id="ot-039" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="distribution"></a>
 ### Implement Version Downloads
