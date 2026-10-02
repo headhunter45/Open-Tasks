@@ -194,7 +194,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-054 | Archive Legacy Tracker                | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-054) |
 | OT-055 | Run First Grooming Meeting            | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-055) |
 | OT-056 | Record First Meeting Notes            | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-056) |
-| OT-057 | **Plan First Release**                | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-057) |
+| OT-057 | Plan First Release                    | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-057) |
 | OT-058 | **Verify Development Workflow**       | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-058) |
 | OT-059 | **Declare Bootstrap Complete**        | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-059) |
 
@@ -883,15 +883,16 @@ Conducted first repository-native backlog grooming meeting reviewing migrated ba
 **Description:**
 Recorded first meeting notes in .ot/meetings/2026-10-02-grooming.md adhering to ADR-0021 repository-based meeting notes and review workflow.
 
-<a id="ot-057" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
+<a id="ot-057" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
 ### Plan First Release
 **ID:** OT-057
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 **Description:**
+Planned initial v0.1.0 release. Created release tracking task 800d17 (Release v0.1.0) under Distribution and Release System epic and documented release plan in .ot/meetings/2026-10-02-release-0.1.0-plan.md.
 
 <a id="ot-058" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
 ### Verify Development Workflow
