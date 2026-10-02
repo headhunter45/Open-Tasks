@@ -31,7 +31,10 @@ class TestValidationAndRepair(unittest.TestCase):
         self.assertEqual(len(errors), 0)
 
     def test_missing_directory_detection_and_repair(self):
-        # Initially .ot/templates and .ot/meetings don't exist
+        # Remove templates and meetings if present
+        shutil.rmtree(self.root / ".ot" / "templates", ignore_errors=True)
+        shutil.rmtree(self.root / ".ot" / "meetings", ignore_errors=True)
+
         validator = Validator(self.root)
         diags = validator.validate_all()
         missing_dirs = [d for d in diags if d.category == "filesystem" and d.is_fixable]
@@ -42,6 +45,7 @@ class TestValidationAndRepair(unittest.TestCase):
         repairs = repairer.repair()
         self.assertTrue(any("templates" in r for r in repairs))
         self.assertTrue((self.root / ".ot" / "templates").is_dir())
+
 
     def test_protected_key_misplacement_detection_and_repair(self):
         # Put protected key in config.local.json

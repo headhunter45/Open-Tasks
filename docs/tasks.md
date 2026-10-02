@@ -165,7 +165,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-028 | Implement Validation Framework          | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-028) |
 | OT-029 | Implement Error Reporting               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-029) |
 | OT-030 | Implement Repair Framework              | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-030) |
-| OT-031 | **Generate Initial Templates**          | Open Tasks | Proof of Concept                | Pending     | [Chore](#ot-031)   |
+| OT-031 | Generate Initial Templates              | Open Tasks | Proof of Concept                | Fixed       | [Chore](#ot-031)   |
 | OT-032 | *Design Release Artifact*               | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-032) |
 | OT-033 | *Build Packaging System*                | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-033) |
 | OT-034 | *Build Global Launcher*                 | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-034) |
@@ -555,16 +555,16 @@ Implement structured diagnostic error reporting with Severity (ERROR, WARNING, I
 **Description:**
 Implement Repair Framework for 'ot check --fix' to safely and automatically repair missing directories, misplaced protected configuration keys, and self-dependencies. Implemented in src/ot/validation.py and tested in tests/test_validation.py.
 
-<a id="ot-031" class="task" data-project="open-tasks" data-status="pending" data-task-type="chore" data-epic="poc"></a>
+<a id="ot-031" class="task" data-project="open-tasks" data-status="done" data-task-type="chore" data-epic="poc"></a>
 ### Generate Initial Templates
 **ID:** OT-031
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Chore
 
-
 **Description:**
+Generate initial template files in .ot/templates/ (tasks/default.md, bug.md, feature.md, epic.md, chore.md, spike.md, meetings/grooming.md, planning.md, retrospective.md, ideation.md, shared/comment.md) and implement template installation system. Implemented in src/ot/templates.py and tested in tests/test_templates.py.
 
 <a id="ot-032" class="task" data-project="open-tasks" data-status="triage" data-task-type="feature" data-epic="distribution"></a>
 ### Design Release Artifact
