@@ -168,7 +168,21 @@ class Validator:
                     )
                 )
 
+        from ot.version import validate_project_version
+        is_v_valid, v_err = validate_project_version(self.project_root)
+        if not is_v_valid and v_err:
+            diagnostics.append(
+                Diagnostic(
+                    severity=Severity.ERROR,
+                    category="version",
+                    message=v_err,
+                    file_path=proj_cfg_path,
+                    is_fixable=False,
+                )
+            )
+
         return diagnostics
+
 
     def validate_work_items(self) -> List[Diagnostic]:
         diagnostics: List[Diagnostic] = []

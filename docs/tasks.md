@@ -170,7 +170,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-033 | Build Packaging System                  | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-033) |
 | OT-034 | Build Global Launcher                   | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-034) |
 | OT-035 | Implement Version Discovery             | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-035) |
-| OT-036 | **Implement Version Validation**        | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-036) |
+| OT-036 | Implement Version Validation            | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-036) |
 | OT-037 | **Implement ot init**                   | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-037) |
 | OT-038 | **Implement Project Installation**      | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-038) |
 | OT-039 | **Implement Version Downloads**         | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-039) |
@@ -642,16 +642,17 @@ Build Global Launcher in src/ot/launcher.py with project root resolution, config
 **Description:**
 Implement Version Discovery to inspect project configured version (.ot/config.json) and installed binary metadata (.ot/bin/ot-manifest.json). Implemented in src/ot/version.py and tested in tests/test_packaging.py.
 
-<a id="ot-036" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="distribution"></a>
+<a id="ot-036" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
 ### Implement Version Validation
 **ID:** OT-036
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 
 **Description:**
+Implement Version Validation for checking semantic version conformance and detecting mismatches between configured and installed tool versions. Integrated into Validator (ot check) and tested in tests/test_packaging.py.
 
 <a id="ot-037" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="distribution"></a>
 ### Implement ot init
