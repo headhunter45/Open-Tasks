@@ -1,9 +1,19 @@
 ---
 projects:
-  - label: 'Example Project'
-    path: 'src/example'
-    prefix: 'EXP'
-    value: 'example-project'
+  - label: 'Open Tasks'
+    path: '.'
+    prefix: 'OT'
+    value: 'open-tasks'
+epics:
+  - value: 'poc'
+    label: 'Proof of Concept'
+    description: 'Validate the core architecture and WorkItem model.'
+  - value: 'distribution'
+    label: 'Distribution and Release System'
+    description: 'Enable installation, upgrades, packaging, release workflows, and project version management.'
+  - value: 'bootstrap'
+    label: 'Self Hosting and Bootstrap'
+    description: 'Migrate development onto Open Tasks and retire the legacy tracker.'
 task-statuses:
   - value: 'planning'
     label: 'Planning'
@@ -68,23 +78,23 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
   - `get-tasks --all`: List all tasks regardless of status.
   - `get-tasks --accept "Status:In Progress"` / `get-tasks --reject "Project:Example"`: Filter tasks.
 - **View a specific task**:
-  - `get-task FGJ-001` (or `./scripts/get-task 1`): Inspect task details, requirements, and metadata.
-  - `get-task FGJ-001 --json`: Output task data in JSON format.
+  - `get-task OAT-001` (or `./scripts/get-task 1`): Inspect task details, requirements, and metadata.
+  - `get-task OAT-001 --json`: Output task data in JSON format.
 - **Add a new task**:
   - `add-task "Task Title" --project=example-project --type=feature --status=triage`
   - (Optionally supply `-d "Description and checklist"`)
 - **Update an existing task**:
-  - `update-task FGJ-001 --status in_progress`
-  - `update-task FGJ-001 --title "New Title"`
-  - `update-task FGJ-001 --status done --check-all`
-  - `update-task FGJ-001 --append-description "- [ ] Additional subtask"`
+  - `update-task OAT-001 --status in_progress`
+  - `update-task OAT-001 --title "New Title"`
+  - `update-task OAT-001 --status done --check-all`
+  - `update-task OAT-001 --append-description "- [ ] Additional subtask"`
 - **Synchronize document**:
   - `update-tasks` (or `./scripts/update-tasks`): Re-indexes task IDs, re-renders the summary progress table, and regenerates metadata enum tables.
 
 ### Workflow Guidelines
 1. **Do Not Edit the Summary Table Manually**: The summary table below is automatically regenerated from the detailed task entries. Use `./scripts/add-task` and `./scripts/update-task`, or edit the detailed task blocks directly and run `./scripts/update-tasks`.
 2. **Anchor Tags as SSOT**: Each task in `## Detailed Tasks` is defined by an anchor tag:
-   `<a id="fgj-XXX" class="task" data-project="PROJECT" data-status="STATUS" data-task-type="TYPE"></a>`
+   `<a id="oat-XXX" class="task" data-project="PROJECT" data-status="STATUS" data-task-type="TYPE"></a>`
    The attributes on this anchor tag are the canonical source of truth for the task's state.
 3. **Task Lifecycle**:
    - **Planning**: Conceptualization and scoping phase.
@@ -102,9 +112,67 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 
 <a id="tasks-list"></a>
 
-| ID      | Title                                       | Project         | Status | Type                |
-|:------|:------------------------------------------|:--------------|:-----|:------------------|
-| FGJ-001 | *Example Task: Initialize Project Template* | Example Project | Triage | [Feature](#fgj-001) |
+| ID     | Title                                   | Project    | Status  | Type               |
+|:-------|:----------------------------------------|:-----------|:--------|:-------------------|
+| OT-001 | *Proof of Concept*                      | Open Tasks | Triage  | [Feature](#ot-001) |
+| OT-002 | *Distribution and Release System*       | Open Tasks | Triage  | [Feature](#ot-002) |
+| OT-003 | *Self Hosting and Bootstrap*            | Open Tasks | Triage  | [Feature](#ot-003) |
+| OT-004 | *Define WorkItem Metadata*              | Open Tasks | Pending | [Feature](#ot-004) |
+| OT-005 | *Define Comment Format*                 | Open Tasks | Pending | [Feature](#ot-005) |
+| OT-006 | *Define Relationship Format*            | Open Tasks | Pending | [Feature](#ot-006) |
+| OT-007 | *Produce Example WorkItem Documents*    | Open Tasks | Pending | [Feature](#ot-007) |
+| OT-008 | *Implement Project Discovery*           | Open Tasks | Pending | [Feature](#ot-008) |
+| OT-009 | *Implement Git Discovery*               | Open Tasks | Pending | [Feature](#ot-009) |
+| OT-010 | *Implement No-VCS Discovery*            | Open Tasks | Pending | [Feature](#ot-010) |
+| OT-011 | *Implement Configuration Loader*        | Open Tasks | Pending | [Feature](#ot-011) |
+| OT-012 | *Implement Configuration Resolution*    | Open Tasks | Pending | [Feature](#ot-012) |
+| OT-013 | *Implement Protected Key Validation*    | Open Tasks | Pending | [Feature](#ot-013) |
+| OT-014 | *Implement UUID Generation*             | Open Tasks | Pending | [Feature](#ot-014) |
+| OT-015 | *Implement Short Identifier Generation* | Open Tasks | Pending | [Feature](#ot-015) |
+| OT-016 | *Implement Identifier Resolution*       | Open Tasks | Pending | [Feature](#ot-016) |
+| OT-017 | *Implement WorkItem Reader*             | Open Tasks | Pending | [Feature](#ot-017) |
+| OT-018 | *Implement WorkItem Writer*             | Open Tasks | Pending | [Feature](#ot-018) |
+| OT-019 | *Preserve Unknown Content*              | Open Tasks | Pending | [Feature](#ot-019) |
+| OT-020 | *Implement Repository Scanner*          | Open Tasks | Pending | [Feature](#ot-020) |
+| OT-021 | *Implement WorkItem Index*              | Open Tasks | Pending | [Feature](#ot-021) |
+| OT-022 | *Implement Task Listing*                | Open Tasks | Pending | [Feature](#ot-022) |
+| OT-023 | *Implement Task Display*                | Open Tasks | Pending | [Feature](#ot-023) |
+| OT-024 | *Implement Task Creation*               | Open Tasks | Pending | [Feature](#ot-024) |
+| OT-025 | *Implement Task Editing*                | Open Tasks | Pending | [Feature](#ot-025) |
+| OT-026 | *Implement Comment Creation*            | Open Tasks | Pending | [Feature](#ot-026) |
+| OT-027 | *Implement Dependency Management*       | Open Tasks | Pending | [Feature](#ot-027) |
+| OT-028 | *Implement Validation Framework*        | Open Tasks | Pending | [Feature](#ot-028) |
+| OT-029 | *Implement Error Reporting*             | Open Tasks | Pending | [Feature](#ot-029) |
+| OT-030 | *Implement Repair Framework*            | Open Tasks | Pending | [Feature](#ot-030) |
+| OT-031 | *Generate Initial Templates*            | Open Tasks | Pending | [Chore](#ot-031)   |
+| OT-032 | *Design Release Artifact*               | Open Tasks | Pending | [Feature](#ot-032) |
+| OT-033 | *Build Packaging System*                | Open Tasks | Pending | [Feature](#ot-033) |
+| OT-034 | *Build Global Launcher*                 | Open Tasks | Pending | [Feature](#ot-034) |
+| OT-035 | *Implement Version Discovery*           | Open Tasks | Pending | [Feature](#ot-035) |
+| OT-036 | *Implement Version Validation*          | Open Tasks | Pending | [Feature](#ot-036) |
+| OT-037 | *Implement ot init*                     | Open Tasks | Pending | [Feature](#ot-037) |
+| OT-038 | *Implement Project Installation*        | Open Tasks | Pending | [Feature](#ot-038) |
+| OT-039 | *Implement Version Downloads*           | Open Tasks | Pending | [Feature](#ot-039) |
+| OT-040 | *Implement Transactional Upgrades*      | Open Tasks | Pending | [Feature](#ot-040) |
+| OT-041 | *Implement ot upgrade*                  | Open Tasks | Pending | [Feature](#ot-041) |
+| OT-042 | *Build Cache Management*                | Open Tasks | Pending | [Feature](#ot-042) |
+| OT-043 | *Implement Download Verification*       | Open Tasks | Pending | [Feature](#ot-043) |
+| OT-044 | *Build Release Pipeline*                | Open Tasks | Pending | [Feature](#ot-044) |
+| OT-045 | *Initialize Using Open Tasks*           | Open Tasks | Pending | [Feature](#ot-045) |
+| OT-046 | *Create WorkItem Templates*             | Open Tasks | Pending | [Feature](#ot-046) |
+| OT-047 | *Create Meeting Templates*              | Open Tasks | Pending | [Feature](#ot-047) |
+| OT-048 | *Create Initial Backlog*                | Open Tasks | Pending | [Feature](#ot-048) |
+| OT-049 | *Migrate Existing Tasks*                | Open Tasks | Pending | [Feature](#ot-049) |
+| OT-050 | *Validate Migrated Tasks*               | Open Tasks | Pending | [Feature](#ot-050) |
+| OT-051 | *Begin Creating Tasks Using Open Tasks* | Open Tasks | Pending | [Feature](#ot-051) |
+| OT-052 | *Begin Updating Tasks Using Open Tasks* | Open Tasks | Pending | [Feature](#ot-052) |
+| OT-053 | *Retire Legacy Scripts*                 | Open Tasks | Pending | [Feature](#ot-053) |
+| OT-054 | *Archive Legacy Tracker*                | Open Tasks | Pending | [Feature](#ot-054) |
+| OT-055 | *Run First Grooming Meeting*            | Open Tasks | Pending | [Feature](#ot-055) |
+| OT-056 | *Record First Meeting Notes*            | Open Tasks | Pending | [Feature](#ot-056) |
+| OT-057 | *Plan First Release*                    | Open Tasks | Pending | [Feature](#ot-057) |
+| OT-058 | *Verify Development Workflow*           | Open Tasks | Pending | [Feature](#ot-058) |
+| OT-059 | *Declare Bootstrap Complete*            | Open Tasks | Pending | [Feature](#ot-059) |
 
 ---
 
@@ -112,26 +180,461 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 
 ## Detailed Tasks
 
-<a id="fgj-001" class="task" data-project="example-project" data-status="triage" data-task-type="feature"></a>
-### Example Task: Initialize Project Template
-**ID:** FGJ-001
-**Project:** Example Project
-**Status:** Triage
+<a id="ot-001" class="task" data-project="open-tasks" data-status="triage" data-task-type="feature"></a>
+### Proof of Concept
+**ID:** OT-001
+**Project:** Open Tasks
+**Status:** Pending
 **Type:** Feature
 
+
 **Description:**
-This is an example task template demonstrating how task entries are structured and managed. Use `scripts/add-task` to create real tasks for your project.
+
+Validate the core architecture and prove that Open Tasks can manage repository-native WorkItems.
 
 **Requirements:**
-- [ ] Define initial requirements and scope
-- [ ] Plan implementation architecture
-- [ ] Execute tasks and verify results
+
+- [ ] Define WorkItem format
+- [ ] Create WorkItem persistence
+- [ ] Create WorkItem commands
+- [ ] Build validation system
+- [ ] Track work using Open Tasks
+
+<a id="ot-002" class="task" data-project="open-tasks" data-status="triage" data-task-type="feature"></a>
+### Distribution and Release System
+**ID:** OT-002
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+
+**Description:**
+
+Enable installation, packaging, upgrades, and project version management.
+
+**Requirements:**
+
+- [ ] Release artifacts
+- [ ] Packaging
+- [ ] Launcher
+- [ ] Downloads
+- [ ] Upgrades
+
+<a id="ot-003" class="task" data-project="open-tasks" data-status="triage" data-task-type="feature"></a>
+### Self Hosting and Bootstrap
+**ID:** OT-003
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+
+**Description:**
+
+Migrate development onto Open Tasks and retire the legacy tracker.
+
+**Requirements:**
+
+- [ ] Migrate existing tasks
+- [ ] Use Open Tasks for Open Tasks
+- [ ] Retire legacy workflow
+
+<a id="ot-004" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Define WorkItem Metadata
+**ID:** OT-004
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-005" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Define Comment Format
+**ID:** OT-005
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-006" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Define Relationship Format
+**ID:** OT-006
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-007" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Produce Example WorkItem Documents
+**ID:** OT-007
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-008" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Project Discovery
+**ID:** OT-008
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-009" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Git Discovery
+**ID:** OT-009
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-010" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement No-VCS Discovery
+**ID:** OT-010
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-011" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Configuration Loader
+**ID:** OT-011
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-012" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Configuration Resolution
+**ID:** OT-012
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-013" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Protected Key Validation
+**ID:** OT-013
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-014" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement UUID Generation
+**ID:** OT-014
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-015" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Short Identifier Generation
+**ID:** OT-015
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-016" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Identifier Resolution
+**ID:** OT-016
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-017" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement WorkItem Reader
+**ID:** OT-017
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-018" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement WorkItem Writer
+**ID:** OT-018
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-019" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Preserve Unknown Content
+**ID:** OT-019
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-020" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Repository Scanner
+**ID:** OT-020
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-021" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement WorkItem Index
+**ID:** OT-021
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-022" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Task Listing
+**ID:** OT-022
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-023" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Task Display
+**ID:** OT-023
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-024" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Task Creation
+**ID:** OT-024
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-025" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Task Editing
+**ID:** OT-025
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-026" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Comment Creation
+**ID:** OT-026
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-027" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Dependency Management
+**ID:** OT-027
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-028" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Validation Framework
+**ID:** OT-028
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-029" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Error Reporting
+**ID:** OT-029
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-030" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Repair Framework
+**ID:** OT-030
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-031" class="task" data-project="open-tasks" data-status="pending" data-task-type="chore"></a>
+### Generate Initial Templates
+**ID:** OT-031
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Chore
+
+<a id="ot-032" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Design Release Artifact
+**ID:** OT-032
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-033" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Build Packaging System
+**ID:** OT-033
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-034" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Build Global Launcher
+**ID:** OT-034
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-035" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Version Discovery
+**ID:** OT-035
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-036" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Version Validation
+**ID:** OT-036
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-037" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement ot init
+**ID:** OT-037
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-038" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Project Installation
+**ID:** OT-038
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-039" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Version Downloads
+**ID:** OT-039
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-040" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Transactional Upgrades
+**ID:** OT-040
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-041" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement ot upgrade
+**ID:** OT-041
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-042" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Build Cache Management
+**ID:** OT-042
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-043" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Implement Download Verification
+**ID:** OT-043
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-044" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Build Release Pipeline
+**ID:** OT-044
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-045" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Initialize Using Open Tasks
+**ID:** OT-045
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-046" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Create WorkItem Templates
+**ID:** OT-046
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-047" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Create Meeting Templates
+**ID:** OT-047
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-048" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Create Initial Backlog
+**ID:** OT-048
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-049" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Migrate Existing Tasks
+**ID:** OT-049
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-050" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Validate Migrated Tasks
+**ID:** OT-050
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-051" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Begin Creating Tasks Using Open Tasks
+**ID:** OT-051
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-052" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Begin Updating Tasks Using Open Tasks
+**ID:** OT-052
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-053" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Retire Legacy Scripts
+**ID:** OT-053
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-054" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Archive Legacy Tracker
+**ID:** OT-054
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-055" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Run First Grooming Meeting
+**ID:** OT-055
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-056" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Record First Meeting Notes
+**ID:** OT-056
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-057" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Plan First Release
+**ID:** OT-057
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-058" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Verify Development Workflow
+**ID:** OT-058
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
+
+<a id="ot-059" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature"></a>
+### Declare Bootstrap Complete
+**ID:** OT-059
+**Project:** Open Tasks
+**Status:** Pending
+**Type:** Feature
 
 ---
 
 ## Notes
 
-- This file uses monotonic 3-digit identifiers (e.g. `FGJ-001`, `FGJ-002`).
+- This file uses monotonic 3-digit identifiers (e.g. `OAT-001`, `OAT-002`).
 - Run `./scripts/update-tasks` whenever manually editing tasks to keep all tables synchronized.
 
 #### Task System Documentation (Requirements for Agents)
@@ -144,7 +647,7 @@ This is an example task template demonstrating how task entries are structured a
 - **Rendered Summary Views**:
   - The **Overall Progress Table** is a rendered summary of task data. It must be updated whenever the SSOT attributes are modified.
   - The **Status and Type Descriptions** sections at the end of the doc are rendered versions of the YAML frontmatter (task-statuses and task-types respectively).
-- **ID Formatting**: All IDs follow the `FGJ-XXX` format where `XXX` is a monotonic 3-digit number.
+- **ID Formatting**: All IDs follow the `OAT-XXX` format where `XXX` is a monotonic 3-digit number.
 - **Task Lifecycle**:
   1. **Planning**: The task is being scoped and conceptualized. We still don't know what we want.
   2. **Triage**: Requirements are identified, but we don't know how we want to do it.
@@ -155,9 +658,9 @@ This is an example task template demonstrating how task entries are structured a
   7. **Cancelled**: Task discarded.
 
 #### Projects (Rendered from frontmatter projects)
-| Value           | Label           | Prefix | Path        |
-|:--------------|:--------------|:-----|:----------|
-| example-project | Example Project | EXP    | src/example |
+| Value      | Label      | Prefix | Path |
+|:---------|:---------|:-----|:---|
+| open-tasks | Open Tasks | OT     | .    |
 
 #### Task Statuses (Rendered from frontmatter task-statuses)
 | Value       | Label       | Description                                                                      |

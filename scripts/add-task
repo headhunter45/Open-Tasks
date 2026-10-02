@@ -121,14 +121,14 @@ def add_task(title, project="shared", subproject=None, task_type="feature", stat
         subproj_label = subproject_map.get(subproj_key, subproject_map.get(sp_in, subproject.strip().replace("-", " ").replace("_", " ").title()))
 
     # 2. Find max task ID
-    anchor_pattern = r'<a id=\"fgj-(\d+)\"'
+    anchor_pattern = r'<a id=\"ot-(\d+)\"'
     ids = [int(m) for m in re.findall(anchor_pattern, text)]
     next_num = (max(ids) + 1) if ids else 1
 
     # Digit width calculation (minimum 3 digits)
     digit_width = max(3, len(str(next_num)))
-    formatted_id = f"FGJ-{next_num:0{digit_width}d}"
-    formatted_aid = f"fgj-{next_num:0{digit_width}d}"
+    formatted_id = f"OT-{next_num:0{digit_width}d}"
+    formatted_aid = f"ot-{next_num:0{digit_width}d}"
 
     # 3. Format description
     if description and description.strip():

@@ -6,9 +6,9 @@ Validates a task's status for active development, displays its requirements,
 and optionally transitions it to 'in_progress'.
 
 Usage:
-    ./scripts/work-on-task FGJ-001
-    ./scripts/work-on-task FGJ-001 --start
-    ./scripts/work-on-task FGJ-001 --force
+    ./scripts/work-on-task OT-001
+    ./scripts/work-on-task OT-001 --start
+    ./scripts/work-on-task OT-001 --force
 """
 
 import argparse
@@ -22,7 +22,7 @@ from task_context import fetch_task, load_get_task_module
 
 def main():
     parser = argparse.ArgumentParser(description="Validate and begin work on a task.")
-    parser.add_argument("task_id", help="Task ID (e.g., FGJ-001 or 1)")
+    parser.add_argument("task_id", help="Task ID (e.g., OT-001 or 1)")
     parser.add_argument("--start", action="store_true", help="Transition status to 'in_progress'")
     parser.add_argument("--force", action="store_true", help="Proceed even if status is not pending/in_progress")
     parser.add_argument("-f", "--file", dest="file", default=None, help="Path to tasks.md")

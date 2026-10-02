@@ -6,11 +6,11 @@ Modifies metadata, title, and/or description of a specific task in Documentation
 and automatically synchronizes the document tables and sorting.
 
 Usage:
-    ./scripts/update-task FGJ-018 --status pending
-    ./scripts/update-task FGJ-018 --title "Updated Title"
-    ./scripts/update-task FGJ-018 --description "New description..."
-    ./scripts/update-task FGJ-018 --append-description "- [ ] Additional checklist item"
-    ./scripts/update-task FGJ-018 --check-all
+    ./scripts/update-task OT-018 --status pending
+    ./scripts/update-task OT-018 --title "Updated Title"
+    ./scripts/update-task OT-018 --description "New description..."
+    ./scripts/update-task OT-018 --append-description "- [ ] Additional checklist item"
+    ./scripts/update-task OT-018 --check-all
 """
 
 import argparse
@@ -87,10 +87,10 @@ def update_task_detail(
         chunk_clean = chunk.strip()
         if not chunk_clean:
             continue
-        m = re.search(r'id=["\']fgj-(\d+)["\']', chunk_clean, re.IGNORECASE)
+        m = re.search(r'id=["\']ot-(\d+)["\']', chunk_clean, re.IGNORECASE)
         if m and int(m.group(1)) == target_num:
             found = True
-            anchor_match = re.search(r'<(?:a\s+)?([^>]*\bid=["\']fgj-\d+["\'][^>]*)>', chunk_clean, re.IGNORECASE)
+            anchor_match = re.search(r'<(?:a\s+)?([^>]*\bid=["\']ot-\d+["\'][^>]*)>', chunk_clean, re.IGNORECASE)
             if not anchor_match:
                 raise ValueError(f"Anchor tag missing in task {target_num}")
             anchor_tag = anchor_match.group(1)
@@ -174,8 +174,8 @@ def update_task_detail(
                 new_desc = "\n".join(desc_lines)
 
             digit_width = max(3, len(str(target_num)))
-            normalized_id = f"FGJ-{target_num:0{digit_width}d}"
-            normalized_aid = f"fgj-{target_num:0{digit_width}d}"
+            normalized_id = f"OT-{target_num:0{digit_width}d}"
+            normalized_aid = f"ot-{target_num:0{digit_width}d}"
 
             # Assemble modified chunk (update-tasks will format headers/labels upon sync)
             if new_subproj:
@@ -201,7 +201,7 @@ def update_task_detail(
             new_chunks.append(chunk_clean)
 
     if not found:
-        raise KeyError(f"Task with ID {target_num} (FGJ-{target_num:03d}) was not found in {tasks_path}")
+        raise KeyError(f"Task with ID {target_num} (OT-{target_num:03d}) was not found in {tasks_path}")
 
     # Reconstruct document
     new_detail_body = "\n\n".join(new_chunks) + "\n"
@@ -214,12 +214,12 @@ def update_task_detail(
         update_mod.update_tasks_document(tasks_path)
 
     digit_width = max(3, len(str(target_num)))
-    return f"FGJ-{target_num:0{digit_width}d}", tasks_path
+    return f"OT-{target_num:0{digit_width}d}", tasks_path
 
 
 def main():
     parser = argparse.ArgumentParser(description="Modify task details and synchronize tasks.md")
-    parser.add_argument("task_id", help="Task ID (e.g. 18, FGJ-018, fgj-018)")
+    parser.add_argument("task_id", help="Task ID (e.g. 18, OT-018, ot-018)")
     parser.add_argument("-T", "--title", default=None, help="Update task title")
     parser.add_argument("-p", "--project", default=None, help="Update project (e.g. android, editor, shared, story-engine)")
     parser.add_argument("-S", "--subproject", default=None, help="Update subproject (e.g. actions, expressions, schema)")

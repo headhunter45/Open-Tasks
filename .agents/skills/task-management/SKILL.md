@@ -51,11 +51,11 @@ source ./scripts/env.sh
   ```
 - **Inspect a specific task**:
   ```bash
-  ./scripts/get-task FGJ-001
+  ./scripts/get-task OT-001
   # Output as JSON:
-  ./scripts/get-task FGJ-001 --json
+  ./scripts/get-task OT-001 --json
   # View description and checklist only:
-  ./scripts/get-task FGJ-001 --description-only
+  ./scripts/get-task OT-001 --description-only
   ```
 
 ---
@@ -83,26 +83,26 @@ Modify task attributes, title, status, and checklist items using `update-task`:
 
 - **Change status**:
   ```bash
-  ./scripts/update-task FGJ-001 --status in_progress
-  ./scripts/update-task FGJ-001 --status done
+  ./scripts/update-task OT-001 --status in_progress
+  ./scripts/update-task OT-001 --status done
   ```
 - **Update title or description**:
   ```bash
-  ./scripts/update-task FGJ-001 --title "Updated Descriptive Title"
-  ./scripts/update-task FGJ-001 --description "New full description text"
+  ./scripts/update-task OT-001 --title "Updated Descriptive Title"
+  ./scripts/update-task OT-001 --description "New full description text"
   ```
 - **Append checklist items or notes**:
   ```bash
-  ./scripts/update-task FGJ-001 --append-description "- [ ] New requirement step"
+  ./scripts/update-task OT-001 --append-description "- [ ] New requirement step"
   ```
 - **Check/uncheck checklist items**:
   ```bash
   # Check all items:
-  ./scripts/update-task FGJ-001 --check-all
+  ./scripts/update-task OT-001 --check-all
   # Check specific item by keyword:
-  ./scripts/update-task FGJ-001 --check-items "Define initial requirements"
+  ./scripts/update-task OT-001 --check-items "Define initial requirements"
   # Uncheck all items:
-  ./scripts/update-task FGJ-001 --uncheck-all
+  ./scripts/update-task OT-001 --uncheck-all
   ```
 
 ---
@@ -126,13 +126,13 @@ This script:
 
 - **Triage a task**:
   ```bash
-  ./scripts/triage FGJ-001
-  ./scripts/triage FGJ-001 --agy
+  ./scripts/triage OT-001
+  ./scripts/triage OT-001 --agy
   ```
 - **Research a task**:
   ```bash
-  ./scripts/research FGJ-001
-  ./scripts/research FGJ-001 --agy
+  ./scripts/research OT-001
+  ./scripts/research OT-001 --agy
   ```
 
 ---
@@ -140,7 +140,7 @@ This script:
 ## Operational Rules & Best Practices
 
 1. **Single Source of Truth (SSOT)**:
-   - The `<a id="fgj-XXX" class="task" data-project="..." data-status="..." data-task-type="..."></a>` anchor tag in `## Detailed Tasks` is the canonical record.
+   - The `<a id="ot-XXX" class="task" data-project="..." data-status="..." data-task-type="..."></a>` anchor tag in `## Detailed Tasks` is the canonical record.
    - **Never manually edit the summary table** in `docs/tasks.md`. Always modify task entries using `update-task` or run `update-tasks` after editing details.
 2. **Lifecycle Discipline**:
    - `planning`: Scoping and defining requirements.

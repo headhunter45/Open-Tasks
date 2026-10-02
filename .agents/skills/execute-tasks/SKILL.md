@@ -3,7 +3,7 @@ name: execute-tasks
 description: >-
   Execute and complete a specific list of tasks one by one. Use this skill
   whenever the user asks to work on, implement, execute, or do a specific set
-  or batch of task IDs (e.g. "Do tasks FGJ-001, FGJ-002", "Work on these tasks
+  or batch of task IDs (e.g. "Do tasks OT-001, OT-002", "Work on these tasks
   one at a time"). Validates task statuses, executes implementation
   sequentially, updates documentation, marks tasks done, records follow-up tasks,
   and creates git commits per task.
@@ -84,7 +84,7 @@ Check off completed checklist items and transition status to `done`:
 ```
 If specific items remain uncompleted or need notes:
 ```bash
-./scripts/update-task <ID> --status done --append-description "### Implementation Notes:\n- Completed core logic.\n- Follow-up logged in FGJ-XXX."
+./scripts/update-task <ID> --status done --append-description "### Implementation Notes:\n- Completed core logic.\n- Follow-up logged in OT-XXX."
 ```
 
 ### Step F: Record Newly Discovered Tasks

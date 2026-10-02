@@ -4,9 +4,9 @@ get-task
 
 Retrieves detailed information and metadata for a specific task in Documentation/Tasks.md.
 Usage:
-    ./scripts/get-task FGJ-018
+    ./scripts/get-task OT-018
     ./scripts/get-task 18 --json
-    ./scripts/get-task FGJ-099 --description-only
+    ./scripts/get-task OT-099 --description-only
 """
 
 import argparse
@@ -65,9 +65,9 @@ def get_task(task_id_input, tasks_file=None):
         chunk_clean = chunk.strip()
         if not chunk_clean:
             continue
-        m = re.search(r'id=["\']fgj-(\d+)["\']', chunk_clean, re.IGNORECASE)
+        m = re.search(r'id=["\']ot-(\d+)["\']', chunk_clean, re.IGNORECASE)
         if m and int(m.group(1)) == target_num:
-            anchor_match = re.search(r'<(?:a\s+)?([^>]*\bid=["\']fgj-\d+["\'][^>]*)>', chunk_clean, re.IGNORECASE)
+            anchor_match = re.search(r'<(?:a\s+)?([^>]*\bid=["\']ot-\d+["\'][^>]*)>', chunk_clean, re.IGNORECASE)
             anchor_tag = anchor_match.group(1) if anchor_match else ""
 
             proj_m = re.search(r'data-project=["\']([^"\']+)["\']', anchor_tag)
@@ -88,8 +88,8 @@ def get_task(task_id_input, tasks_file=None):
             description = desc_m.group(1).strip() if desc_m else ""
 
             digit_width = max(3, len(str(target_num)))
-            formatted_id = f"FGJ-{target_num:0{digit_width}d}"
-            formatted_aid = f"fgj-{target_num:0{digit_width}d}"
+            formatted_id = f"OT-{target_num:0{digit_width}d}"
+            formatted_aid = f"ot-{target_num:0{digit_width}d}"
 
             return {
                 "number": target_num,
@@ -105,12 +105,12 @@ def get_task(task_id_input, tasks_file=None):
                 "file_path": str(tasks_path),
             }
 
-    raise KeyError(f"Task with ID {target_num} (FGJ-{target_num:03d}) was not found in {tasks_path}")
+    raise KeyError(f"Task with ID {target_num} (OT-{target_num:03d}) was not found in {tasks_path}")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Get detailed info and metadata for a task in tasks.md")
-    parser.add_argument("task_id", help="Task ID (e.g. 18, FGJ-018, fgj-018)")
+    parser.add_argument("task_id", help="Task ID (e.g. 18, OT-018, ot-018)")
     parser.add_argument("-j", "--json", action="store_true", help="Output details as JSON")
     parser.add_argument("-d", "--description", "--description-only", dest="description", action="store_true", help="Output description and checklist")
     parser.add_argument("--id", action="store_true", help="Output task ID only")
