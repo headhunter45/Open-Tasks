@@ -495,6 +495,32 @@ def cmd_check(args: argparse.Namespace, config: Config) -> int:
     return 2 if errors else 0
 
 
+from ot.installation import init_project
+
+
+def cmd_init(args: argparse.Namespace, config: Config) -> int:
+    """Initialize a new Open Tasks project."""
+    target_dir = args.directory or Path.cwd()
+    try:
+        res = init_project(
+            target_dir=target_dir,
+            project_name=args.name,
+            version=args.version,
+            description=args.description or "",
+            install_binary=not args.no_binary,
+            create_wrappers=not args.no_wrappers,
+        )
+        print(f"Initialized Open Tasks project in {res['project_root']}")
+        print(f"  Tool version:      {res['version']}")
+        print(f"  Templates created: {res['templates_count']}")
+        if res.get("binary_path"):
+            print(f"  Installed binary:  {res['binary_path']}")
+        return 0
+    except Exception as e:
+        print(f"Initialization failed: {e}", file=sys.stderr)
+        return 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="ot", description="Open Tasks (ot) CLI")
     parser.add_argument(
@@ -505,6 +531,15 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     subparsers = parser.add_subparsers(dest="category")
+
+    # ot init ...
+    init_parser = subparsers.add_parser("init", help="Initialize a new Open Tasks project")
+    init_parser.add_argument("directory", nargs="?", default=".", help="Directory to initialize (default: current)")
+    init_parser.add_argument("--name", "-n", help="Project name")
+    init_parser.add_argument("--version", "-v", help="Initial tool version")
+    init_parser.add_argument("--description", "-d", help="Project description")
+    init_parser.add_argument("--no-binary", action="store_true", help="Skip installing executable zipapp")
+    init_parser.add_argument("--no-wrappers", action="store_true", help="Skip creating otw / otw.bat scripts")
 
     # ot check ...
     check_parser = subparsers.add_parser("check", help="Validate project state and configuration")
@@ -580,6 +615,9 @@ def main(args: Optional[List[str]] = None) -> int:
 
     config = load_config(parsed.project_dir)
 
+    if parsed.category == "init":
+        return cmd_init(parsed, config)
+
     if parsed.category == "check":
         return cmd_check(parsed, config)
 
@@ -611,4 +649,5 @@ def main(args: Optional[List[str]] = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
 
