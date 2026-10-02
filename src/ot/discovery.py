@@ -109,3 +109,32 @@ def get_git_editor(repo_dir: Optional[Path | str] = None) -> Optional[str]:
     """Get preferred editor from git configuration (core.editor)."""
     return get_git_config("core.editor", repo_dir)
 
+
+def get_system_identity() -> Tuple[Optional[str], Optional[str]]:
+    """Get identity fallback when no VCS is present or configured.
+
+    Checks EMAIL, USER, USERNAME, LOGNAME, and getpass.getuser().
+    """
+    import getpass
+
+    email = os.getenv("EMAIL")
+    name = os.getenv("OT_USER") or os.getenv("USER") or os.getenv("USERNAME") or os.getenv("LOGNAME")
+    if not name:
+        try:
+            name = getpass.getuser()
+        except Exception:
+            name = "Anonymous"
+    return name, email
+
+
+def get_system_editor() -> str:
+    """Get fallback editor when no VCS or configuration specifies one."""
+    editor = os.getenv("EDITOR") or os.getenv("VISUAL")
+    if editor:
+        return editor
+    import sys
+    if sys.platform == "win32":
+        return "notepad.exe"
+    return "nano"
+
+

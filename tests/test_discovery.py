@@ -66,6 +66,14 @@ class TestProjectDiscovery(unittest.TestCase):
             # In git repository, name and email should be queryable
             self.assertTrue(name is None or isinstance(name, str))
 
+    def test_no_vcs_fallback(self):
+        from ot.discovery import get_system_identity, get_system_editor
+        name, email = get_system_identity()
+        self.assertIsNotNone(name)
+        editor = get_system_editor()
+        self.assertIsNotNone(editor)
+
+
 
 
 if __name__ == "__main__":
