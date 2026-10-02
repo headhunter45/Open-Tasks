@@ -164,7 +164,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-027 | Implement Dependency Management         | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-027) |
 | OT-028 | Implement Validation Framework          | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-028) |
 | OT-029 | Implement Error Reporting               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-029) |
-| OT-030 | **Implement Repair Framework**          | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-030) |
+| OT-030 | Implement Repair Framework              | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-030) |
 | OT-031 | **Generate Initial Templates**          | Open Tasks | Proof of Concept                | Pending     | [Chore](#ot-031)   |
 | OT-032 | *Design Release Artifact*               | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-032) |
 | OT-033 | *Build Packaging System*                | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-033) |
@@ -544,16 +544,16 @@ Implement Validation Framework checking project directories, configuration schem
 **Description:**
 Implement structured diagnostic error reporting with Severity (ERROR, WARNING, INFO), categories, fixability indicators, formatted console output, and --json output. Implemented in src/ot/validation.py, src/ot/cli.py, and tested in tests/test_validation.py.
 
-<a id="ot-030" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-030" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Implement Repair Framework
 **ID:** OT-030
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Implement Repair Framework for 'ot check --fix' to safely and automatically repair missing directories, misplaced protected configuration keys, and self-dependencies. Implemented in src/ot/validation.py and tested in tests/test_validation.py.
 
 <a id="ot-031" class="task" data-project="open-tasks" data-status="pending" data-task-type="chore" data-epic="poc"></a>
 ### Generate Initial Templates
