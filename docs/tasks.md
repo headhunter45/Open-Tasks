@@ -141,7 +141,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-004 | Define WorkItem Metadata                  | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-004) |
 | OT-005 | Define Comment Format                     | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-005) |
 | OT-006 | Define Relationship Format                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-006) |
-| OT-007 | **Produce Example WorkItem Documents**    | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-007) |
+| OT-007 | Produce Example WorkItem Documents        | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-007) |
 | OT-008 | **Implement Project Discovery**           | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-008) |
 | OT-009 | **Implement Git Discovery**               | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-009) |
 | OT-010 | **Implement No-VCS Discovery**            | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-010) |
@@ -291,16 +291,16 @@ Define Comment format and markdown rendering (Author, timestamp, unique comment 
 **Description:**
 Define WorkItem relationship formats (Parent, Child, Depends-on, Blocks) and manipulation APIs. Implemented in src/ot/models.py and tested in tests/test_models.py.
 
-<a id="ot-007" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-007" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Produce Example WorkItem Documents
 **ID:** OT-007
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Produce example WorkItem documents in examples/sample-project/.ot/tasks/ illustrating Epics, child Features, Bugs with dependencies and comments, and Chores. Tested in tests/test_examples.py.
 
 <a id="ot-008" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Implement Project Discovery

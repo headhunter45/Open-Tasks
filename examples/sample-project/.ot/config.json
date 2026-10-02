@@ -1,0 +1,77 @@
+{
+  "system": {
+    "configSchemaVersion": 1
+  },
+  "project": {
+    "name": "Sample Project",
+    "description": "Demonstration project for Open Tasks."
+  },
+  "workItem": {
+    "types": {
+      "epic": {
+        "label": "Epic",
+        "description": "A high-level collection of related features and deliverables."
+      },
+      "feature": {
+        "label": "Feature",
+        "description": "A new functional capability."
+      },
+      "task": {
+        "label": "Task",
+        "description": "A standard unit of work."
+      },
+      "bug": {
+        "label": "Bug",
+        "description": "A defect or bug that needs fixing."
+      },
+      "chore": {
+        "label": "Chore",
+        "description": "Routine maintenance or refactoring."
+      },
+      "spike": {
+        "label": "Spike",
+        "description": "Time-boxed technical investigation."
+      }
+    },
+    "statuses": {
+      "triage": {
+        "label": "Triage",
+        "description": "Item needs review or backlog grooming."
+      },
+      "planned": {
+        "label": "Planned",
+        "description": "Item is ready to be worked on."
+      },
+      "in_progress": {
+        "label": "In Progress",
+        "description": "Active work in progress."
+      },
+      "blocked": {
+        "label": "Blocked",
+        "description": "Waiting on another item or external blocker."
+      },
+      "completed": {
+        "label": "Completed",
+        "description": "Work finished and validated."
+      },
+      "closed": {
+        "label": "Closed",
+        "description": "Archived or cancelled item."
+      }
+    },
+    "sizes": {
+      "small": {
+        "label": "Small",
+        "description": "Quick change (1-2 days)"
+      },
+      "medium": {
+        "label": "Medium",
+        "description": "Standard work unit (1 week)"
+      },
+      "large": {
+        "label": "Large",
+        "description": "Multi-week initiative"
+      }
+    }
+  }
+}
