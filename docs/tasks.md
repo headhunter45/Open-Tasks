@@ -195,7 +195,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-055 | Run First Grooming Meeting            | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-055) |
 | OT-056 | Record First Meeting Notes            | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-056) |
 | OT-057 | Plan First Release                    | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-057) |
-| OT-058 | **Verify Development Workflow**       | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-058) |
+| OT-058 | Verify Development Workflow           | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-058) |
 | OT-059 | **Declare Bootstrap Complete**        | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-059) |
 
 ---
@@ -894,15 +894,16 @@ Recorded first meeting notes in .ot/meetings/2026-10-02-grooming.md adhering to 
 **Description:**
 Planned initial v0.1.0 release. Created release tracking task 800d17 (Release v0.1.0) under Distribution and Release System epic and documented release plan in .ot/meetings/2026-10-02-release-0.1.0-plan.md.
 
-<a id="ot-058" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
+<a id="ot-058" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
 ### Verify Development Workflow
 **ID:** OT-058
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 **Description:**
+Verified complete end-to-end development workflow in self-hosted repository: otw version, otw check, otw task queries, release packaging, and unit tests passing with zero errors.
 
 <a id="ot-059" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
 ### Declare Bootstrap Complete
