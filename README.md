@@ -44,5 +44,6 @@ python3 -m ot.cli -C examples/sample-project check
 
 - [Phase 1 Testing and Verification Guide (Core Engine)](docs/phase-1-testing-and-verification.md)
 - [Phase 2 Testing and Verification Guide (Distribution & Release)](docs/phase-2-testing-and-verification.md)
+- [Phase 3 Testing and Verification Guide (Self-Hosting & Bootstrap)](docs/phase-3-testing-and-verification.md)
 - [Architecture & Design Documents](docs/design/)
-- [Project Task Tracker](docs/tasks.md)
+- [Project Task Tracker (Archived)](docs/tasks.md)
