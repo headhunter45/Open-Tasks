@@ -2,9 +2,10 @@
 id: 558e650a-9b17-40f7-9e16-f4a8cd257fd0
 title: Run First Grooming Meeting
 type: feature
-status: planned
+status: completed
 size: medium
 created_at: 2026-10-02T21:33:19.358363+00:00
+updated_at: 2026-10-02T21:36:30.235834+00:00
 parent: e5792420-3eae-4b37-b54f-16dba2cc9f55
 author:
   name: Tom Hicks

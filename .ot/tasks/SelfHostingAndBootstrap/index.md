@@ -2,9 +2,10 @@
 id: e5792420-3eae-4b37-b54f-16dba2cc9f55
 title: Self Hosting and Bootstrap
 type: epic
-status: in_progress
+status: completed
 size: large
 created_at: 2026-10-02T21:33:19.342920+00:00
+updated_at: 2026-10-02T21:36:28.992480+00:00
 author:
   name: Tom Hicks
   email: headhunter3@gmail.com
