@@ -182,7 +182,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-045 | Initialize Using Open Tasks               | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-045) |
 | OT-046 | Create WorkItem Templates                 | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-046) |
 | OT-047 | Create Meeting Templates                  | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-047) |
-| OT-048 | **Create Initial Backlog**                | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-048) |
+| OT-048 | Create Initial Backlog                    | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-048) |
 | OT-049 | **Migrate Existing Tasks**                | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-049) |
 | OT-050 | **Validate Migrated Tasks**               | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-050) |
 | OT-051 | **Begin Creating Tasks Using Open Tasks** | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-051) |
@@ -781,15 +781,16 @@ Created and validated WorkItem templates in .ot/templates/tasks/ (feature.md, bu
 **Description:**
 Created and validated meeting templates in .ot/templates/meetings/ (grooming.md, planning.md, retrospective.md, ideation.md) with agenda, discussion, decisions, and action item sections.
 
-<a id="ot-048" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
+<a id="ot-048" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
 ### Create Initial Backlog
 **ID:** OT-048
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 **Description:**
+Created initial repository-native backlog in .ot/tasks/ with epics and features ('Export and Reporting Tooling', 'Mercurial VCS Integration', 'JSON Schema Export'). Verified with 'otw task list' and 'otw check'.
 
 <a id="ot-049" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
 ### Migrate Existing Tasks
