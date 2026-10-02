@@ -155,7 +155,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-018 | Implement WorkItem Writer               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-018) |
 | OT-019 | Preserve Unknown Content                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-019) |
 | OT-020 | Implement Repository Scanner            | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-020) |
-| OT-021 | **Implement WorkItem Index**            | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-021) |
+| OT-021 | Implement WorkItem Index                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-021) |
 | OT-022 | **Implement Task Listing**              | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-022) |
 | OT-023 | **Implement Task Display**              | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-023) |
 | OT-024 | **Implement Task Creation**             | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-024) |
@@ -445,16 +445,16 @@ Preserve unknown user-defined markdown sections, frontmatter fields, and custom 
 **Description:**
 Implement Repository Scanner to discover and load all WorkItem markdown documents in the .ot/tasks/ directory hierarchy. Implemented in src/ot/scanner.py and tested in tests/test_scanner.py.
 
-<a id="ot-021" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-021" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Implement WorkItem Index
 **ID:** OT-021
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Implement WorkItem Index for fast query by UUID, unique short prefix, title, parent/child hierarchy traversal, and dependency graph navigation. Implemented in src/ot/scanner.py and tested in tests/test_scanner.py.
 
 <a id="ot-022" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Implement Task Listing
