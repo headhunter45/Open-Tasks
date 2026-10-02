@@ -184,7 +184,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-047 | Create Meeting Templates                  | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-047) |
 | OT-048 | Create Initial Backlog                    | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-048) |
 | OT-049 | Migrate Existing Tasks                    | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-049) |
-| OT-050 | **Validate Migrated Tasks**               | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-050) |
+| OT-050 | Validate Migrated Tasks                   | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-050) |
 | OT-051 | **Begin Creating Tasks Using Open Tasks** | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-051) |
 | OT-052 | **Begin Updating Tasks Using Open Tasks** | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-052) |
 | OT-053 | **Retire Legacy Scripts**                 | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-053) |
@@ -803,15 +803,16 @@ Created initial repository-native backlog in .ot/tasks/ with epics and features 
 **Description:**
 Migrated all 59 existing tasks, epics, descriptions, requirements, and metadata from docs/tasks.md into repository-native .ot/tasks/ hierarchy. Verified with 'otw task list' and 'otw check'.
 
-<a id="ot-050" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
+<a id="ot-050" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
 ### Validate Migrated Tasks
 **ID:** OT-050
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 **Description:**
+Validated all migrated tasks across the repository using 'otw check' and 'otw check --json'. All YAML frontmatter schemas, UUID uniqueness, relationships, and directory structures verified with 0 errors/warnings.
 
 <a id="ot-051" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
 ### Begin Creating Tasks Using Open Tasks
