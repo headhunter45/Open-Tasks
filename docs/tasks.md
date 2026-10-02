@@ -136,7 +136,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | ID     | Title                                   | Project    | Epic                            | Status | Type               |
 |:-----|:--------------------------------------|:---------|:------------------------------|:-----|:-----------------|
 | OT-001 | Proof of Concept                        | Open Tasks |                                 | Fixed  | [Feature](#ot-001) |
-| OT-002 | *Distribution and Release System*       | Open Tasks |                                 | Triage | [Feature](#ot-002) |
+| OT-002 | Distribution and Release System         | Open Tasks |                                 | Fixed  | [Feature](#ot-002) |
 | OT-003 | *Self Hosting and Bootstrap*            | Open Tasks |                                 | Triage | [Feature](#ot-003) |
 | OT-004 | Define WorkItem Metadata                | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-004) |
 | OT-005 | Define Comment Format                   | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-005) |
@@ -220,16 +220,14 @@ Validate the core architecture and prove that Open Tasks can manage repository-n
 - [ ] Build validation system
 - [ ] Track work using Open Tasks
 
-<a id="ot-002" class="task" data-project="open-tasks" data-status="triage" data-task-type="feature"></a>
+<a id="ot-002" class="task" data-project="open-tasks" data-status="done" data-task-type="feature"></a>
 ### Distribution and Release System
 **ID:** OT-002
 **Project:** Open Tasks
-**Status:** Triage
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
-
 Enable installation, packaging, upgrades, and project version management.
 
 **Requirements:**
