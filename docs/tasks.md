@@ -161,7 +161,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-024 | Implement Task Creation                 | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-024) |
 | OT-025 | Implement Task Editing                  | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-025) |
 | OT-026 | Implement Comment Creation              | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-026) |
-| OT-027 | **Implement Dependency Management**     | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-027) |
+| OT-027 | Implement Dependency Management         | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-027) |
 | OT-028 | **Implement Validation Framework**      | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-028) |
 | OT-029 | **Implement Error Reporting**           | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-029) |
 | OT-030 | **Implement Repair Framework**          | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-030) |
@@ -511,16 +511,16 @@ Implement 'ot task edit' (interactive external editor with validation on save) a
 **Description:**
 Implement 'ot task comment' with interactive and message argument workflows, timestamping, user author attribution, and markdown persistence. Implemented in src/ot/cli.py and tested in tests/test_cli.py.
 
-<a id="ot-027" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-027" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Implement Dependency Management
 **ID:** OT-027
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Implement dependency commands ('ot task add-dependency', 'ot task remove-dependency', 'ot task get-dependencies') with circular/self dependency guards and bidirectional relationship rendering. Implemented in src/ot/cli.py and tested in tests/test_cli.py.
 
 <a id="ot-028" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Implement Validation Framework
