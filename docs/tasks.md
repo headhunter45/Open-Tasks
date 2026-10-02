@@ -151,7 +151,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-014 | Implement UUID Generation               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-014) |
 | OT-015 | Implement Short Identifier Generation   | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-015) |
 | OT-016 | Implement Identifier Resolution         | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-016) |
-| OT-017 | **Implement WorkItem Reader**           | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-017) |
+| OT-017 | Implement WorkItem Reader               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-017) |
 | OT-018 | **Implement WorkItem Writer**           | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-018) |
 | OT-019 | **Preserve Unknown Content**            | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-019) |
 | OT-020 | **Implement Repository Scanner**        | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-020) |
@@ -401,16 +401,16 @@ Implement Git-style Short Identifier Generation with adaptive prefix expansion t
 **Description:**
 Implement Identifier Resolution for exact UUID, short unique prefix, and unique title matches, raising explicit AmbiguousIdentifierError or IdentifierNotFoundError when required. Implemented in src/ot/identifiers.py and tested in tests/test_identifiers.py.
 
-<a id="ot-017" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-017" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Implement WorkItem Reader
 **ID:** OT-017
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Implement WorkItem Reader to load and parse markdown files with YAML frontmatter, headers, markdown bodies, and comments. Implemented in src/ot/parser.py and tested in tests/test_parser.py.
 
 <a id="ot-018" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Implement WorkItem Writer
