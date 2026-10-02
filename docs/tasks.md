@@ -152,7 +152,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-015 | Implement Short Identifier Generation   | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-015) |
 | OT-016 | Implement Identifier Resolution         | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-016) |
 | OT-017 | Implement WorkItem Reader               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-017) |
-| OT-018 | **Implement WorkItem Writer**           | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-018) |
+| OT-018 | Implement WorkItem Writer               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-018) |
 | OT-019 | **Preserve Unknown Content**            | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-019) |
 | OT-020 | **Implement Repository Scanner**        | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-020) |
 | OT-021 | **Implement WorkItem Index**            | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-021) |
@@ -412,16 +412,16 @@ Implement Identifier Resolution for exact UUID, short unique prefix, and unique 
 **Description:**
 Implement WorkItem Reader to load and parse markdown files with YAML frontmatter, headers, markdown bodies, and comments. Implemented in src/ot/parser.py and tested in tests/test_parser.py.
 
-<a id="ot-018" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-018" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Implement WorkItem Writer
 **ID:** OT-018
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Implement WorkItem Writer for atomic serialization of WorkItems to disk with formatted YAML frontmatter, markdown sections, and comments. Implemented in src/ot/parser.py and tested in tests/test_parser.py.
 
 <a id="ot-019" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Preserve Unknown Content
