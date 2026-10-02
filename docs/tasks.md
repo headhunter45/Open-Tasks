@@ -133,67 +133,67 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 
 <a id="tasks-list"></a>
 
-| ID     | Title                                   | Project    | Epic                            | Status      | Type               |
-|:-----|:--------------------------------------|:---------|:------------------------------|:----------|:-----------------|
-| OT-001 | Proof of Concept                        | Open Tasks |                                 | In-progress | [Feature](#ot-001) |
-| OT-002 | *Distribution and Release System*       | Open Tasks |                                 | Triage      | [Feature](#ot-002) |
-| OT-003 | *Self Hosting and Bootstrap*            | Open Tasks |                                 | Triage      | [Feature](#ot-003) |
-| OT-004 | Define WorkItem Metadata                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-004) |
-| OT-005 | Define Comment Format                   | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-005) |
-| OT-006 | Define Relationship Format              | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-006) |
-| OT-007 | Produce Example WorkItem Documents      | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-007) |
-| OT-008 | Implement Project Discovery             | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-008) |
-| OT-009 | Implement Git Discovery                 | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-009) |
-| OT-010 | Implement No-VCS Discovery              | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-010) |
-| OT-011 | Implement Configuration Loader          | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-011) |
-| OT-012 | Implement Configuration Resolution      | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-012) |
-| OT-013 | Implement Protected Key Validation      | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-013) |
-| OT-014 | Implement UUID Generation               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-014) |
-| OT-015 | Implement Short Identifier Generation   | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-015) |
-| OT-016 | Implement Identifier Resolution         | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-016) |
-| OT-017 | Implement WorkItem Reader               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-017) |
-| OT-018 | Implement WorkItem Writer               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-018) |
-| OT-019 | Preserve Unknown Content                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-019) |
-| OT-020 | Implement Repository Scanner            | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-020) |
-| OT-021 | Implement WorkItem Index                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-021) |
-| OT-022 | Implement Task Listing                  | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-022) |
-| OT-023 | Implement Task Display                  | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-023) |
-| OT-024 | Implement Task Creation                 | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-024) |
-| OT-025 | Implement Task Editing                  | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-025) |
-| OT-026 | Implement Comment Creation              | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-026) |
-| OT-027 | Implement Dependency Management         | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-027) |
-| OT-028 | Implement Validation Framework          | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-028) |
-| OT-029 | Implement Error Reporting               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-029) |
-| OT-030 | Implement Repair Framework              | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-030) |
-| OT-031 | Generate Initial Templates              | Open Tasks | Proof of Concept                | Fixed       | [Chore](#ot-031)   |
-| OT-032 | *Design Release Artifact*               | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-032) |
-| OT-033 | *Build Packaging System*                | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-033) |
-| OT-034 | *Build Global Launcher*                 | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-034) |
-| OT-035 | *Implement Version Discovery*           | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-035) |
-| OT-036 | *Implement Version Validation*          | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-036) |
-| OT-037 | *Implement ot init*                     | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-037) |
-| OT-038 | *Implement Project Installation*        | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-038) |
-| OT-039 | *Implement Version Downloads*           | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-039) |
-| OT-040 | *Implement Transactional Upgrades*      | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-040) |
-| OT-041 | *Implement ot upgrade*                  | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-041) |
-| OT-042 | *Build Cache Management*                | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-042) |
-| OT-043 | *Implement Download Verification*       | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-043) |
-| OT-044 | *Build Release Pipeline*                | Open Tasks | Distribution and Release System | Triage      | [Feature](#ot-044) |
-| OT-045 | *Initialize Using Open Tasks*           | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-045) |
-| OT-046 | *Create WorkItem Templates*             | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-046) |
-| OT-047 | *Create Meeting Templates*              | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-047) |
-| OT-048 | *Create Initial Backlog*                | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-048) |
-| OT-049 | *Migrate Existing Tasks*                | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-049) |
-| OT-050 | *Validate Migrated Tasks*               | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-050) |
-| OT-051 | *Begin Creating Tasks Using Open Tasks* | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-051) |
-| OT-052 | *Begin Updating Tasks Using Open Tasks* | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-052) |
-| OT-053 | *Retire Legacy Scripts*                 | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-053) |
-| OT-054 | *Archive Legacy Tracker*                | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-054) |
-| OT-055 | *Run First Grooming Meeting*            | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-055) |
-| OT-056 | *Record First Meeting Notes*            | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-056) |
-| OT-057 | *Plan First Release*                    | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-057) |
-| OT-058 | *Verify Development Workflow*           | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-058) |
-| OT-059 | *Declare Bootstrap Complete*            | Open Tasks | Self Hosting and Bootstrap      | Triage      | [Feature](#ot-059) |
+| ID     | Title                                   | Project    | Epic                            | Status | Type               |
+|:-----|:--------------------------------------|:---------|:------------------------------|:-----|:-----------------|
+| OT-001 | Proof of Concept                        | Open Tasks |                                 | Fixed  | [Feature](#ot-001) |
+| OT-002 | *Distribution and Release System*       | Open Tasks |                                 | Triage | [Feature](#ot-002) |
+| OT-003 | *Self Hosting and Bootstrap*            | Open Tasks |                                 | Triage | [Feature](#ot-003) |
+| OT-004 | Define WorkItem Metadata                | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-004) |
+| OT-005 | Define Comment Format                   | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-005) |
+| OT-006 | Define Relationship Format              | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-006) |
+| OT-007 | Produce Example WorkItem Documents      | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-007) |
+| OT-008 | Implement Project Discovery             | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-008) |
+| OT-009 | Implement Git Discovery                 | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-009) |
+| OT-010 | Implement No-VCS Discovery              | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-010) |
+| OT-011 | Implement Configuration Loader          | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-011) |
+| OT-012 | Implement Configuration Resolution      | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-012) |
+| OT-013 | Implement Protected Key Validation      | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-013) |
+| OT-014 | Implement UUID Generation               | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-014) |
+| OT-015 | Implement Short Identifier Generation   | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-015) |
+| OT-016 | Implement Identifier Resolution         | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-016) |
+| OT-017 | Implement WorkItem Reader               | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-017) |
+| OT-018 | Implement WorkItem Writer               | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-018) |
+| OT-019 | Preserve Unknown Content                | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-019) |
+| OT-020 | Implement Repository Scanner            | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-020) |
+| OT-021 | Implement WorkItem Index                | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-021) |
+| OT-022 | Implement Task Listing                  | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-022) |
+| OT-023 | Implement Task Display                  | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-023) |
+| OT-024 | Implement Task Creation                 | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-024) |
+| OT-025 | Implement Task Editing                  | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-025) |
+| OT-026 | Implement Comment Creation              | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-026) |
+| OT-027 | Implement Dependency Management         | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-027) |
+| OT-028 | Implement Validation Framework          | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-028) |
+| OT-029 | Implement Error Reporting               | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-029) |
+| OT-030 | Implement Repair Framework              | Open Tasks | Proof of Concept                | Fixed  | [Feature](#ot-030) |
+| OT-031 | Generate Initial Templates              | Open Tasks | Proof of Concept                | Fixed  | [Chore](#ot-031)   |
+| OT-032 | *Design Release Artifact*               | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-032) |
+| OT-033 | *Build Packaging System*                | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-033) |
+| OT-034 | *Build Global Launcher*                 | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-034) |
+| OT-035 | *Implement Version Discovery*           | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-035) |
+| OT-036 | *Implement Version Validation*          | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-036) |
+| OT-037 | *Implement ot init*                     | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-037) |
+| OT-038 | *Implement Project Installation*        | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-038) |
+| OT-039 | *Implement Version Downloads*           | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-039) |
+| OT-040 | *Implement Transactional Upgrades*      | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-040) |
+| OT-041 | *Implement ot upgrade*                  | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-041) |
+| OT-042 | *Build Cache Management*                | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-042) |
+| OT-043 | *Implement Download Verification*       | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-043) |
+| OT-044 | *Build Release Pipeline*                | Open Tasks | Distribution and Release System | Triage | [Feature](#ot-044) |
+| OT-045 | *Initialize Using Open Tasks*           | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-045) |
+| OT-046 | *Create WorkItem Templates*             | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-046) |
+| OT-047 | *Create Meeting Templates*              | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-047) |
+| OT-048 | *Create Initial Backlog*                | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-048) |
+| OT-049 | *Migrate Existing Tasks*                | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-049) |
+| OT-050 | *Validate Migrated Tasks*               | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-050) |
+| OT-051 | *Begin Creating Tasks Using Open Tasks* | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-051) |
+| OT-052 | *Begin Updating Tasks Using Open Tasks* | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-052) |
+| OT-053 | *Retire Legacy Scripts*                 | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-053) |
+| OT-054 | *Archive Legacy Tracker*                | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-054) |
+| OT-055 | *Run First Grooming Meeting*            | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-055) |
+| OT-056 | *Record First Meeting Notes*            | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-056) |
+| OT-057 | *Plan First Release*                    | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-057) |
+| OT-058 | *Verify Development Workflow*           | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-058) |
+| OT-059 | *Declare Bootstrap Complete*            | Open Tasks | Self Hosting and Bootstrap      | Triage | [Feature](#ot-059) |
 
 ---
 
@@ -201,13 +201,12 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 
 ## Detailed Tasks
 
-<a id="ot-001" class="task" data-project="open-tasks" data-status="in-progress" data-task-type="feature"></a>
+<a id="ot-001" class="task" data-project="open-tasks" data-status="done" data-task-type="feature"></a>
 ### Proof of Concept
 **ID:** OT-001
 **Project:** Open Tasks
-**Status:** In-progress
+**Status:** Fixed
 **Type:** Feature
-
 
 **Description:**
 Validate the core architecture and prove that Open Tasks can manage repository-native WorkItems.
