@@ -193,7 +193,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-053 | Retire Legacy Scripts                 | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-053) |
 | OT-054 | Archive Legacy Tracker                | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-054) |
 | OT-055 | Run First Grooming Meeting            | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-055) |
-| OT-056 | **Record First Meeting Notes**        | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-056) |
+| OT-056 | Record First Meeting Notes            | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-056) |
 | OT-057 | **Plan First Release**                | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-057) |
 | OT-058 | **Verify Development Workflow**       | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-058) |
 | OT-059 | **Declare Bootstrap Complete**        | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-059) |
@@ -872,15 +872,16 @@ Archived docs/tasks.md single-file tracker with an archival header notice direct
 **Description:**
 Conducted first repository-native backlog grooming meeting reviewing migrated backlog items and planning first release.
 
-<a id="ot-056" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
+<a id="ot-056" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
 ### Record First Meeting Notes
 **ID:** OT-056
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 **Description:**
+Recorded first meeting notes in .ot/meetings/2026-10-02-grooming.md adhering to ADR-0021 repository-based meeting notes and review workflow.
 
 <a id="ot-057" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
 ### Plan First Release
