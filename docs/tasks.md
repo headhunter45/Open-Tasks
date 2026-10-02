@@ -174,7 +174,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-037 | Implement ot init                       | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-037) |
 | OT-038 | Implement Project Installation          | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-038) |
 | OT-039 | Implement Version Downloads             | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-039) |
-| OT-040 | **Implement Transactional Upgrades**    | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-040) |
+| OT-040 | Implement Transactional Upgrades        | Open Tasks | Distribution and Release System | Fixed   | [Feature](#ot-040) |
 | OT-041 | **Implement ot upgrade**                | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-041) |
 | OT-042 | **Build Cache Management**              | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-042) |
 | OT-043 | **Implement Download Verification**     | Open Tasks | Distribution and Release System | Pending | [Feature](#ot-043) |
@@ -690,16 +690,17 @@ Implement Project Installation mechanism to install versioned executable zipapp,
 **Description:**
 Implement Version Downloads for fetching, caching, and staging release zipapps and manifests from mirrors or release builds. Implemented in src/ot/upgrade.py and tested in tests/test_upgrade.py.
 
-<a id="ot-040" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="distribution"></a>
+<a id="ot-040" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
 ### Implement Transactional Upgrades
 **ID:** OT-040
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 
 **Description:**
+Implement Transactional Upgrades with isolated temporary staging, semver downgrade prevention, non-destructive template preservation, validation checks, and atomic commit on success. Implemented in src/ot/upgrade.py and tested in tests/test_upgrade.py.
 
 <a id="ot-041" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="distribution"></a>
 ### Implement ot upgrade
