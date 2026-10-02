@@ -154,7 +154,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-017 | Implement WorkItem Reader               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-017) |
 | OT-018 | Implement WorkItem Writer               | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-018) |
 | OT-019 | Preserve Unknown Content                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-019) |
-| OT-020 | **Implement Repository Scanner**        | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-020) |
+| OT-020 | Implement Repository Scanner            | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-020) |
 | OT-021 | **Implement WorkItem Index**            | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-021) |
 | OT-022 | **Implement Task Listing**              | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-022) |
 | OT-023 | **Implement Task Display**              | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-023) |
@@ -434,16 +434,16 @@ Implement WorkItem Writer for atomic serialization of WorkItems to disk with for
 **Description:**
 Preserve unknown user-defined markdown sections, frontmatter fields, and custom content without destructive reformatting during parse-and-write cycles. Implemented in src/ot/parser.py and tested in tests/test_parser.py.
 
-<a id="ot-020" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-020" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Implement Repository Scanner
 **ID:** OT-020
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Implement Repository Scanner to discover and load all WorkItem markdown documents in the .ot/tasks/ directory hierarchy. Implemented in src/ot/scanner.py and tested in tests/test_scanner.py.
 
 <a id="ot-021" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Implement WorkItem Index
