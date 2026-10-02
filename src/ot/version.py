@@ -58,3 +58,64 @@ def compare_versions(v1: str, v2: str) -> int:
     if pre1 > pre2:
         return 1
     return 0
+
+
+from pathlib import Path
+from ot.config import load_json_file
+from ot.discovery import find_project_root
+
+
+def discover_project_version(project_root: Optional[Path | str] = None) -> Optional[str]:
+    """Discover the configured Open Tasks version for a project from .ot/config.json."""
+    root = find_project_root(project_root)
+    if not root:
+        return None
+    config_file = root / ".ot" / "config.json"
+    if not config_file.is_file():
+        return None
+    try:
+        data = load_json_file(config_file)
+        return data.get("system", {}).get("toolVersion")
+    except Exception:
+        return None
+
+
+def discover_installed_version(project_root: Optional[Path | str] = None) -> Optional[str]:
+    """Discover the version of the installed executable beneath .ot/bin/."""
+    root = find_project_root(project_root)
+    if not root:
+        return None
+    bin_dir = root / ".ot" / "bin"
+    manifest_file = bin_dir / "ot-manifest.json"
+    if manifest_file.is_file():
+        try:
+            data = load_json_file(manifest_file)
+            return data.get("version")
+        except Exception:
+            pass
+    return None
+
+
+def validate_project_version(project_root: Optional[Path | str] = None) -> Tuple[bool, Optional[str]]:
+    """Validate project version configuration against installed binary.
+
+    Returns:
+        (is_valid, error_message_or_none)
+    """
+    root = find_project_root(project_root)
+    if not root:
+        return True, None
+
+    configured = discover_project_version(root)
+    if not configured:
+        return True, None
+
+    if not is_valid_version(configured):
+        return False, f"Configured toolVersion '{configured}' is not a valid semantic version."
+
+    installed = discover_installed_version(root)
+    if installed and installed != configured:
+        return False, f"Version mismatch: Configured version is '{configured}', but installed binary is '{installed}'."
+
+    return True, None
+

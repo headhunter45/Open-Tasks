@@ -49,6 +49,35 @@ class TestVersioningAndPackaging(unittest.TestCase):
             self.assertEqual(res.returncode, 0)
             self.assertIn("Open Tasks", res.stdout)
 
+    def test_version_discovery_and_validation(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            ot_dir = root / ".ot"
+            ot_dir.mkdir()
+
+            from ot.version import discover_project_version, validate_project_version
+
+            # Initially not configured
+            self.assertIsNone(discover_project_version(root))
+
+            # Configured valid version
+            cfg = {"system": {"toolVersion": "1.2.0"}}
+            (ot_dir / "config.json").write_text(json.dumps(cfg), encoding="utf-8")
+            self.assertEqual(discover_project_version(root), "1.2.0")
+
+            is_valid, err = validate_project_version(root)
+            self.assertTrue(is_valid)
+
+            # Version mismatch
+            (ot_dir / "bin").mkdir()
+            manifest = {"version": "1.1.0"}
+            (ot_dir / "bin" / "ot-manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+            is_valid, err = validate_project_version(root)
+            self.assertFalse(is_valid)
+            self.assertIn("Version mismatch", err)
+
+
 
 if __name__ == "__main__":
     unittest.main()
