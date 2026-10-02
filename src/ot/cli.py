@@ -442,6 +442,131 @@ def build_parser() -> argparse.ArgumentParser:
     get_dep_p = task_sub.add_parser("get-dependencies", help="Get work item dependencies")
     get_dep_p.add_argument("id", help="WorkItem ID or short ID")
 
+from ot.validation import Diagnostic, Repairer, Severity, Validator
+
+
+def cmd_check(args: argparse.Namespace, config: Config) -> int:
+    """Validate project state and optionally repair fixable issues."""
+    if getattr(args, "fix", False):
+        repairer = Repairer(config.project_root)
+        repairs = repairer.repair()
+        if repairs:
+            print("Repairs applied:")
+            for r in repairs:
+                print(f"  - {r}")
+        else:
+            print("No automatic repairs needed.")
+
+    validator = Validator(config.project_root)
+    diagnostics = validator.validate_all()
+
+    if getattr(args, "json", False):
+        print(json.dumps([d.to_dict() for d in diagnostics], indent=2))
+        has_errors = any(d.severity == Severity.ERROR for d in diagnostics)
+        return 2 if has_errors else 0
+
+    if not diagnostics:
+        print("Project check passed: No errors or warnings detected.")
+        return 0
+
+    errors = [d for d in diagnostics if d.severity == Severity.ERROR]
+    warnings = [d for d in diagnostics if d.severity == Severity.WARNING]
+    infos = [d for d in diagnostics if d.severity == Severity.INFO]
+
+    if errors:
+        print(f"\nErrors ({len(errors)}):")
+        for err in errors:
+            loc = f" [{err.file_path.name}]" if err.file_path else ""
+            print(f"  [x] {err.category.upper()}{loc}: {err.message}")
+
+    if warnings:
+        print(f"\nWarnings ({len(warnings)}):")
+        for warn in warnings:
+            loc = f" [{warn.file_path.name}]" if warn.file_path else ""
+            fix_note = " (Fixable with --fix)" if warn.is_fixable else ""
+            print(f"  [!] {warn.category.upper()}{loc}: {warn.message}{fix_note}")
+
+    if infos:
+        print(f"\nInfo ({len(infos)}):")
+        for info in infos:
+            print(f"  [i] {info.message}")
+
+    print(f"\nCheck summary: {len(errors)} error(s), {len(warnings)} warning(s)")
+    return 2 if errors else 0
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="ot", description="Open Tasks (ot) CLI")
+    parser.add_argument(
+        "--project-dir",
+        "-C",
+        type=str,
+        help="Path to project directory (default: discover from cwd)",
+    )
+
+    subparsers = parser.add_subparsers(dest="category")
+
+    # ot check ...
+    check_parser = subparsers.add_parser("check", help="Validate project state and configuration")
+    check_parser.add_argument("--fix", action="store_true", help="Automatically repair fixable issues")
+    check_parser.add_argument("--json", action="store_true", help="Output diagnostics in JSON format")
+
+    # ot task ...
+    task_parser = subparsers.add_parser("task", help="WorkItem management")
+    task_sub = task_parser.add_subparsers(dest="command")
+
+    # list
+    list_p = task_sub.add_parser("list", help="List work items")
+    list_p.add_argument("--status", "-s", type=str, help="Filter by status")
+    list_p.add_argument("--type", "-t", type=str, help="Filter by type")
+    list_p.add_argument("--size", type=str, help="Filter by size")
+    list_p.add_argument("--tag", type=str, help="Filter by tag")
+    list_p.add_argument("--author", type=str, help="Filter by author name")
+    list_p.add_argument("--json", action="store_true", help="Output in JSON format")
+
+    # show
+    show_p = task_sub.add_parser("show", help="Show work item details")
+    show_p.add_argument("id", help="WorkItem ID, short ID, or title")
+
+    # create
+    create_p = task_sub.add_parser("create", help="Create a new work item")
+    create_p.add_argument("--title", "-m", type=str, help="WorkItem title")
+    create_p.add_argument("--type", "-t", type=str, default="task", help="WorkItem type")
+    create_p.add_argument("--status", "-s", type=str, default="triage", help="Initial status")
+    create_p.add_argument("--size", type=str, help="WorkItem size")
+    create_p.add_argument("--parent", "-p", type=str, help="Parent WorkItem ID or short ID")
+    create_p.add_argument("--overview", type=str, help="Overview summary")
+    create_p.add_argument("--no-edit", action="store_true", help="Do not launch editor")
+    create_p.add_argument("--edit", action="store_true", help="Launch editor after setup")
+
+    # edit
+    edit_p = task_sub.add_parser("edit", help="Edit a work item")
+    edit_p.add_argument("id", help="WorkItem ID, short ID, or title")
+
+    # status
+    status_p = task_sub.add_parser("status", help="Update work item status")
+    status_p.add_argument("id", help="WorkItem ID or short ID")
+    status_p.add_argument("status", help="New status value")
+
+    # comment
+    comment_p = task_sub.add_parser("comment", help="Add comment to work item")
+    comment_p.add_argument("id", help="WorkItem ID or short ID")
+    comment_p.add_argument("message", nargs="?", help="Comment body (optional)")
+
+    # add-dependency
+    add_dep_p = task_sub.add_parser("add-dependency", help="Add dependency relationship")
+    add_dep_p.add_argument("child", help="Target child WorkItem ID or short ID")
+    add_dep_p.add_argument("dependency", help="Dependency WorkItem ID or short ID")
+
+    # remove-dependency
+    rm_dep_p = task_sub.add_parser("remove-dependency", help="Remove dependency relationship")
+    rm_dep_p.add_argument("child", help="Target child WorkItem ID or short ID")
+    rm_dep_p.add_argument("dependency", help="Dependency WorkItem ID or short ID")
+
+    # get-dependencies
+    get_dep_p = task_sub.add_parser("get-dependencies", help="Get work item dependencies")
+    get_dep_p.add_argument("id", help="WorkItem ID or short ID")
+
     return parser
 
 
@@ -454,6 +579,9 @@ def main(args: Optional[List[str]] = None) -> int:
         return 0
 
     config = load_config(parsed.project_dir)
+
+    if parsed.category == "check":
+        return cmd_check(parsed, config)
 
     if parsed.category == "task":
         if parsed.command == "list":
@@ -483,3 +611,4 @@ def main(args: Optional[List[str]] = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
