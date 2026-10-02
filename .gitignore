@@ -1,1 +1,18 @@
 .worktrees
+# OS / System
+.DS_Store
+._*
+thumbs.db
+
+# Build & Tooling
+.artifacts/
+.worktrees/
+.build/
+.worktrees
+
+# Cache
+__pycache__
+
+# Local Environment Overrides
+*.sh.local
+.env*

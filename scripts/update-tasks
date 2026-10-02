@@ -1,0 +1,457 @@
+#!/usr/bin/env python3
+"""
+update-tasks
+
+Synchronizes and regenerates Documentation/Tasks.md:
+1. Parses YAML frontmatter for projects, task-statuses, and task-types.
+2. Extracts all task chunks and sorts the Detailed Tasks section strictly by numeric task ID.
+3. Updates the Detailed Tasks section:
+   - Normalizes all task IDs to uniform digit width (minimum 3 digits, e.g. FGJ-001).
+   - Synchronizes task detail blocks (### Title, **ID:**, **Project:**, **Status:**, **Type:**) with anchor tags (SSOT).
+4. Re-renders the Overall Progress Table (tasks-list) from the sorted, updated task details:
+   - Bold (**Title**) for pending tasks
+   - Italic (*Title*) for planning and triage tasks
+   - Plain (Title) for fixed/done/other tasks
+   - Type column links ([Type](#fgj-xxx))
+5. Re-renders the metadata derived enum tables at the end of the document:
+   - Projects (Rendered from frontmatter projects)
+   - Task Statuses (Rendered from frontmatter task-statuses)
+   - Task Types (Rendered from frontmatter task-types)
+6. Assembles and writes the updated document.
+"""
+
+import sys
+import os
+import re
+from pathlib import Path
+
+
+def find_tasks_file(explicit_path=None):
+    if explicit_path:
+        p = Path(explicit_path)
+        if p.is_file():
+            return p
+        raise FileNotFoundError(f"Specified file not found: {explicit_path}")
+
+    # Search upwards or relative to script / cwd
+    script_dir = Path(__file__).resolve().parent
+    candidates = [
+        Path.cwd() / "docs" / "tasks.md",
+        Path.cwd() / "docs" / "Tasks.md",
+        Path.cwd() / "Documentation" / "tasks.md",
+        Path.cwd() / "Documentation" / "Tasks.md",
+        Path.cwd() / "tasks.md",
+        Path.cwd() / "Tasks.md",
+        script_dir.parent / "docs" / "tasks.md",
+        script_dir.parent / "docs" / "Tasks.md",
+        script_dir.parent / "Documentation" / "tasks.md",
+        script_dir.parent / "Documentation" / "Tasks.md",
+        script_dir / "docs" / "tasks.md",
+        script_dir / "docs" / "Tasks.md",
+        script_dir / "Documentation" / "tasks.md",
+        script_dir / "Documentation" / "Tasks.md",
+    ]
+    for c in candidates:
+        if c.is_file():
+            return c
+
+    raise FileNotFoundError("Could not locate docs/tasks.md or docs/Tasks.md")
+
+
+def parse_yaml_frontmatter(fm_text):
+    sections = {}
+    current_section = None
+    current_item = None
+
+    for line in fm_text.splitlines():
+        if line and not line.startswith(" ") and line.endswith(":"):
+            current_section = line[:-1].strip()
+            sections[current_section] = []
+            current_item = None
+        elif current_section is not None:
+            stripped = line.strip()
+            if not stripped:
+                continue
+            if line.startswith("  - "):
+                current_item = {}
+                sections[current_section].append(current_item)
+                kv = line[4:].strip()
+                if ":" in kv:
+                    k, v = kv.split(":", 1)
+                    current_item[k.strip()] = v.strip().strip("\"'")
+            elif line.startswith("    ") and current_item is not None:
+                kv = line.strip()
+                if ":" in kv:
+                    k, v = kv.split(":", 1)
+                    current_item[k.strip()] = v.strip().strip("\"'")
+
+    return sections
+
+
+def build_markdown_table(headers, rows, alignments=None):
+    if not rows:
+        return ""
+
+    num_cols = len(headers)
+    widths = [len(h) for h in headers]
+    for row in rows:
+        for i, val in enumerate(row):
+            widths[i] = max(widths[i], len(str(val)))
+
+    if alignments is None:
+        alignments = [":---"] * num_cols
+
+    header_line = "| " + " | ".join(f"{h:<{widths[i]}}" for i, h in enumerate(headers)) + " |\n"
+    separator_parts = []
+    for i, a in enumerate(alignments):
+        w = max(widths[i], 3)
+        if a.startswith(":") and a.endswith(":"):
+            separator_parts.append(":" + "-" * (w - 2) + ":")
+        elif a.endswith(":"):
+            separator_parts.append("-" * (w - 1) + ":")
+        else:
+            separator_parts.append(":" + "-" * (w - 1))
+    separator_line = "|" + "|".join(separator_parts) + "|\n"
+
+    row_lines = []
+    for row in rows:
+        line = "| " + " | ".join(f"{str(row[i]):<{widths[i]}}" for i in range(num_cols)) + " |\n"
+        row_lines.append(line)
+
+    return header_line + separator_line + "".join(row_lines)
+
+
+def update_tasks_document(tasks_path):
+    tasks_path = Path(tasks_path)
+    with open(tasks_path, "r", encoding="utf-8") as f:
+        text = f.read()
+
+    # 1. Parse frontmatter
+    fm_match = re.match(r"^---\n(.*?)\n---", text, re.DOTALL)
+    if not fm_match:
+        raise ValueError("YAML frontmatter not found in tasks.md")
+
+    fm_text = fm_match.group(1)
+    fm_data = parse_yaml_frontmatter(fm_text)
+
+    project_list = fm_data.get("projects", [])
+    subproject_list = fm_data.get("subprojects", [])
+    status_list = fm_data.get("task-statuses", [])
+    type_list = fm_data.get("task-types", [])
+
+    # Maps for lookup (both value and label matching)
+    project_map = {}
+    project_value_map = {}
+    for p in project_list:
+        val = p.get("value", "").strip()
+        lbl = p.get("label", "").strip()
+        if val:
+            project_map[val.lower()] = lbl or val.capitalize()
+            project_value_map[val.lower()] = val
+        if lbl:
+            project_map[lbl.lower()] = lbl
+            if val:
+                project_value_map[lbl.lower()] = val
+
+    subproject_map = {}
+    subproject_value_map = {}
+    for sp in subproject_list:
+        val = sp.get("value", "").strip()
+        lbl = sp.get("label", "").strip()
+        if val:
+            subproject_map[val.lower()] = lbl or val.replace("-", " ").title()
+            subproject_value_map[val.lower()] = val
+        if lbl:
+            subproject_map[lbl.lower()] = lbl
+            if val:
+                subproject_value_map[lbl.lower()] = val
+
+    status_map = {s.get("value", "").lower(): s.get("label", "") for s in status_list}
+    status_value_map = {s.get("value", "").lower(): s.get("value", "") for s in status_list}
+    for s in status_list:
+        lbl = s.get("label", "").strip()
+        val = s.get("value", "").strip()
+        if lbl:
+            status_map[lbl.lower()] = lbl
+            if val:
+                status_value_map[lbl.lower()] = val
+    # Accept 'done' or 'fixed'
+    status_map["fixed"] = "Fixed"
+    status_map["done"] = "Fixed"
+    status_value_map["fixed"] = "done"
+    status_value_map["done"] = "done"
+
+    type_map = {t.get("value", "").lower(): t.get("label", "") for t in type_list}
+    type_value_map = {t.get("value", "").lower(): t.get("value", "") for t in type_list}
+    for t in type_list:
+        lbl = t.get("label", "").strip()
+        val = t.get("value", "").strip()
+        if lbl:
+            type_map[lbl.lower()] = lbl
+            if val:
+                type_value_map[lbl.lower()] = val
+
+    # 2. Locate boundaries
+    table_start_marker = "| ID"
+    table_start = text.find(table_start_marker)
+    if table_start == -1:
+        raise ValueError("Overall Progress Table (| ID) not found")
+
+    detail_header_marker = "## Detailed Tasks\n"
+    detail_start = text.find(detail_header_marker)
+    if detail_start == -1:
+        raise ValueError("## Detailed Tasks heading not found")
+
+    notes_marker = "\n---\n\n## Notes\n"
+    notes_start = text.find(notes_marker)
+    if notes_start == -1:
+        raise ValueError("## Notes section marker not found")
+
+    part_a = text[:table_start]
+    table_end = text.find("\n\n---\n", table_start)
+    if table_end == -1:
+        raise ValueError("End of summary table not found")
+
+    part_c = text[table_end : detail_start + len(detail_header_marker)]
+    detail_body = text[detail_start + len(detail_header_marker) : notes_start]
+
+    # 3. Extract and Sort Task Chunks by Numeric ID
+    task_chunks = re.split(r"(?=<a\s+[^>]*\bid=|<id=)", detail_body)
+    task_chunks = [c.strip() for c in task_chunks if c.strip()]
+
+    if not task_chunks:
+        raise ValueError("No task chunks found in Detailed Tasks")
+
+    extracted_chunks = []
+    for chunk in task_chunks:
+        m = re.search(r'id=["\']fgj-(\d+)["\']', chunk, re.IGNORECASE)
+        if not m:
+            raise ValueError(f"Could not find task ID in chunk:\n{chunk[:150]}")
+        num = int(m.group(1))
+        extracted_chunks.append((num, chunk))
+
+    # Sort task detail section chunks by numeric ID
+    extracted_chunks.sort(key=lambda x: x[0])
+
+    max_id_num = extracted_chunks[-1][0] if extracted_chunks else 1
+    digit_width = max(3, len(str(max_id_num)))
+
+    # 4. Update the Task Detail Section (First)
+    updated_detailed_chunks = []
+    updated_task_records = []
+
+    header_block_pattern = r'<(?:a\s+[^>]*\bid=|\bid=)["\']fgj-\d+["\'][^>]*></a>\s*\n###\s+[^\n]+\n\*\*ID:\*\*[^\n]+\n\*\*Project:\*\*[^\n]+(?:\n\*\*Subproject:\*\*[^\n]+)?\n\*\*Status:\*\*[^\n]+\n\*\*Type:\*\*[^\n]+'
+
+    for num, chunk in extracted_chunks:
+        anchor_match = re.search(r'<(?:a\s+)?([^>]*\bid=["\']fgj-\d+["\'][^>]*)>', chunk, re.IGNORECASE)
+        if not anchor_match:
+            raise ValueError(f"Anchor tag missing in task chunk {num}")
+        anchor_tag = anchor_match.group(1)
+
+        proj_m = re.search(r'data-project=["\']([^"\']+)["\']', anchor_tag)
+        subproj_m = re.search(r'data-subproject=["\']([^"\']*)["\']', anchor_tag)
+        status_m = re.search(r'data-status=["\']([^"\']+)["\']', anchor_tag)
+        type_m = re.search(r'data-task-type=["\']([^"\']+)["\']', anchor_tag)
+
+        # Also check for **Subproject:** in chunk if anchor tag didn't have data-subproject
+        if not subproj_m:
+            subproj_field_m = re.search(r'^\*\*Subproject:\*\*\s*([^\n]+)$', chunk, re.MULTILINE)
+            subproj_val = subproj_field_m.group(1).strip() if subproj_field_m else None
+        else:
+            subproj_val = subproj_m.group(1).strip() if subproj_m.group(1).strip() else None
+
+        proj_raw = proj_m.group(1).strip() if proj_m else "shared"
+        status_raw = status_m.group(1).strip() if status_m else "triage"
+        type_raw = type_m.group(1).strip() if type_m else "feature"
+
+        proj_key = project_value_map.get(proj_raw.lower(), proj_raw.lower())
+        status_key = status_value_map.get(status_raw.lower(), status_raw.lower())
+        type_key = type_value_map.get(type_raw.lower(), type_raw.lower())
+
+        expected_proj = project_map.get(proj_key, project_map.get(proj_raw.lower(), proj_raw.capitalize()))
+        expected_status = status_map.get(status_key, status_map.get(status_raw.lower(), status_raw.capitalize()))
+        expected_type = type_map.get(type_key, type_map.get(type_raw.lower(), type_raw.capitalize()))
+
+        subproj_key = None
+        expected_subproj = None
+        if subproj_val and subproj_val.lower() not in ("", "none", "null"):
+            subproj_key = subproject_value_map.get(subproj_val.lower(), subproj_val.lower())
+            expected_subproj = subproject_map.get(subproj_key, subproject_map.get(subproj_val.lower(), subproj_val.replace("-", " ").replace("_", " ").title()))
+
+        title_m = re.search(r'^###\s+(.+)$', chunk, re.MULTILINE)
+        title = title_m.group(1).strip() if title_m else f"Task {num}"
+
+        normalized_id = f"FGJ-{num:0{digit_width}d}"
+        normalized_aid = f"fgj-{num:0{digit_width}d}"
+
+        if subproj_key:
+            anchor_tag_str = f'<a id="{normalized_aid}" class="task" data-project="{proj_key}" data-subproject="{subproj_key}" data-status="{status_key}" data-task-type="{type_key}"></a>'
+            subproj_line = f"**Subproject:** {expected_subproj}\n"
+        else:
+            anchor_tag_str = f'<a id="{normalized_aid}" class="task" data-project="{proj_key}" data-status="{status_key}" data-task-type="{type_key}"></a>'
+            subproj_line = ""
+
+        new_header_block = (
+            f'{anchor_tag_str}\n'
+            f"### {title}\n"
+            f"**ID:** {normalized_id}\n"
+            f"**Project:** {expected_proj}\n"
+            f"{subproj_line}"
+            f"**Status:** {expected_status}\n"
+            f"**Type:** {expected_type}"
+        )
+
+        if re.search(header_block_pattern, chunk):
+            updated_chunk = re.sub(header_block_pattern, new_header_block, chunk, count=1)
+        else:
+            # Fallback if header spacing or fields differed slightly
+            rest = chunk.split("**Type:**", 1)[1].lstrip().split("\n", 1)[1] if "**Type:**" in chunk else ""
+            updated_chunk = f"{new_header_block}\n\n{rest}".rstrip()
+
+        updated_detailed_chunks.append(updated_chunk)
+
+        updated_task_records.append({
+            "num": num,
+            "id": normalized_id,
+            "aid": normalized_aid,
+            "title": title,
+            "project": expected_proj,
+            "subproject": expected_subproj or "",
+            "status": expected_status,
+            "type": expected_type,
+        })
+
+    # Assemble sorted, updated Detailed Tasks section
+    sorted_detailed_tasks = "\n\n".join(updated_detailed_chunks)
+
+    # 5. Rebuild Summary Table (Rendered from the sorted, updated task details)
+    has_subprojects = any(bool(t.get("subproject")) for t in updated_task_records)
+    if has_subprojects:
+        summary_headers = ["ID", "Title", "Project", "Subproject", "Status", "Type"]
+        alignments = [":---", ":---", ":---", ":---", ":---", ":---"]
+    else:
+        summary_headers = ["ID", "Title", "Project", "Status", "Type"]
+        alignments = [":---", ":---", ":---", ":---", ":---"]
+
+    summary_rows = []
+
+    for task in updated_task_records:
+        clean_title = task["title"]
+        while (clean_title.startswith("**") and clean_title.endswith("**")) or (
+            clean_title.startswith("*") and clean_title.endswith("*")
+        ):
+            if clean_title.startswith("**") and clean_title.endswith("**"):
+                clean_title = clean_title[2:-2].strip()
+            elif clean_title.startswith("*") and clean_title.endswith("*"):
+                clean_title = clean_title[1:-1].strip()
+
+        st_lower = task["status"].lower()
+        if st_lower == "pending":
+            formatted_title = f"**{clean_title}**"
+        elif st_lower in ("triage", "planning"):
+            formatted_title = f"*{clean_title}*"
+        else:
+            formatted_title = clean_title
+
+        formatted_type = f"[{task['type']}](#{task['aid']})"
+        if has_subprojects:
+            summary_rows.append([task["id"], formatted_title, task["project"], task["subproject"], task["status"], formatted_type])
+        else:
+            summary_rows.append([task["id"], formatted_title, task["project"], task["status"], formatted_type])
+
+    new_summary_table = build_markdown_table(
+        summary_headers, summary_rows, alignments=alignments
+    ).rstrip("\n")
+
+    # 8. Re-render metadata derived enum tables at end of document
+    end_text = text[notes_start:]
+
+    # Projects table: Value | Label | Prefix | Path
+    project_headers = ["Value", "Label", "Prefix", "Path"]
+    project_rows = [
+        [p.get("value", ""), p.get("label", ""), p.get("prefix", ""), p.get("path", "")]
+        for p in project_list
+    ]
+    projects_table = build_markdown_table(project_headers, project_rows, [":---", ":---", ":---", ":---"]).strip()
+
+    # Statuses table: Value | Label | Description
+    status_headers = ["Value", "Label", "Description"]
+    status_rows = [
+        [s.get("value", ""), s.get("label", ""), s.get("description", "")]
+        for s in status_list
+    ]
+    statuses_table = build_markdown_table(status_headers, status_rows, [":---", ":---", ":---"]).strip()
+
+    # Types table: Value | Label | Prefix | Description
+    type_headers = ["Value", "Label", "Prefix", "Description"]
+    type_rows = [
+        [t.get("value", ""), t.get("label", ""), t.get("prefix", ""), t.get("description", "")]
+        for t in type_list
+    ]
+    types_table = build_markdown_table(type_headers, type_rows, [":---", ":---", ":---", ":---"]).strip()
+
+    # Subprojects table if present in frontmatter
+    subproject_section = ""
+    if subproject_list:
+        subproject_headers = ["Value", "Label", "Description"]
+        subproject_rows = [
+            [sp.get("value", ""), sp.get("label", ""), sp.get("description", "")]
+            for sp in subproject_list
+        ]
+        subprojects_table = build_markdown_table(subproject_headers, subproject_rows, [":---", ":---", ":---"]).strip()
+        subproject_section = f"\n\n#### Subprojects (Rendered from frontmatter subprojects)\n{subprojects_table}"
+
+    # Replace enum tables in end_text
+    enum_tables_pattern = r"(#### Projects \(Rendered from frontmatter projects\)\n).*?(<!-- Table Sort Injection -->)"
+    new_enum_tables = (
+        "#### Projects (Rendered from frontmatter projects)\n"
+        f"{projects_table}\n\n"
+        "#### Task Statuses (Rendered from frontmatter task-statuses)\n"
+        f"{statuses_table}\n\n"
+        "#### Task Types (Rendered from frontmatter task-types)\n"
+        f"{types_table}"
+        f"{subproject_section}\n\n"
+        r"\2"
+    )
+
+    updated_end_text = re.sub(enum_tables_pattern, new_enum_tables, end_text, flags=re.DOTALL)
+
+    # 9. Assemble full document
+    new_full_text = (
+        part_a
+        + new_summary_table
+        + part_c
+        + "\n"
+        + sorted_detailed_tasks
+        + "\n\n"
+        + updated_end_text.lstrip("\n")
+    )
+
+    with open(tasks_path, "w", encoding="utf-8") as f:
+        f.write(new_full_text)
+
+    return len(updated_task_records)
+
+
+def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Synchronize and update Documentation/tasks.md")
+    parser.add_argument(
+        "-f", "--file",
+        dest="file",
+        default=None,
+        help="Path to tasks.md (defaults to searching workspace)"
+    )
+    args = parser.parse_args()
+
+    try:
+        tasks_file = find_tasks_file(args.file)
+        count = update_tasks_document(tasks_file)
+        print(f"Successfully synchronized and updated {count} tasks in {tasks_file}")
+    except Exception as e:
+        print(f"Error updating tasks: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
