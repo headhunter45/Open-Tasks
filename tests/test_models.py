@@ -1,7 +1,7 @@
 """Tests for WorkItem data models."""
 
 import unittest
-from ot.models import WorkItemMetadata, Author, generate_uuid
+from ot.models import WorkItemMetadata, Author, Comment, generate_uuid
 
 
 class TestWorkItemMetadata(unittest.TestCase):
@@ -46,6 +46,33 @@ class TestWorkItemMetadata(unittest.TestCase):
         exported = meta.to_dict()
         self.assertEqual(exported["id"], raw["id"])
         self.assertEqual(exported["custom_field"], "preserved")
+
+
+class TestComment(unittest.TestCase):
+    def test_comment_creation_and_markdown(self):
+        c = Comment(
+            author=Author(name="Bob", email="bob@example.com"),
+            timestamp="2026-10-02T14:00:00Z",
+            body="Looks good to me!",
+        )
+        md = c.to_markdown()
+        self.assertIn("Comment by Bob <bob@example.com> on 2026-10-02T14:00:00Z", md)
+        self.assertIn("Looks good to me!", md)
+        self.assertIn(f"<!-- comment-id: {c.id} -->", md)
+
+    def test_comment_dict_roundtrip(self):
+        c = Comment(
+            id="1234-5678",
+            author=Author(name="Bob"),
+            timestamp="2026-10-02T14:00:00Z",
+            body="Test body",
+        )
+        d = c.to_dict()
+        c2 = Comment.from_dict(d)
+        self.assertEqual(c2.id, "1234-5678")
+        self.assertEqual(c2.author.name, "Bob")
+        self.assertEqual(c2.body, "Test body")
+
 
 
 if __name__ == "__main__":

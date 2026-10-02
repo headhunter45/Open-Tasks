@@ -139,7 +139,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-002 | *Distribution and Release System*         | Open Tasks |                                 | Triage      | [Feature](#ot-002) |
 | OT-003 | *Self Hosting and Bootstrap*              | Open Tasks |                                 | Triage      | [Feature](#ot-003) |
 | OT-004 | Define WorkItem Metadata                  | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-004) |
-| OT-005 | **Define Comment Format**                 | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-005) |
+| OT-005 | Define Comment Format                     | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-005) |
 | OT-006 | **Define Relationship Format**            | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-006) |
 | OT-007 | **Produce Example WorkItem Documents**    | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-007) |
 | OT-008 | **Implement Project Discovery**           | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-008) |
@@ -269,16 +269,16 @@ Migrate development onto Open Tasks and retire the legacy tracker.
 **Description:**
 Define canonical WorkItem metadata model and YAML frontmatter schema (id, title, type, status, size, created_at, updated_at, author, parent, dependencies, tags, custom fields). Implemented in src/ot/models.py and tested in tests/test_models.py.
 
-<a id="ot-005" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-005" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Define Comment Format
 **ID:** OT-005
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Define Comment format and markdown rendering (Author, timestamp, unique comment ID, body). Implemented in src/ot/models.py and tested in tests/test_models.py.
 
 <a id="ot-006" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Define Relationship Format

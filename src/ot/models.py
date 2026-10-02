@@ -137,3 +137,47 @@ class WorkItemMetadata:
             tags=tags,
             custom=custom,
         )
+
+
+@dataclass
+class Comment:
+    """A comment on a WorkItem."""
+
+    id: str = field(default_factory=generate_uuid)
+    author: Optional[Author] = None
+    timestamp: str = field(default_factory=now_iso)
+    body: str = ""
+
+    def to_markdown(self) -> str:
+        """Render comment to markdown format."""
+        author_str = self.author.name if self.author else "Anonymous"
+        if self.author and self.author.email:
+            author_str += f" <{self.author.email}>"
+        lines = [
+            f"### Comment by {author_str} on {self.timestamp}",
+            f"<!-- comment-id: {self.id} -->",
+            "",
+            self.body.strip(),
+            "",
+        ]
+        return "\n".join(lines)
+
+    def to_dict(self) -> Dict[str, Any]:
+        data: Dict[str, Any] = {
+            "id": self.id,
+            "timestamp": self.timestamp,
+            "body": self.body,
+        }
+        if self.author:
+            data["author"] = self.author.to_dict()
+        return data
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> Comment:
+        return cls(
+            id=str(data.get("id") or generate_uuid()),
+            author=Author.from_dict(data.get("author")),
+            timestamp=str(data.get("timestamp") or now_iso()),
+            body=str(data.get("body") or ""),
+        )
+
