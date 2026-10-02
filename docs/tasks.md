@@ -158,7 +158,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-021 | Implement WorkItem Index                | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-021) |
 | OT-022 | Implement Task Listing                  | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-022) |
 | OT-023 | Implement Task Display                  | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-023) |
-| OT-024 | **Implement Task Creation**             | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-024) |
+| OT-024 | Implement Task Creation                 | Open Tasks | Proof of Concept                | Fixed       | [Feature](#ot-024) |
 | OT-025 | **Implement Task Editing**              | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-025) |
 | OT-026 | **Implement Comment Creation**          | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-026) |
 | OT-027 | **Implement Dependency Management**     | Open Tasks | Proof of Concept                | Pending     | [Feature](#ot-027) |
@@ -478,16 +478,16 @@ Implement 'ot task list' with options for filtering by status, type, size, tag, 
 **Description:**
 Implement 'ot task show' to display complete WorkItem metadata, parent, children, dependencies, blockers, description, and comments. Implemented in src/ot/cli.py and tested in tests/test_cli.py.
 
-<a id="ot-024" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
+<a id="ot-024" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
 ### Implement Task Creation
 **ID:** OT-024
 **Project:** Open Tasks
 **Epic:** Proof of Concept
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
+Implement 'ot task create' with CLI flags (--title, --type, --status, --size, --parent, --overview, --no-edit, --edit) and directory structure generation. Implemented in src/ot/cli.py and tested in tests/test_cli.py.
 
 <a id="ot-025" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="poc"></a>
 ### Implement Task Editing
