@@ -181,7 +181,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-044 | Build Release Pipeline                    | Open Tasks | Distribution and Release System | Fixed       | [Feature](#ot-044) |
 | OT-045 | Initialize Using Open Tasks               | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-045) |
 | OT-046 | Create WorkItem Templates                 | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-046) |
-| OT-047 | **Create Meeting Templates**              | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-047) |
+| OT-047 | Create Meeting Templates                  | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-047) |
 | OT-048 | **Create Initial Backlog**                | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-048) |
 | OT-049 | **Migrate Existing Tasks**                | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-049) |
 | OT-050 | **Validate Migrated Tasks**               | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-050) |
@@ -770,15 +770,16 @@ Initialize self-hosted Open Tasks repository structure (.ot/, config.json, templ
 **Description:**
 Created and validated WorkItem templates in .ot/templates/tasks/ (feature.md, bug.md, epic.md, chore.md, spike.md, default.md) with YAML frontmatter placeholders and markdown sections.
 
-<a id="ot-047" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
+<a id="ot-047" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
 ### Create Meeting Templates
 **ID:** OT-047
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 **Description:**
+Created and validated meeting templates in .ot/templates/meetings/ (grooming.md, planning.md, retrospective.md, ideation.md) with agenda, discussion, decisions, and action item sections.
 
 <a id="ot-048" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
 ### Create Initial Backlog
