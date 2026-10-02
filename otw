@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+PROJ_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BIN="${PROJ_ROOT}/.ot/bin/ot.zipapp"
+
+if [ -f "$BIN" ]; then
+    exec python3 "$BIN" "$@"
+else
+    exec ot "$@"
+fi

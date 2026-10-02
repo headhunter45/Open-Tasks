@@ -179,7 +179,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 | OT-042 | Build Cache Management                    | Open Tasks | Distribution and Release System | Fixed       | [Feature](#ot-042) |
 | OT-043 | Implement Download Verification           | Open Tasks | Distribution and Release System | Fixed       | [Feature](#ot-043) |
 | OT-044 | Build Release Pipeline                    | Open Tasks | Distribution and Release System | Fixed       | [Feature](#ot-044) |
-| OT-045 | **Initialize Using Open Tasks**           | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-045) |
+| OT-045 | Initialize Using Open Tasks               | Open Tasks | Self Hosting and Bootstrap      | Fixed       | [Feature](#ot-045) |
 | OT-046 | **Create WorkItem Templates**             | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-046) |
 | OT-047 | **Create Meeting Templates**              | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-047) |
 | OT-048 | **Create Initial Backlog**                | Open Tasks | Self Hosting and Bootstrap      | Pending     | [Feature](#ot-048) |
@@ -748,15 +748,16 @@ Implement Download Verification using cryptographic SHA-256 validation to preven
 **Description:**
 Build automated release pipeline script in scripts/build-release executing test suite, zipapp packaging, manifest creation, SHA256 checksum generation, and post-build verification.
 
-<a id="ot-045" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
+<a id="ot-045" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
 ### Initialize Using Open Tasks
 **ID:** OT-045
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
-**Status:** Pending
+**Status:** Fixed
 **Type:** Feature
 
 **Description:**
+Initialize self-hosted Open Tasks repository structure (.ot/, config.json, templates/, bin/, otw, otw.bat) in the repository root. Verified with 'otw version' and 'otw check'.
 
 <a id="ot-046" class="task" data-project="open-tasks" data-status="pending" data-task-type="feature" data-epic="bootstrap"></a>
 ### Create WorkItem Templates
