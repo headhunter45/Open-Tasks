@@ -1,0 +1,20 @@
+# Open Tasks Design
+
+0. [Decision Log](00-architecture-decision-log.md)
+1. [Vision & Philosophy](01-vision-and-philosophy.md)
+2. [Filesystem Layout](02-filesystem-layout.md)
+3. [Configuration System](03-configuration-system.md)
+4. [Work Item Model](04-work-item-model.md)
+5. [Meetings & Planning](05-meetings-and-planning.md)
+6. [CLI Reference](06-cli-reference.md)
+7. [Validation & Repair](07-validation-and-repair.md)
+8. [Upgrade & Versioning](08-upgrade-and-versioning.md)
+9. [Open Questions](09-open-questions.md)
+10. [Roadmap](10-roadmap.md)
+11. [Design Notes & Alternatives](11-design-notes-and-alternatives.md)
+12. [Future Features](12-future-features.md)
+13. [Proof of Concept Scope](13-proof-of-concept-scope.md)
+14. [Glossary](14-glossary.md)
+15. [Implementation Notes](99-implementation-notes.md)
+
+[ADRs](adrs/)
