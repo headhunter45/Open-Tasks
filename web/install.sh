@@ -3,7 +3,7 @@
 # Installs standalone Open Tasks (.zipapp) from GitHub Releases
 set -eu
 
-REPO="headhunter45/Open-Tasks"
+REPO="headhunter45/opentasks"
 DEFAULT_INSTALL_DIR="${HOME}/.local/bin"
 INSTALL_DIR="${OT_INSTALL_DIR:-$DEFAULT_INSTALL_DIR}"
 VERSION="${OT_VERSION:-latest}"
