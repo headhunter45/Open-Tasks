@@ -87,6 +87,23 @@ jobs:
           cp -r docs/* _site/docs/
           touch _site/.nojekyll
 
+          python3 -c "
+          version = '${{ steps.resolve_version.outputs.version }}'
+          try:
+              with open('dist/SHA256SUMS', 'r') as f:
+                  sha_val = f.read().split()[0]
+              sha_short = sha_val[:12]
+          except Exception:
+              sha_short = 'unknown'
+
+          with open('_site/index.html', 'r', encoding='utf-8') as f:
+              html = f.read()
+          html = html.replace('__OT_VERSION__', version)
+          html = html.replace('__OT_SHA256_SHORT__', sha_short)
+          with open('_site/index.html', 'w', encoding='utf-8') as f:
+              f.write(html)
+          "
+
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
