@@ -3,36 +3,36 @@ name: execute-tasks
 description: >-
   Execute and complete a specific list of tasks one by one. Use this skill
   whenever the user asks to work on, implement, execute, or do a specific set
-  or batch of task IDs (e.g. "Do tasks OT-001, OT-002", "Work on these tasks
+  or batch of tasks (e.g. "Do tasks 075920, 29ba55", "Work on these tasks
   one at a time"). Validates task statuses, executes implementation
-  sequentially, updates documentation, marks tasks done, records follow-up tasks,
-  and creates git commits per task.
+  sequentially, updates documentation, marks tasks completed, records follow-up
+  tasks, and creates git commits per task.
 ---
 
 # Execute Tasks Workflow Skill
 
 This skill defines the standardized procedure for executing a specific set of tasks sequentially with strict status validation, documentation updates, follow-up tracking, and per-task commits.
 
+Tasks are managed with Open Tasks via the project wrapper `./otw` (see the `task-management` skill). Tasks may be referenced by 6-character short ID, UUID, or title.
+
 ---
 
 ## 1. Task Status Validation & Confirmation
 
-Before starting execution on any given task ID, inspect its status using `./scripts/get-task <ID>`:
+Before starting execution on any given task, inspect its status using `./otw task show <ID>`:
 
 - **Valid Statuses to Work On**:
-  - `pending` (Ready for implementation)
+  - `planned` (Ready for implementation)
   - `in_progress` (Work currently active)
 
 - **Invalid / Ambiguous Statuses**:
-  - `planning`: Scoping incomplete; requirements still unknown.
-  - `triage`: Requirements known, but prioritization or technical approach unconfirmed.
-  - `research`: Technical investigation required before planning.
-  - `done` / `fixed`: Task is already completed.
-  - `cancelled`: Task was discarded or rejected.
+  - `triage`: Requirements, prioritization, or technical approach unconfirmed.
   - `blocked`: Task is waiting on external dependencies or decisions.
+  - `completed`: Task is already finished.
+  - `closed`: Task was archived or cancelled.
 
 > [!WARNING]
-> **Status Check Rule**: If any requested task is in an invalid status (such as `planning`, `triage`, `research`, `done`, `cancelled`, or `blocked`), you **must stop, report the task ID and its current status to the user, explain why it is not ready for implementation, and ask for explicit confirmation** before proceeding with that task.
+> **Status Check Rule**: If any requested task is in an invalid status (`triage`, `blocked`, `completed`, or `closed`), you **must stop, report the task ID and its current status to the user, explain why it is not ready for implementation, and ask for explicit confirmation** before proceeding with that task.
 
 ---
 
@@ -44,10 +44,10 @@ Process each validated task **strictly one at a time** in the requested order:
 graph TD
     A[Inspect & Validate Task Status] --> B[Mark Task In Progress]
     B --> C[Implement Code & Fixes]
-    C --> D[Run Build & Verification Tests]
+    C --> D[Run Tests & Project Check]
     D --> E[Update Relevant Documentation]
-    E --> F[Check Off Requirements & Mark Done]
-    F --> G[Add Discovered Follow-Up Tasks as Planning]
+    E --> F[Comment & Mark Completed]
+    F --> G[Add Discovered Follow-Up Tasks as Triage]
     G --> H[Create Git Commit for Task]
     H --> I{More Tasks?}
     I -- Yes --> A
@@ -55,48 +55,55 @@ graph TD
 ```
 
 ### Step A: Mark In Progress
-Transition the task to active work:
 ```bash
-./scripts/update-task <ID> --status in_progress
+./otw task status <ID> in_progress
 ```
 
 ### Step B: Implement Requirements
-1. Read the task requirements using `./scripts/get-task <ID>`.
-2. Inspect the relevant source files and implement the requested changes adhering to project architecture and best practices.
-3. If partial implementation is required or edge cases emerge, record notes directly in the task description.
+1. Read the task using `./otw task show <ID>`.
+2. Inspect the relevant source files in `src/ot/` and implement the requested changes, adhering to the ADRs in `docs/design/adrs/`.
+3. If partial implementation is required or edge cases emerge, record notes with `./otw task comment <ID> "..."`.
 
 ### Step C: Verify & Test
-Run build verification and automated tests to ensure no regressions:
-- For iOS: `xcodebuild -scheme MonsterCards -project iOS/MonsterCards.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 17' build` (or test)
-- For Android: `./gradlew test` or `./gradlew assembleDebug`
+Run the test suite and project integrity check to ensure no regressions:
+```bash
+PYTHONPATH=src python3 -m unittest discover -s tests
+./otw check
+```
+For changes affecting packaging or releases, also run:
+```bash
+./scripts/build-release --version 0.0.0-dev
+```
 
 ### Step D: Update Documentation
 Check if the changes affect:
-- [README.md](file:///Users/tom/Projects/MonsterCards/README.md)
-- `Project.md` / `Project.json`
-- Feature specifications or architecture docs
-Update the corresponding documentation files accordingly.
+- [README.md](../../../README.md)
+- Design specifications or ADRs in `docs/design/`
+- The web portal in `web/` (`index.html`, `install.sh`)
 
-### Step E: Mark Task Done
-Check off completed checklist items and transition status to `done`:
+Update the corresponding files accordingly.
+
+### Step E: Mark Task Completed
 ```bash
-./scripts/update-task <ID> --status done --check-all
-```
-If specific items remain uncompleted or need notes:
-```bash
-./scripts/update-task <ID> --status done --append-description "### Implementation Notes:\n- Completed core logic.\n- Follow-up logged in OT-XXX."
+./otw task comment <ID> "Implementation notes: <summary>. Follow-up logged in <ID>."
+./otw task status <ID> completed
 ```
 
 ### Step F: Record Newly Discovered Tasks
-If during the work any new bugs, edge cases, refactor opportunities, or follow-ups are discovered, log them immediately in `planning` status:
+If any new bugs, edge cases, refactor opportunities, or follow-ups are discovered, log them immediately in `triage` status:
 ```bash
-./scripts/add-task "Follow-up: <Descriptive Title>" --project=<proj> --type=<type> --status=planning -d "Discovered during work on <ID>:\n- [ ] Detail"
+./otw task create \
+  --title "Follow-up: <Descriptive Title>" \
+  --type <feature|bug|chore|spike> \
+  --status triage \
+  --overview "Discovered during work on <ID>." \
+  --no-edit
 ```
 
 ### Step G: Create Git Commit
-Create a dedicated Git commit for the completed task:
+Create a dedicated Git commit for the completed task, including its `.ot/tasks/` changes:
 ```bash
-git add <modified-files>
-git commit -m "<type>(<project>): <concise summary of task ID>"
+git add <modified-files> .ot/
+git commit -m "<type>(open-tasks): <concise summary> (<ID>)"
 ```
 *(At least one commit must be made per completed task before moving to the next task).*

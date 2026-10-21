@@ -17,33 +17,45 @@ Open Tasks is a repository-native, database-free task and planning management to
 
 ## Quick Start
 
+### Installation
+
+Install the standalone executable launcher:
+
+```bash
+curl -fsSL https://headhunter45.github.io/opentasks/install.sh | bash
+```
+
+Or download the latest standalone binary directly from [GitHub Releases](https://github.com/headhunter45/opentasks/releases/latest).
+
+### Repository Workflow
+
+Open Tasks self-hosts its own task tracking directly within this repository using the `./otw` project wrapper:
+
+```bash
+# Verify project version & integrity
+./otw version
+./otw check
+
+# Query the active backlog
+./otw task list
+
+# Create a new feature task
+./otw task create --title "My New Feature" --type feature --size medium
+
+# Progress a task's status
+./otw task status "My New Feature" in_progress
+```
+
 ### Running Unit Tests
 
 ```bash
 PYTHONPATH=src python3 -m unittest discover -s tests
 ```
 
-### Trying the CLI
-
-```bash
-export PYTHONPATH="$(pwd)/src:$PYTHONPATH"
-
-# List work items in the sample project
-python3 -m ot.cli -C examples/sample-project task list
-
-# Show detailed work item information
-python3 -m ot.cli -C examples/sample-project task show "Release Alpha"
-
-# Check project health
-python3 -m ot.cli -C examples/sample-project check
-```
-
 ---
 
-## Documentation
+## Documentation & Architecture
 
-- [Phase 1 Testing and Verification Guide (Core Engine)](docs/phase-1-testing-and-verification.md)
-- [Phase 2 Testing and Verification Guide (Distribution & Release)](docs/phase-2-testing-and-verification.md)
-- [Phase 3 Testing and Verification Guide (Self-Hosting & Bootstrap)](docs/phase-3-testing-and-verification.md)
-- [Architecture & Design Documents](docs/design/)
-- [Project Task Tracker (Archived)](docs/tasks.md)
+* **Web Portal & Guides**: [https://headhunter45.github.io/opentasks/](https://headhunter45.github.io/opentasks/)
+* **Architecture Decision Records (ADRs)**: [docs/design/adrs/](docs/design/adrs/)
+* **Design Specifications**: [docs/design/](docs/design/)

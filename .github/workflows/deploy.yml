@@ -75,7 +75,6 @@ jobs:
       - name: Run Test Suite
         run: |
           PYTHONPATH=src python3 -m unittest discover -s tests
-          python3 -m unittest discover -s scripts/tests
 
       - name: Build Release Artifacts
         run: |

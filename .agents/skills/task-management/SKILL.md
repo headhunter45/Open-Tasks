@@ -1,28 +1,26 @@
 ---
 name: task-management
 description: >-
-  Manage, query, create, triage, research, and update project tasks using the
-  repository's task CLI scripts in scripts/ (get-tasks, get-task, add-task,
-  update-task, update-tasks, triage, research) and docs/tasks.md. Activate this
-  skill whenever reading, creating, editing, prioritizing, or updating tasks,
-  checklists, or project progress.
+  Manage, query, create, triage, inspect, and update project tasks using Open Tasks
+  (ot / ./otw). Activate this skill whenever reading, creating, editing, prioritizing,
+  or updating tasks, checklists, or project progress.
 ---
 
 # Task Management Skill
 
-This skill provides operational guidelines and procedures for managing project tasks using the automation scripts in `scripts/` and the Single Source of Truth (SSOT) document `docs/tasks.md`.
+This skill provides operational guidelines and procedures for managing project tasks using **Open Tasks (`ot` / `./otw`)**. All tasks, epics, bugs, and meeting records are stored directly in the repository under `.ot/tasks/` and `.ot/meetings/`.
 
 ---
 
-## Quick Reference & Environment Setup
+## Quick Reference
 
-To make scripts available on your `PATH` and load shell aliases:
+In the repository root, run commands through the self-hosted wrapper `./otw` (or the global `ot` CLI):
 
 ```bash
-source ./scripts/env.sh
+# Verify project version and health
+./otw version
+./otw check
 ```
-
-> **Note**: For local configurations that should not be committed (such as custom environment variables, agent endpoints, or tokens), create a `scripts/env.local.sh` or `.env.local` file. It will be automatically sourced by `env.sh` and is ignored by Git.
 
 ---
 
@@ -30,126 +28,82 @@ source ./scripts/env.sh
 
 ### 1. Querying and Inspecting Tasks
 
-- **List active pending tasks**:
+- **List active work items**:
   ```bash
-  ./scripts/get-tasks
+  ./otw task list
   ```
-- **List tasks in Planning and Triage**:
+- **Filter by status**:
   ```bash
-  ./scripts/get-tasks --planning
-  # or alias: get-planning-tasks
+  ./otw task list --status planned
+  ./otw task list --status in_progress
+  ./otw task list --status completed
+  ./otw task list --status blocked
   ```
-- **List all tasks**:
+- **Filter by type**:
   ```bash
-  ./scripts/get-tasks --all
+  ./otw task list --type epic
+  ./otw task list --type feature
+  ./otw task list --type bug
+  ./otw task list --type chore
   ```
-- **Filter tasks**:
+- **Inspect a specific task** (by 6-char short ID, UUID, or title):
   ```bash
-  ./scripts/get-tasks --accept "Status:In Progress"
-  ./scripts/get-tasks --reject "Project:Android"
-  ./scripts/get-tasks --sort asc
-  ```
-- **Inspect a specific task**:
-  ```bash
-  ./scripts/get-task OT-001
-  # Output as JSON:
-  ./scripts/get-task OT-001 --json
-  # View description and checklist only:
-  ./scripts/get-task OT-001 --description-only
+  ./otw task show 075920
+  ./otw task show "Cleanup source tree."
   ```
 
 ---
 
-### 2. Creating New Tasks
+### 2. Creating WorkItems
 
-Use `add-task` to add a new entry to `docs/tasks.md`. The script automatically assigns the next monotonic ID and re-synchronizes the summary table:
+Create new tasks using template instantiation:
 
 ```bash
-./scripts/add-task "Task Title" --project=<project-key> --type=<type> --status=<status> -d "Description text"
+./otw task create \
+  --title "Implement Cache Invalidation" \
+  --type feature \
+  --status planned \
+  --size medium \
+  --parent "Distribution and Release System" \
+  --overview "Support explicit cache invalidation in ot upgrade." \
+  --no-edit
 ```
 
-**Common Flags**:
-- `-p`, `--project`: Project value from frontmatter (e.g., `example-project`, `android`, `ios`, `shared`).
-- `-t`, `--type`: Task type (`feature`, `bug`, `chore`, `lint`). Default: `feature`.
-- `-s`, `--status`: Initial status (`planning`, `triage`, `pending`, `in_progress`, `done`, `blocked`, `cancelled`, `research`). Default: `triage`.
-- `-d`, `--description`: Initial description and markdown checklist items.
-- `--subproject`: Subproject name if applicable.
+Available types: `feature`, `bug`, `task`, `chore`, `spike`, `epic`.
+Available statuses: `triage`, `planned`, `in_progress`, `blocked`, `completed`, `closed`.
+Available sizes: `small`, `medium`, `large`.
 
 ---
 
-### 3. Updating Tasks
+### 3. Updating Lifecycles & Recording Progress
 
-Modify task attributes, title, status, and checklist items using `update-task`:
-
-- **Change status**:
+- **Update Task Status**:
   ```bash
-  ./scripts/update-task OT-001 --status in_progress
-  ./scripts/update-task OT-001 --status done
+  ./otw task status "Implement Cache Invalidation" in_progress
+  ./otw task status "Implement Cache Invalidation" completed
   ```
-- **Update title or description**:
+- **Append Timestamped Comment**:
   ```bash
-  ./scripts/update-task OT-001 --title "Updated Descriptive Title"
-  ./scripts/update-task OT-001 --description "New full description text"
+  ./otw task comment "Implement Cache Invalidation" "Implemented cache clearing on version mismatch."
   ```
-- **Append checklist items or notes**:
+- **Add Task Dependency / Blocker**:
   ```bash
-  ./scripts/update-task OT-001 --append-description "- [ ] New requirement step"
-  ```
-- **Check/uncheck checklist items**:
-  ```bash
-  # Check all items:
-  ./scripts/update-task OT-001 --check-all
-  # Check specific item by keyword:
-  ./scripts/update-task OT-001 --check-items "Define initial requirements"
-  # Uncheck all items:
-  ./scripts/update-task OT-001 --uncheck-all
+  ./otw task add-dependency "Implement Cache Invalidation" "Build Cache Management"
   ```
 
 ---
 
-### 4. Synchronizing the Document
+### 4. Integrity Validation & Automatic Repair
 
-If tasks are modified or if table alignment needs re-calculation, run `update-tasks`:
+Run diagnostic checks before concluding tasks or submitting PRs:
 
 ```bash
-./scripts/update-tasks
+# Check repository integrity (UUID uniqueness, relationships, schema validity)
+./otw check
+
+# Output diagnostics as JSON
+./otw check --json
+
+# Automatically repair trivial inconsistencies
+./otw check --fix
 ```
-
-This script:
-1. Re-indexes and sorts all detailed task chunks strictly by numeric ID.
-2. Re-renders the **Overall Progress Table** (`#tasks-list`).
-3. Re-renders the metadata enum tables (**Projects**, **Task Statuses**, **Task Types**) based on frontmatter.
-
----
-
-### 5. Running Triage & Research Workflows
-
-- **Triage a task**:
-  ```bash
-  ./scripts/triage OT-001
-  ./scripts/triage OT-001 --agy
-  ```
-- **Research a task**:
-  ```bash
-  ./scripts/research OT-001
-  ./scripts/research OT-001 --agy
-  ```
-
----
-
-## Operational Rules & Best Practices
-
-1. **Single Source of Truth (SSOT)**:
-   - The `<a id="ot-XXX" class="task" data-project="..." data-status="..." data-task-type="..."></a>` anchor tag in `## Detailed Tasks` is the canonical record.
-   - **Never manually edit the summary table** in `docs/tasks.md`. Always modify task entries using `update-task` or run `update-tasks` after editing details.
-2. **Lifecycle Discipline**:
-   - `planning`: Scoping and defining requirements.
-   - `triage`: Prioritizing and deciding architecture.
-   - `pending`: Clear scope, ready for execution.
-   - `in_progress`: Work actively being executed.
-   - `done`: All requirements verified and complete.
-   - `blocked`: Waiting on an unresolved external dependency.
-   - `cancelled`: No longer applicable.
-   - `research`: Technical investigation needed before planning.
-3. **Verification**:
-   - Always run `./scripts/get-tasks` or `./scripts/get-task <ID>` after updating to verify that status transitions and checklist updates have persisted accurately.

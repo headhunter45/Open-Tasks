@@ -35,9 +35,9 @@
         <ul class="nav-links">
           <li><a href="#features" id="nav-features">Architecture</a></li>
           <li><a href="#quickstart" id="nav-quickstart">Quickstart</a></li>
-          <li><a href="#phases" id="nav-phases">Phase Guides</a></li>
+          <li><a href="#docs" id="nav-docs">ADR Records</a></li>
           <li><a href="#downloads" id="nav-downloads">Downloads</a></li>
-          <li><a href="docs/design/" id="nav-docs">Design ADRs</a></li>
+          <li><a href="docs/design/" id="nav-design">Specifications</a></li>
         </ul>
       </nav>
 
@@ -236,59 +236,59 @@ Successfully upgraded project from 0.1.0 to 0.2.0.</span></code></pre>
       </div>
     </section>
 
-    <!-- Phase Verification Guides -->
-    <section class="phases-section" id="phases">
+    <!-- Architecture Decisions & Specifications -->
+    <section class="phases-section" id="docs">
       <div class="container">
         <div class="section-header">
-          <h2 class="section-title">Milestone Testing & Verification Guides</h2>
-          <p class="section-desc">Comprehensive step-by-step test guides and verification walkthroughs for each development phase.</p>
+          <h2 class="section-title">Architecture Decision Records & Design</h2>
+          <p class="section-desc">Explore the 30 formal Architecture Decision Records (ADRs) establishing Open Tasks principles.</p>
         </div>
 
         <div class="phases-grid">
-          <article class="phase-card" id="card-phase-1">
+          <article class="phase-card" id="card-adr-storage">
             <div>
-              <span class="phase-badge phase-1-badge">Phase 1 • Verified</span>
-              <h3 class="phase-title">Proof of Concept & Core Engine</h3>
+              <span class="phase-badge phase-1-badge">ADR-0001 &bull; Core Storage</span>
+              <h3 class="phase-title">Repository-Native Storage</h3>
               <p class="phase-desc">
-                Validates the unified WorkItem model, YAML parser round-trip preservation, UUID short identifier generation, repository scanning, and task CRUD CLI.
+                Tasks, bugs, and meetings are stored as plain Markdown documents with YAML frontmatter in <code>.ot/tasks/</code>, branching and merging cleanly with source code.
               </p>
             </div>
             <div class="phase-meta">
-              <span class="phase-tasks-count">Tasks OT-004 to OT-031</span>
-              <a href="docs/phase-1-testing-and-verification.md" class="phase-link" id="link-phase-1">
-                Read Guide →
+              <span class="phase-tasks-count">ADR-0001 to ADR-0008</span>
+              <a href="docs/design/adrs/ADR-0001-repository-native-storage.md" class="phase-link" id="link-adr-storage">
+                Read ADR →
               </a>
             </div>
           </article>
 
-          <article class="phase-card" id="card-phase-2">
+          <article class="phase-card" id="card-adr-distribution">
             <div>
-              <span class="phase-badge phase-2-badge">Phase 2 • Verified</span>
-              <h3 class="phase-title">Distribution & Release System</h3>
+              <span class="phase-badge phase-2-badge">ADR-0009 &bull; Packaging</span>
+              <h3 class="phase-title">Project Wrappers & Standalone Binaries</h3>
               <p class="phase-desc">
-                Validates standalone Python ZipApp packaging, global launcher delegation, project initialization, atomic upgrades, and SHA-256 download caching.
+                Eliminates global tool version conflicts by packaging standalone Python zipapps and providing transparent project wrappers (<code>./otw</code>).
               </p>
             </div>
             <div class="phase-meta">
-              <span class="phase-tasks-count">Tasks OT-032 to OT-044</span>
-              <a href="docs/phase-2-testing-and-verification.md" class="phase-link" id="link-phase-2">
-                Read Guide →
+              <span class="phase-tasks-count">ADR-0009 to ADR-0015</span>
+              <a href="docs/design/adrs/ADR-0010-optional-wrapper-scripts.md" class="phase-link" id="link-adr-distribution">
+                Read ADR →
               </a>
             </div>
           </article>
 
-          <article class="phase-card" id="card-phase-3">
+          <article class="phase-card" id="card-adr-validation">
             <div>
-              <span class="phase-badge phase-3-badge">Phase 3 • Active Milestone</span>
-              <h3 class="phase-title">Self-Hosting & Bootstrap</h3>
+              <span class="phase-badge phase-3-badge">ADR-0023 &bull; Validation</span>
+              <h3 class="phase-title">First-Class Validation & Repair</h3>
               <p class="phase-desc">
-                Validates repository-native self-hosting under <code>.ot/</code>, 59 migrated tasks, WorkItem & meeting templates, <code>otw</code> wrapper operations, and release pipeline.
+                Guarantees project health through <code>ot check</code> and automated repairs for orphaned dependencies, invalid schemas, and corrupted hierarchies.
               </p>
             </div>
             <div class="phase-meta">
-              <span class="phase-tasks-count">Tasks OT-045 to OT-059</span>
-              <a href="docs/phase-3-testing-and-verification.md" class="phase-link" id="link-phase-3">
-                Read Guide →
+              <span class="phase-tasks-count">ADR-0016 to ADR-0030</span>
+              <a href="docs/design/adrs/ADR-0023-first-class-validation-and-repair.md" class="phase-link" id="link-adr-validation">
+                Read ADR →
               </a>
             </div>
           </article>
