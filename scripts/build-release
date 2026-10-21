@@ -28,7 +28,18 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [ -z "$VERSION" ]; then
-    VERSION=$(python3 -c "import ot; print(ot.__version__)")
+    # 1. Check if HEAD is an exact git tag (e.g. v0.1.0 or 0.1.0)
+    if git describe --tags --exact-match >/dev/null 2>&1; then
+        RAW_TAG=$(git describe --tags --exact-match)
+        VERSION="${RAW_TAG#v}"
+    # 2. Check closest git tag
+    elif git describe --tags --abbrev=0 >/dev/null 2>&1; then
+        RAW_TAG=$(git describe --tags --abbrev=0)
+        VERSION="${RAW_TAG#v}"
+    # 3. Fallback to package __version__
+    else
+        VERSION=$(python3 -c "import ot; print(ot.__version__)")
+    fi
 fi
 mkdir -p "$OUTPUT_DIR"
 
@@ -42,8 +53,11 @@ python3 -m ot.packaging \
     --output-dir "$OUTPUT_DIR" \
     --artifact-name "ot-${VERSION}.zipapp"
 
-# Also maintain canonical ot.zipapp copy in dist/
+# Also maintain canonical ot.zipapp and ot-manifest.json copies in dist/
 cp "${OUTPUT_DIR}/ot-${VERSION}.zipapp" "${OUTPUT_DIR}/ot.zipapp"
+if [ -f "${OUTPUT_DIR}/ot-${VERSION}-manifest.json" ]; then
+    cp "${OUTPUT_DIR}/ot-${VERSION}-manifest.json" "${OUTPUT_DIR}/ot-manifest.json"
+fi
 
 echo "=== 3. Generating SHA256 Checksums ==="
 cd "$OUTPUT_DIR"

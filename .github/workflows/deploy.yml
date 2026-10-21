@@ -1,0 +1,133 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. 0.1.0). If omitted, inferred from git tag or latest tag.'
+        required: false
+        default: ''
+      publish_release:
+        description: 'Force publish GitHub Release (true/false/auto)'
+        required: false
+        default: 'auto'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.resolve_version.outputs.version }}
+      is_release: ${{ steps.check_release.outputs.is_release }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Resolve Version
+        id: resolve_version
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          elif [[ "$GITHUB_REF" =~ ^refs/tags/v[0-9] ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          elif git describe --tags --abbrev=0 >/dev/null 2>&1; then
+            VERSION=$(git describe --tags --abbrev=0 | sed 's/^v//')
+          else
+            VERSION=$(python3 -c "import ot; print(ot.__version__)")
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Resolved version: ${VERSION}"
+
+      - name: Determine if release should be published
+        id: check_release
+        run: |
+          FORCE="${{ github.event.inputs.publish_release }}"
+          if [ "$FORCE" = "true" ]; then
+            echo "is_release=true" >> "$GITHUB_OUTPUT"
+          elif [ "$FORCE" = "false" ]; then
+            echo "is_release=false" >> "$GITHUB_OUTPUT"
+          elif [[ "$GITHUB_REF" =~ ^refs/tags/v[0-9] ]]; then
+            echo "is_release=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_release=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run Test Suite
+        run: |
+          PYTHONPATH=src python3 -m unittest discover -s tests
+          python3 -m unittest discover -s scripts/tests
+
+      - name: Build Release Artifacts
+        run: |
+          ./scripts/build-release --version "${{ steps.resolve_version.outputs.version }}"
+
+      - name: Prepare GitHub Pages Site
+        run: |
+          mkdir -p _site/docs
+          cp -r web/* _site/
+          cp -r docs/* _site/docs/
+          touch _site/.nojekyll
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Publish GitHub Release
+        if: steps.check_release.outputs.is_release == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_NAME="v${{ steps.resolve_version.outputs.version }}"
+          echo "Publishing GitHub Release for tag: ${TAG_NAME}"
+          
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            echo "Release $TAG_NAME exists. Updating release assets..."
+            gh release upload "$TAG_NAME" \
+              dist/ot-${{ steps.resolve_version.outputs.version }}.zipapp \
+              dist/ot.zipapp \
+              dist/ot-${{ steps.resolve_version.outputs.version }}-manifest.json \
+              dist/ot-manifest.json \
+              dist/SHA256SUMS --clobber
+          else
+            echo "Creating new release $TAG_NAME..."
+            gh release create "$TAG_NAME" \
+              dist/ot-${{ steps.resolve_version.outputs.version }}.zipapp \
+              dist/ot.zipapp \
+              dist/ot-${{ steps.resolve_version.outputs.version }}-manifest.json \
+              dist/ot-manifest.json \
+              dist/SHA256SUMS \
+              --title "Open Tasks v${{ steps.resolve_version.outputs.version }}" \
+              --generate-notes
+          fi
+
+  deploy-pages:
+    needs: build-and-publish
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

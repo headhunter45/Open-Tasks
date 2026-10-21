@@ -82,6 +82,22 @@ def build_zipapp_artifact(
         import shutil
         shutil.copytree(ot_src, staging / "ot")
 
+        # Inject packaging version into staging __init__.py so artifact reflects release version
+        init_py = staging / "ot" / "__init__.py"
+        if init_py.is_file():
+            import re
+            content = init_py.read_text(encoding="utf-8")
+            if re.search(r"^__version__\s*=", content, re.MULTILINE):
+                content = re.sub(
+                    r"^__version__\s*=.*$",
+                    f'__version__ = "{version}"',
+                    content,
+                    flags=re.MULTILINE,
+                )
+            else:
+                content += f'\n__version__ = "{version}"\n'
+            init_py.write_text(content, encoding="utf-8")
+
         # Create __main__.py entry point
         main_py = staging / "__main__.py"
         main_py.write_text(

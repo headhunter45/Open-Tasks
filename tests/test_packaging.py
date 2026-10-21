@@ -49,6 +49,15 @@ class TestVersioningAndPackaging(unittest.TestCase):
             self.assertEqual(res.returncode, 0)
             self.assertIn("Open Tasks", res.stdout)
 
+            # Test that packaged version command reflects stamped version
+            res_v = subprocess.run(
+                ["python3", str(out_path), "version"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(res_v.returncode, 0)
+            self.assertIn("0.1.0", res_v.stdout)
+
     def test_version_discovery_and_validation(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
