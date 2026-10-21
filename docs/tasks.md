@@ -62,7 +62,7 @@ task-types:
 # Project Task Tracker (Archived)
 
 > [!NOTE]
-> **ARCHIVED**: This single-file tracker document has been archived. Open Tasks is now fully self-hosted! All work items and epics are maintained directly in repository-native files under [`.ot/tasks/`](file:///Users/tom/Projects/OpenTasks/.ot/tasks/) and managed via `./otw` or the `ot` CLI.
+> **ARCHIVED**: This single-file tracker document has been archived. Open Tasks is now fully self-hosted! All work items and epics are maintained directly in repository-native files under [`.ot/tasks/`](.ot/tasks/) and managed via `./otw` or the `ot` CLI.
 
 This document serves as the historical record for bootstrap and initial project phases.
 
@@ -137,7 +137,7 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 <a id="tasks-list"></a>
 
 | ID     | Title                                 | Project    | Epic                            | Status | Type               |
-|:-----|:------------------------------------|:---------|:------------------------------|:-----|:-----------------|
+| :----- | :------------------------------------ | :--------- | :------------------------------ | :----- | :----------------- |
 | OT-001 | Proof of Concept                      | Open Tasks |                                 | Fixed  | [Feature](#ot-001) |
 | OT-002 | Distribution and Release System       | Open Tasks |                                 | Fixed  | [Feature](#ot-002) |
 | OT-003 | Self Hosting and Bootstrap            | Open Tasks |                                 | Fixed  | [Feature](#ot-003) |
@@ -205,12 +205,13 @@ You can manage tasks using the provided automation scripts in `./scripts/` (or v
 ## Detailed Tasks
 
 <a id="ot-001" class="task" data-project="open-tasks" data-status="done" data-task-type="feature"></a>
+
 ### Proof of Concept
+
 **ID:** OT-001
 **Project:** Open Tasks
 **Status:** Fixed
 **Type:** Feature
-
 
 **Description:**
 Validate the core architecture and prove that Open Tasks can manage repository-native WorkItems.
@@ -224,12 +225,13 @@ Validate the core architecture and prove that Open Tasks can manage repository-n
 - [ ] Track work using Open Tasks
 
 <a id="ot-002" class="task" data-project="open-tasks" data-status="done" data-task-type="feature"></a>
+
 ### Distribution and Release System
+
 **ID:** OT-002
 **Project:** Open Tasks
 **Status:** Fixed
 **Type:** Feature
-
 
 **Description:**
 Enable installation, packaging, upgrades, and project version management.
@@ -243,7 +245,9 @@ Enable installation, packaging, upgrades, and project version management.
 - [ ] Upgrades
 
 <a id="ot-003" class="task" data-project="open-tasks" data-status="done" data-task-type="feature"></a>
+
 ### Self Hosting and Bootstrap
+
 **ID:** OT-003
 **Project:** Open Tasks
 **Status:** Fixed
@@ -259,499 +263,542 @@ Migrate development onto Open Tasks and retire the legacy tracker.
 - [x] Retire legacy workflow
 
 <a id="ot-004" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Define WorkItem Metadata
+
 **ID:** OT-004
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Define canonical WorkItem metadata model and YAML frontmatter schema (id, title, type, status, size, created_at, updated_at, author, parent, dependencies, tags, custom fields). Implemented in src/ot/models.py and tested in tests/test_models.py.
 
 <a id="ot-005" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Define Comment Format
+
 **ID:** OT-005
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Define Comment format and markdown rendering (Author, timestamp, unique comment ID, body). Implemented in src/ot/models.py and tested in tests/test_models.py.
 
 <a id="ot-006" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Define Relationship Format
+
 **ID:** OT-006
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Define WorkItem relationship formats (Parent, Child, Depends-on, Blocks) and manipulation APIs. Implemented in src/ot/models.py and tested in tests/test_models.py.
 
 <a id="ot-007" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Produce Example WorkItem Documents
+
 **ID:** OT-007
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Produce example WorkItem documents in examples/sample-project/.ot/tasks/ illustrating Epics, child Features, Bugs with dependencies and comments, and Chores. Tested in tests/test_examples.py.
 
 <a id="ot-008" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Project Discovery
+
 **ID:** OT-008
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement project root discovery by directory tree traversal, environment variable overrides, and fallback resolution. Implemented in src/ot/discovery.py and tested in tests/test_discovery.py.
 
 <a id="ot-009" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Git Discovery
+
 **ID:** OT-009
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Git discovery: git root detection, querying git config for user name, email, and core.editor. Implemented in src/ot/discovery.py and tested in tests/test_discovery.py.
 
 <a id="ot-010" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement No-VCS Discovery
+
 **ID:** OT-010
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement No-VCS discovery and fallbacks for environments without Git or Mercurial, resolving system username, email, and platform default editor. Implemented in src/ot/discovery.py and tested in tests/test_discovery.py.
 
 <a id="ot-011" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Configuration Loader
+
 **ID:** OT-011
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Configuration Loader for reading and parsing JSON configuration files (.ot/config.json, .ot/config.local.json, ~/.ot/config.json). Implemented in src/ot/config.py and tested in tests/test_config.py.
 
 <a id="ot-012" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Configuration Resolution
+
 **ID:** OT-012
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Configuration Resolution layer merging with precedence rules (local > project > global > vcs > env > defaults) and dot-path lookup. Implemented in src/ot/config.py and tested in tests/test_config.py.
 
 <a id="ot-013" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Protected Key Validation
+
 **ID:** OT-013
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Protected Key Validation to detect and warn against improper local overrides of shared project configuration (types, statuses, sizes, meeting types). Implemented in src/ot/config.py and tested in tests/test_config.py.
 
 <a id="ot-014" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement UUID Generation
+
 **ID:** OT-014
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement UUID Generation (RFC 4122 v4 canonical lowercase string generation and validation). Implemented in src/ot/identifiers.py and tested in tests/test_identifiers.py.
 
 <a id="ot-015" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Short Identifier Generation
+
 **ID:** OT-015
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Git-style Short Identifier Generation with adaptive prefix expansion to guarantee repository-wide uniqueness. Implemented in src/ot/identifiers.py and tested in tests/test_identifiers.py.
 
 <a id="ot-016" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Identifier Resolution
+
 **ID:** OT-016
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Identifier Resolution for exact UUID, short unique prefix, and unique title matches, raising explicit AmbiguousIdentifierError or IdentifierNotFoundError when required. Implemented in src/ot/identifiers.py and tested in tests/test_identifiers.py.
 
 <a id="ot-017" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement WorkItem Reader
+
 **ID:** OT-017
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement WorkItem Reader to load and parse markdown files with YAML frontmatter, headers, markdown bodies, and comments. Implemented in src/ot/parser.py and tested in tests/test_parser.py.
 
 <a id="ot-018" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement WorkItem Writer
+
 **ID:** OT-018
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement WorkItem Writer for atomic serialization of WorkItems to disk with formatted YAML frontmatter, markdown sections, and comments. Implemented in src/ot/parser.py and tested in tests/test_parser.py.
 
 <a id="ot-019" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Preserve Unknown Content
+
 **ID:** OT-019
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Preserve unknown user-defined markdown sections, frontmatter fields, and custom content without destructive reformatting during parse-and-write cycles. Implemented in src/ot/parser.py and tested in tests/test_parser.py.
 
 <a id="ot-020" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Repository Scanner
+
 **ID:** OT-020
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Repository Scanner to discover and load all WorkItem markdown documents in the .ot/tasks/ directory hierarchy. Implemented in src/ot/scanner.py and tested in tests/test_scanner.py.
 
 <a id="ot-021" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement WorkItem Index
+
 **ID:** OT-021
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement WorkItem Index for fast query by UUID, unique short prefix, title, parent/child hierarchy traversal, and dependency graph navigation. Implemented in src/ot/scanner.py and tested in tests/test_scanner.py.
 
 <a id="ot-022" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Task Listing
+
 **ID:** OT-022
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement 'ot task list' with options for filtering by status, type, size, tag, author, and --json output. Implemented in src/ot/cli.py and tested in tests/test_cli.py.
 
 <a id="ot-023" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Task Display
+
 **ID:** OT-023
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement 'ot task show' to display complete WorkItem metadata, parent, children, dependencies, blockers, description, and comments. Implemented in src/ot/cli.py and tested in tests/test_cli.py.
 
 <a id="ot-024" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Task Creation
+
 **ID:** OT-024
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement 'ot task create' with CLI flags (--title, --type, --status, --size, --parent, --overview, --no-edit, --edit) and directory structure generation. Implemented in src/ot/cli.py and tested in tests/test_cli.py.
 
 <a id="ot-025" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Task Editing
+
 **ID:** OT-025
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement 'ot task edit' (interactive external editor with validation on save) and 'ot task status' for direct status updates. Implemented in src/ot/cli.py and tested in tests/test_cli.py.
 
 <a id="ot-026" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Comment Creation
+
 **ID:** OT-026
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement 'ot task comment' with interactive and message argument workflows, timestamping, user author attribution, and markdown persistence. Implemented in src/ot/cli.py and tested in tests/test_cli.py.
 
 <a id="ot-027" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Dependency Management
+
 **ID:** OT-027
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement dependency commands ('ot task add-dependency', 'ot task remove-dependency', 'ot task get-dependencies') with circular/self dependency guards and bidirectional relationship rendering. Implemented in src/ot/cli.py and tested in tests/test_cli.py.
 
 <a id="ot-028" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Validation Framework
+
 **ID:** OT-028
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Validation Framework checking project directories, configuration schemas, UUID validity/uniqueness, work item types/statuses/sizes, broken parent/dependency references, and merge conflict markers. Implemented in src/ot/validation.py and tested in tests/test_validation.py.
 
 <a id="ot-029" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Error Reporting
+
 **ID:** OT-029
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement structured diagnostic error reporting with Severity (ERROR, WARNING, INFO), categories, fixability indicators, formatted console output, and --json output. Implemented in src/ot/validation.py, src/ot/cli.py, and tested in tests/test_validation.py.
 
 <a id="ot-030" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="poc"></a>
+
 ### Implement Repair Framework
+
 **ID:** OT-030
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Repair Framework for 'ot check --fix' to safely and automatically repair missing directories, misplaced protected configuration keys, and self-dependencies. Implemented in src/ot/validation.py and tested in tests/test_validation.py.
 
 <a id="ot-031" class="task" data-project="open-tasks" data-status="done" data-task-type="chore" data-epic="poc"></a>
+
 ### Generate Initial Templates
+
 **ID:** OT-031
 **Project:** Open Tasks
 **Epic:** Proof of Concept
 **Status:** Fixed
 **Type:** Chore
 
-
 **Description:**
 Generate initial template files in .ot/templates/ (tasks/default.md, bug.md, feature.md, epic.md, chore.md, spike.md, meetings/grooming.md, planning.md, retrospective.md, ideation.md, shared/comment.md) and implement template installation system. Implemented in src/ot/templates.py and tested in tests/test_templates.py.
 
 <a id="ot-032" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Design Release Artifact
+
 **ID:** OT-032
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Design Release Artifact format using standalone Python ZipApp (.zipapp) packaging with embedded **main**.py, ReleaseManifest schema, and SHA-256 integrity verification. Implemented in src/ot/packaging.py and tested in tests/test_packaging.py.
 
 <a id="ot-033" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Build Packaging System
+
 **ID:** OT-033
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Build packaging system and release generator in scripts/package-release and ot.packaging for building reproducible self-contained zipapp distributions with checksum manifests. Tested in tests/test_packaging.py.
 
 <a id="ot-034" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Build Global Launcher
+
 **ID:** OT-034
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Build Global Launcher in src/ot/launcher.py with project root resolution, configured version discovery, and delegation to project-installed binary (.ot/bin/ot.zipapp). Tested in tests/test_launcher.py.
 
 <a id="ot-035" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Implement Version Discovery
+
 **ID:** OT-035
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Version Discovery to inspect project configured version (.ot/config.json) and installed binary metadata (.ot/bin/ot-manifest.json). Implemented in src/ot/version.py and tested in tests/test_packaging.py.
 
 <a id="ot-036" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Implement Version Validation
+
 **ID:** OT-036
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Version Validation for checking semantic version conformance and detecting mismatches between configured and installed tool versions. Integrated into Validator (ot check) and tested in tests/test_packaging.py.
 
 <a id="ot-037" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Implement ot init
+
 **ID:** OT-037
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement 'ot init' command for initializing new Open Tasks projects with directory structure, system.toolVersion, project configuration, and default templates. Implemented in src/ot/installation.py, src/ot/cli.py, and tested in tests/test_installation.py.
 
 <a id="ot-038" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Implement Project Installation
+
 **ID:** OT-038
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Project Installation mechanism to install versioned executable zipapp, manifest, and optional root wrapper scripts (otw, otw.bat) in .ot/bin/. Implemented in src/ot/installation.py and tested in tests/test_installation.py.
 
 <a id="ot-039" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Implement Version Downloads
+
 **ID:** OT-039
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Version Downloads for fetching, caching, and staging release zipapps and manifests from mirrors or release builds. Implemented in src/ot/upgrade.py and tested in tests/test_upgrade.py.
 
 <a id="ot-040" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Implement Transactional Upgrades
+
 **ID:** OT-040
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Transactional Upgrades with isolated temporary staging, semver downgrade prevention, non-destructive template preservation, validation checks, and atomic commit on success. Implemented in src/ot/upgrade.py and tested in tests/test_upgrade.py.
 
 <a id="ot-041" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Implement ot upgrade
+
 **ID:** OT-041
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement 'ot upgrade' CLI command supporting --version <v>, --mirror <dir>, and --dry-run flags for automated project upgrades. Implemented in src/ot/cli.py, src/ot/upgrade.py, and tested in tests/test_upgrade.py.
 
 <a id="ot-042" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Build Cache Management
+
 **ID:** OT-042
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Build global cache management in ~/.ot/cache/ and ~/.ot/versions/ for local caching of downloaded zipapps, manifests, and artifacts. Implemented in src/ot/cache.py and tested in tests/test_upgrade.py.
 
 <a id="ot-043" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Implement Download Verification
+
 **ID:** OT-043
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Implement Download Verification using cryptographic SHA-256 validation to prevent corrupted or tampered downloads from being unpacked or executed. Implemented in src/ot/cache.py and tested in tests/test_upgrade.py.
 
 <a id="ot-044" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="distribution"></a>
+
 ### Build Release Pipeline
+
 **ID:** OT-044
 **Project:** Open Tasks
 **Epic:** Distribution and Release System
 **Status:** Fixed
 **Type:** Feature
 
-
 **Description:**
 Build automated release pipeline script in scripts/build-release executing test suite, zipapp packaging, manifest creation, SHA256 checksum generation, and post-build verification.
 
 <a id="ot-045" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Initialize Using Open Tasks
+
 **ID:** OT-045
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -762,7 +809,9 @@ Build automated release pipeline script in scripts/build-release executing test 
 Initialize self-hosted Open Tasks repository structure (.ot/, config.json, templates/, bin/, otw, otw.bat) in the repository root. Verified with 'otw version' and 'otw check'.
 
 <a id="ot-046" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Create WorkItem Templates
+
 **ID:** OT-046
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -773,7 +822,9 @@ Initialize self-hosted Open Tasks repository structure (.ot/, config.json, templ
 Created and validated WorkItem templates in .ot/templates/tasks/ (feature.md, bug.md, epic.md, chore.md, spike.md, default.md) with YAML frontmatter placeholders and markdown sections.
 
 <a id="ot-047" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Create Meeting Templates
+
 **ID:** OT-047
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -784,7 +835,9 @@ Created and validated WorkItem templates in .ot/templates/tasks/ (feature.md, bu
 Created and validated meeting templates in .ot/templates/meetings/ (grooming.md, planning.md, retrospective.md, ideation.md) with agenda, discussion, decisions, and action item sections.
 
 <a id="ot-048" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Create Initial Backlog
+
 **ID:** OT-048
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -795,7 +848,9 @@ Created and validated meeting templates in .ot/templates/meetings/ (grooming.md,
 Created initial repository-native backlog in .ot/tasks/ with epics and features ('Export and Reporting Tooling', 'Mercurial VCS Integration', 'JSON Schema Export'). Verified with 'otw task list' and 'otw check'.
 
 <a id="ot-049" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Migrate Existing Tasks
+
 **ID:** OT-049
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -806,7 +861,9 @@ Created initial repository-native backlog in .ot/tasks/ with epics and features 
 Migrated all 59 existing tasks, epics, descriptions, requirements, and metadata from docs/tasks.md into repository-native .ot/tasks/ hierarchy. Verified with 'otw task list' and 'otw check'.
 
 <a id="ot-050" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Validate Migrated Tasks
+
 **ID:** OT-050
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -817,7 +874,9 @@ Migrated all 59 existing tasks, epics, descriptions, requirements, and metadata 
 Validated all migrated tasks across the repository using 'otw check' and 'otw check --json'. All YAML frontmatter schemas, UUID uniqueness, relationships, and directory structures verified with 0 errors/warnings.
 
 <a id="ot-051" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Begin Creating Tasks Using Open Tasks
+
 **ID:** OT-051
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -828,7 +887,9 @@ Validated all migrated tasks across the repository using 'otw check' and 'otw ch
 Adopted 'otw task create' for creating new repository-native tasks with automated slug directory generation, template instantiation, and parent relationship linking.
 
 <a id="ot-052" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Begin Updating Tasks Using Open Tasks
+
 **ID:** OT-052
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -839,7 +900,9 @@ Adopted 'otw task create' for creating new repository-native tasks with automate
 Adopted 'otw task status', 'otw task comment', 'otw task add-dependency', and 'otw task edit' for updating and progressing WorkItems directly in the repository.
 
 <a id="ot-053" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Retire Legacy Scripts
+
 **ID:** OT-053
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -850,7 +913,9 @@ Adopted 'otw task status', 'otw task comment', 'otw task add-dependency', and 'o
 Retired legacy Markdown tracker scripts in scripts/ (get-tasks, get-task, add-task, update-task, update-tasks) in favor of the self-hosted Open Tasks CLI (otw / ot). Documented retirement and migration mapping in scripts/README.md.
 
 <a id="ot-054" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Archive Legacy Tracker
+
 **ID:** OT-054
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -861,7 +926,9 @@ Retired legacy Markdown tracker scripts in scripts/ (get-tasks, get-task, add-ta
 Archived docs/tasks.md single-file tracker with an archival header notice directing all task management workflows to repository-native .ot/tasks/ and the otw CLI.
 
 <a id="ot-055" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Run First Grooming Meeting
+
 **ID:** OT-055
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -872,7 +939,9 @@ Archived docs/tasks.md single-file tracker with an archival header notice direct
 Conducted first repository-native backlog grooming meeting reviewing migrated backlog items and planning first release.
 
 <a id="ot-056" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Record First Meeting Notes
+
 **ID:** OT-056
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -883,7 +952,9 @@ Conducted first repository-native backlog grooming meeting reviewing migrated ba
 Recorded first meeting notes in .ot/meetings/2026-10-02-grooming.md adhering to ADR-0021 repository-based meeting notes and review workflow.
 
 <a id="ot-057" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Plan First Release
+
 **ID:** OT-057
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -894,7 +965,9 @@ Recorded first meeting notes in .ot/meetings/2026-10-02-grooming.md adhering to 
 Planned initial v0.1.0 release. Created release tracking task 800d17 (Release v0.1.0) under Distribution and Release System epic and documented release plan in .ot/meetings/2026-10-02-release-0.1.0-plan.md.
 
 <a id="ot-058" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Verify Development Workflow
+
 **ID:** OT-058
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -905,7 +978,9 @@ Planned initial v0.1.0 release. Created release tracking task 800d17 (Release v0
 Verified complete end-to-end development workflow in self-hosted repository: otw version, otw check, otw task queries, release packaging, and unit tests passing with zero errors.
 
 <a id="ot-059" class="task" data-project="open-tasks" data-status="done" data-task-type="feature" data-epic="bootstrap"></a>
+
 ### Declare Bootstrap Complete
+
 **ID:** OT-059
 **Project:** Open Tasks
 **Epic:** Self Hosting and Bootstrap
@@ -944,13 +1019,15 @@ Declared Self Hosting and Bootstrap (Phase 3) complete! Open Tasks is fully oper
   7. **Cancelled**: Task discarded.
 
 #### Projects (Rendered from frontmatter projects)
+
 | Value      | Label      | Prefix | Path |
-|:---------|:---------|:-----|:---|
+| :--------- | :--------- | :----- | :--- |
 | open-tasks | Open Tasks | OT     | .    |
 
 #### Task Statuses (Rendered from frontmatter task-statuses)
+
 | Value       | Label       | Description                                                                      |
-|:----------|:----------|:-------------------------------------------------------------------------------|
+| :---------- | :---------- | :------------------------------------------------------------------------------- |
 | planning    | Planning    | The task is being scoped and conceptualized. We still don't know what we want.   |
 | triage      | Triage      | The task is being evaluated and prioritized. We don't know how we want to do it. |
 | pending     | Pending     | The task is ready to be acted on.                                                |
@@ -961,16 +1038,18 @@ Declared Self Hosting and Bootstrap (Phase 3) complete! Open Tasks is fully oper
 | research    | Researching | This task needs more research before planning.                                   |
 
 #### Task Types (Rendered from frontmatter task-types)
+
 | Value   | Label   | Prefix | Description                                                |
-|:------|:------|:-----|:---------------------------------------------------------|
+| :------ | :------ | :----- | :--------------------------------------------------------- |
 | lint    | Lint    | LNT    | The task involves fixing a linting error or other warning. |
 | bug     | Bug     | BUG    | The task is a bug to fix.                                  |
 | feature | Feature | ENH    | The task is a new feature to implement.                    |
 | chore   | Chore   | CHR    | The task is a routine maintenance or administrative task.  |
 
 #### Epics (Rendered from frontmatter epics)
+
 | Value        | Label                           | Description                                                                                  |
-|:-----------|:------------------------------|:-------------------------------------------------------------------------------------------|
+| :----------- | :------------------------------ | :------------------------------------------------------------------------------------------- |
 | poc          | Proof of Concept                | Validate the core architecture and WorkItem model.                                           |
 | distribution | Distribution and Release System | Enable installation, upgrades, packaging, release workflows, and project version management. |
 | bootstrap    | Self Hosting and Bootstrap      | Migrate development onto Open Tasks and retire the legacy tracker.                           |

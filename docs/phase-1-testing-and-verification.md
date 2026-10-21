@@ -6,20 +6,20 @@ This guide provides comprehensive instructions for testing, inspecting, and veri
 
 ## 1. Architecture & Feature Overview
 
-The implemented Proof of Concept codebase in [`src/ot/`](file:///Users/tom/Projects/OpenTasks/src/ot/) provides a database-free, repository-native task tracking architecture:
+The implemented Proof of Concept codebase in [`src/ot/`](src/ot/) provides a database-free, repository-native task tracking architecture:
 
-| Subsystem | Components & Modules | Implemented Tasks |
-| :--- | :--- | :--- |
-| **Data Models** | [`src/ot/models.py`](file:///Users/tom/Projects/OpenTasks/src/ot/models.py) | **OT-004**, **OT-005**, **OT-006** |
-| **Examples** | [`examples/sample-project/`](file:///Users/tom/Projects/OpenTasks/examples/sample-project/) | **OT-007** |
-| **Discovery** | [`src/ot/discovery.py`](file:///Users/tom/Projects/OpenTasks/src/ot/discovery.py) | **OT-008**, **OT-009**, **OT-010** |
-| **Configuration** | [`src/ot/config.py`](file:///Users/tom/Projects/OpenTasks/src/ot/config.py) | **OT-011**, **OT-012**, **OT-013** |
-| **Identifiers** | [`src/ot/identifiers.py`](file:///Users/tom/Projects/OpenTasks/src/ot/identifiers.py) | **OT-014**, **OT-015**, **OT-016** |
-| **Parser & Serialization** | [`src/ot/parser.py`](file:///Users/tom/Projects/OpenTasks/src/ot/parser.py) | **OT-017**, **OT-018**, **OT-019** |
-| **Scanner & Index** | [`src/ot/scanner.py`](file:///Users/tom/Projects/OpenTasks/src/ot/scanner.py) | **OT-020**, **OT-021** |
-| **CLI Commands** | [`src/ot/cli.py`](file:///Users/tom/Projects/OpenTasks/src/ot/cli.py) | **OT-022**, **OT-023**, **OT-024**, **OT-025**, **OT-026**, **OT-027** |
-| **Validation & Repair** | [`src/ot/validation.py`](file:///Users/tom/Projects/OpenTasks/src/ot/validation.py) | **OT-028**, **OT-029**, **OT-030** |
-| **Templates** | [`src/ot/templates.py`](file:///Users/tom/Projects/OpenTasks/src/ot/templates.py) | **OT-031** |
+| Subsystem                  | Components & Modules                                   | Implemented Tasks                                                      |
+| :------------------------- | :----------------------------------------------------- | :--------------------------------------------------------------------- |
+| **Data Models**            | [`src/ot/models.py`](src/ot/models.py)                 | **OT-004**, **OT-005**, **OT-006**                                     |
+| **Examples**               | [`examples/sample-project/`](examples/sample-project/) | **OT-007**                                                             |
+| **Discovery**              | [`src/ot/discovery.py`](src/ot/discovery.py)           | **OT-008**, **OT-009**, **OT-010**                                     |
+| **Configuration**          | [`src/ot/config.py`](src/ot/config.py)                 | **OT-011**, **OT-012**, **OT-013**                                     |
+| **Identifiers**            | [`src/ot/identifiers.py`](src/ot/identifiers.py)       | **OT-014**, **OT-015**, **OT-016**                                     |
+| **Parser & Serialization** | [`src/ot/parser.py`](src/ot/parser.py)                 | **OT-017**, **OT-018**, **OT-019**                                     |
+| **Scanner & Index**        | [`src/ot/scanner.py`](src/ot/scanner.py)               | **OT-020**, **OT-021**                                                 |
+| **CLI Commands**           | [`src/ot/cli.py`](src/ot/cli.py)                       | **OT-022**, **OT-023**, **OT-024**, **OT-025**, **OT-026**, **OT-027** |
+| **Validation & Repair**    | [`src/ot/validation.py`](src/ot/validation.py)         | **OT-028**, **OT-029**, **OT-030**                                     |
+| **Templates**              | [`src/ot/templates.py`](src/ot/templates.py)           | **OT-031**                                                             |
 
 ---
 
@@ -36,6 +36,7 @@ PYTHONPATH=src python3 -m unittest discover -s tests
 ```
 
 Expected output:
+
 ```text
 ............................................
 ----------------------------------------------------------------------
@@ -90,7 +91,7 @@ python3 -m unittest discover -s scripts/tests
 
 ## 3. Interactive CLI Verification Walkthrough
 
-You can interactively test the Open Tasks CLI against the sample project in [`examples/sample-project`](file:///Users/tom/Projects/OpenTasks/examples/sample-project/).
+You can interactively test the Open Tasks CLI against the sample project in [`examples/sample-project`](examples/sample-project/).
 
 ### Setup Shell Environment
 
@@ -110,16 +111,19 @@ ot -C examples/sample-project task list
 ```
 
 **Filter by status:**
+
 ```bash
 ot -C examples/sample-project task list --status in_progress
 ```
 
 **Filter by type:**
+
 ```bash
 ot -C examples/sample-project task list --type bug
 ```
 
 **JSON output format:**
+
 ```bash
 ot -C examples/sample-project task list --json
 ```
@@ -131,16 +135,19 @@ ot -C examples/sample-project task list --json
 View complete metadata, parent/child hierarchy, dependencies, blockers, description, and comments:
 
 **By Title:**
+
 ```bash
 ot -C examples/sample-project task show "Release Alpha"
 ```
 
 **By Short Prefix:**
+
 ```bash
 ot -C examples/sample-project task show 111111
 ```
 
 **Inspect dependency graph:**
+
 ```bash
 ot -C examples/sample-project task get-dependencies "Fix Login Crash on Null Password"
 ```
@@ -197,11 +204,13 @@ ot -C examples/sample-project task add-dependency "Add OAuth2 Authentication" "I
 ```
 
 Verify dependencies:
+
 ```bash
 ot -C examples/sample-project task get-dependencies "Add OAuth2 Authentication"
 ```
 
 Remove dependency:
+
 ```bash
 ot -C examples/sample-project task remove-dependency "Add OAuth2 Authentication" "Implement User Authentication"
 ```
@@ -217,11 +226,13 @@ ot -C examples/sample-project check
 ```
 
 **JSON diagnostic report:**
+
 ```bash
 ot -C examples/sample-project check --json
 ```
 
 **Validate and automatically repair fixable issues (missing folders, misplaced protected config keys, self-dependencies):**
+
 ```bash
 ot -C examples/sample-project check --fix
 ```
@@ -231,6 +242,7 @@ ot -C examples/sample-project check --fix
 ### Step 8: Template Verification (OT-031)
 
 Inspect installed templates in `examples/sample-project/.ot/templates/`:
+
 - `tasks/default.md`, `tasks/bug.md`, `tasks/feature.md`, `tasks/epic.md`, `tasks/chore.md`, `tasks/spike.md`
 - `meetings/grooming.md`, `meetings/planning.md`, `meetings/retrospective.md`, `meetings/ideation.md`
 - `shared/comment.md`

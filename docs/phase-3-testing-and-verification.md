@@ -8,23 +8,23 @@ This guide provides comprehensive instructions for testing, inspecting, and veri
 
 The Phase 3 subsystem enables Open Tasks to manage its own development lifecycle in a fully self-hosted, repository-native environment:
 
-| Subsystem | Components & Modules | Implemented Tasks |
-| :--- | :--- | :--- |
-| **Self-Hosting Initialization** | [`.ot/config.json`](file:///Users/tom/Projects/OpenTasks/.ot/config.json), [`.ot/bin/ot.zipapp`](file:///Users/tom/Projects/OpenTasks/.ot/bin/ot.zipapp), [`otw`](file:///Users/tom/Projects/OpenTasks/otw), [`otw.bat`](file:///Users/tom/Projects/OpenTasks/otw.bat) | **OT-045** |
-| **WorkItem Templates** | [`.ot/templates/tasks/`](file:///Users/tom/Projects/OpenTasks/.ot/templates/tasks/) (`feature.md`, `bug.md`, `epic.md`, `chore.md`, `spike.md`, `default.md`) | **OT-046** |
-| **Meeting Templates** | [`.ot/templates/meetings/`](file:///Users/tom/Projects/OpenTasks/.ot/templates/meetings/) (`grooming.md`, `planning.md`, `retrospective.md`, `ideation.md`) | **OT-047** |
-| **Initial Backlog** | [`.ot/tasks/`](file:///Users/tom/Projects/OpenTasks/.ot/tasks/) (`ExportAndReportingTooling`, `MercurialVcsIntegration`, `JsonSchemaExport`) | **OT-048** |
-| **Task Migration** | [`.ot/tasks/ProofOfConcept/`](file:///Users/tom/Projects/OpenTasks/.ot/tasks/ProofOfConcept/), [`.ot/tasks/DistributionAndReleaseSystem/`](file:///Users/tom/Projects/OpenTasks/.ot/tasks/DistributionAndReleaseSystem/), [`.ot/tasks/SelfHostingAndBootstrap/`](file:///Users/tom/Projects/OpenTasks/.ot/tasks/SelfHostingAndBootstrap/) | **OT-049** |
-| **Migration Validation** | [`src/ot/validation.py`](file:///Users/tom/Projects/OpenTasks/src/ot/validation.py), `ot check` | **OT-050** |
-| **WorkItem Creation** | `ot task create` / `./otw task create` | **OT-051** |
-| **Lifecycle & Status Updates** | `ot task status`, `ot task comment`, `ot task add-dependency`, `ot task edit` | **OT-052** |
-| **Legacy Script Retirement** | [`scripts/README.md`](file:///Users/tom/Projects/OpenTasks/scripts/README.md) | **OT-053** |
-| **Legacy Tracker Archival** | [`docs/tasks.md`](file:///Users/tom/Projects/OpenTasks/docs/tasks.md) Archival Notice | **OT-054** |
-| **Backlog Grooming** | [`.ot/meetings/2026-10-02-grooming.md`](file:///Users/tom/Projects/OpenTasks/.ot/meetings/2026-10-02-grooming.md) | **OT-055** |
-| **Meeting Notes Recording** | [`.ot/meetings/2026-10-02-grooming.md`](file:///Users/tom/Projects/OpenTasks/.ot/meetings/2026-10-02-grooming.md) | **OT-056** |
-| **Release Planning** | [`.ot/meetings/2026-10-02-release-0.1.0-plan.md`](file:///Users/tom/Projects/OpenTasks/.ot/meetings/2026-10-02-release-0.1.0-plan.md), `Release v0.1.0` WorkItem | **OT-057** |
-| **Development Workflow** | `./otw`, `ot version`, `ot check`, `scripts/build-release` | **OT-058** |
-| **Bootstrap Completion** | Full milestone validation, parent epic OT-003 completion | **OT-059** |
+| Subsystem                       | Components & Modules                                                                                                                                                                                                       | Implemented Tasks |
+| :------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------- |
+| **Self-Hosting Initialization** | [`.ot/config.json`](.ot/config.json), [`.ot/bin/ot.zipapp`](.ot/bin/ot.zipapp), [`otw`](otw), [`otw.bat`](otw.bat)                                                                                                         | **OT-045**        |
+| **WorkItem Templates**          | [`.ot/templates/tasks/`](.ot/templates/tasks/) (`feature.md`, `bug.md`, `epic.md`, `chore.md`, `spike.md`, `default.md`)                                                                                                   | **OT-046**        |
+| **Meeting Templates**           | [`.ot/templates/meetings/`](.ot/templates/meetings/) (`grooming.md`, `planning.md`, `retrospective.md`, `ideation.md`)                                                                                                     | **OT-047**        |
+| **Initial Backlog**             | [`.ot/tasks/`](.ot/tasks/) (`ExportAndReportingTooling`, `MercurialVcsIntegration`, `JsonSchemaExport`)                                                                                                                    | **OT-048**        |
+| **Task Migration**              | [`.ot/tasks/ProofOfConcept/`](.ot/tasks/ProofOfConcept/), [`.ot/tasks/DistributionAndReleaseSystem/`](.ot/tasks/DistributionAndReleaseSystem/), [`.ot/tasks/SelfHostingAndBootstrap/`](.ot/tasks/SelfHostingAndBootstrap/) | **OT-049**        |
+| **Migration Validation**        | [`src/ot/validation.py`](src/ot/validation.py), `ot check`                                                                                                                                                                 | **OT-050**        |
+| **WorkItem Creation**           | `ot task create` / `./otw task create`                                                                                                                                                                                     | **OT-051**        |
+| **Lifecycle & Status Updates**  | `ot task status`, `ot task comment`, `ot task add-dependency`, `ot task edit`                                                                                                                                              | **OT-052**        |
+| **Legacy Script Retirement**    | [`scripts/README.md`](scripts/README.md)                                                                                                                                                                                   | **OT-053**        |
+| **Legacy Tracker Archival**     | [`docs/tasks.md`](docs/tasks.md) Archival Notice                                                                                                                                                                           | **OT-054**        |
+| **Backlog Grooming**            | [`.ot/meetings/2026-10-02-grooming.md`](.ot/meetings/2026-10-02-grooming.md)                                                                                                                                               | **OT-055**        |
+| **Meeting Notes Recording**     | [`.ot/meetings/2026-10-02-grooming.md`](.ot/meetings/2026-10-02-grooming.md)                                                                                                                                               | **OT-056**        |
+| **Release Planning**            | [`.ot/meetings/2026-10-02-release-0.1.0-plan.md`](.ot/meetings/2026-10-02-release-0.1.0-plan.md), `Release v0.1.0` WorkItem                                                                                                | **OT-057**        |
+| **Development Workflow**        | `./otw`, `ot version`, `ot check`, `scripts/build-release`                                                                                                                                                                 | **OT-058**        |
+| **Bootstrap Completion**        | Full milestone validation, parent epic OT-003 completion                                                                                                                                                                   | **OT-059**        |
 
 ---
 
@@ -39,6 +39,7 @@ PYTHONPATH=src python3 -m unittest discover -s tests
 ```
 
 Expected output:
+
 ```text
 .......................................................
 ----------------------------------------------------------------------
@@ -54,6 +55,7 @@ python3 -m unittest discover -s scripts/tests
 ```
 
 Expected output:
+
 ```text
 ...........
 ----------------------------------------------------------------------
@@ -78,6 +80,7 @@ Run project diagnostic checks using the self-hosted project wrapper script:
 ```
 
 Expected output:
+
 ```text
 Open Tasks v0.1.0
 Project root:       /Users/tom/Projects/OpenTasks
@@ -86,16 +89,19 @@ Installed version:  0.1.0
 ```
 
 Run project integrity validation:
+
 ```bash
 ./otw check
 ```
 
 Expected output:
+
 ```text
 Project check passed: No errors or warnings detected.
 ```
 
 JSON diagnostic output verification:
+
 ```bash
 ./otw check --json
 # Output should be: []
@@ -112,6 +118,7 @@ List all migrated and active work items in the repository:
 ```
 
 **Filter by status:**
+
 ```bash
 # View completed work items
 ./otw task list --status completed
@@ -121,12 +128,14 @@ List all migrated and active work items in the repository:
 ```
 
 **Filter by type:**
+
 ```bash
 # View high-level epics
 ./otw task list --type epic
 ```
 
 **Inspect a specific migrated task:**
+
 ```bash
 ./otw task show "Define WorkItem Metadata"
 ```
@@ -194,12 +203,14 @@ Execute the production release pipeline to produce and verify standalone distrib
 ```
 
 Verify that the output directory `dist/` contains:
+
 - `ot-0.1.0.zipapp`
 - `ot.zipapp`
 - `ot-0.1.0-manifest.json`
 - `SHA256SUMS`
 
 Test the standalone distribution binary directly:
+
 ```bash
 python3 dist/ot-0.1.0.zipapp version
 python3 dist/ot-0.1.0.zipapp task list
@@ -210,6 +221,7 @@ python3 dist/ot-0.1.0.zipapp task list
 ### Step 7: Clean Up Verification Scratch Items
 
 Clean up the test task created in Step 3:
+
 ```bash
 rm -rf .ot/tasks/ExportAndReportingTooling/InteractiveDashboardUi
 ./otw check

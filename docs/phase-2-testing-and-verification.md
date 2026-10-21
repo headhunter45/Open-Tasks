@@ -6,23 +6,23 @@ This guide provides comprehensive instructions for testing, inspecting, and veri
 
 ## 1. Architecture & Feature Overview
 
-The Phase 2 distribution subsystem in [`src/ot/`](file:///Users/tom/Projects/OpenTasks/src/ot/) provides an end-to-end release, launcher, installation, and upgrade mechanism:
+The Phase 2 distribution subsystem in [`src/ot/`](src/ot/) provides an end-to-end release, launcher, installation, and upgrade mechanism:
 
-| Subsystem | Components & Modules | Implemented Tasks |
-| :--- | :--- | :--- |
-| **Release Artifact** | [`src/ot/packaging.py`](file:///Users/tom/Projects/OpenTasks/src/ot/packaging.py) | **OT-032** |
-| **Packaging System** | [`src/ot/packaging.py`](file:///Users/tom/Projects/OpenTasks/src/ot/packaging.py), [`scripts/package-release`](file:///Users/tom/Projects/OpenTasks/scripts/package-release) | **OT-033** |
-| **Global Launcher** | [`src/ot/launcher.py`](file:///Users/tom/Projects/OpenTasks/src/ot/launcher.py) | **OT-034** |
-| **Version Discovery** | [`src/ot/version.py`](file:///Users/tom/Projects/OpenTasks/src/ot/version.py) | **OT-035** |
-| **Version Validation** | [`src/ot/version.py`](file:///Users/tom/Projects/OpenTasks/src/ot/version.py), [`src/ot/validator.py`](file:///Users/tom/Projects/OpenTasks/src/ot/validator.py) | **OT-036** |
-| **Project Initialization** | [`src/ot/installation.py`](file:///Users/tom/Projects/OpenTasks/src/ot/installation.py), [`src/ot/cli.py`](file:///Users/tom/Projects/OpenTasks/src/ot/cli.py) | **OT-037** |
-| **Project Installation & Wrappers** | [`src/ot/installation.py`](file:///Users/tom/Projects/OpenTasks/src/ot/installation.py) | **OT-038** |
-| **Version Downloads & Staging** | [`src/ot/upgrade.py`](file:///Users/tom/Projects/OpenTasks/src/ot/upgrade.py), [`src/ot/cache.py`](file:///Users/tom/Projects/OpenTasks/src/ot/cache.py) | **OT-039** |
-| **Transactional Upgrades** | [`src/ot/upgrade.py`](file:///Users/tom/Projects/OpenTasks/src/ot/upgrade.py) | **OT-040** |
-| **CLI Upgrade Command** | [`src/ot/cli.py`](file:///Users/tom/Projects/OpenTasks/src/ot/cli.py) | **OT-041** |
-| **Cache Management** | [`src/ot/cache.py`](file:///Users/tom/Projects/OpenTasks/src/ot/cache.py) | **OT-042** |
-| **Download Verification** | [`src/ot/cache.py`](file:///Users/tom/Projects/OpenTasks/src/ot/cache.py) | **OT-043** |
-| **Release Pipeline** | [`scripts/build-release`](file:///Users/tom/Projects/OpenTasks/scripts/build-release) | **OT-044** |
+| Subsystem                           | Components & Modules                                                                               | Implemented Tasks |
+| :---------------------------------- | :------------------------------------------------------------------------------------------------- | :---------------- |
+| **Release Artifact**                | [`src/ot/packaging.py`](src/ot/packaging.py)                                                       | **OT-032**        |
+| **Packaging System**                | [`src/ot/packaging.py`](src/ot/packaging.py), [`scripts/package-release`](scripts/package-release) | **OT-033**        |
+| **Global Launcher**                 | [`src/ot/launcher.py`](src/ot/launcher.py)                                                         | **OT-034**        |
+| **Version Discovery**               | [`src/ot/version.py`](src/ot/version.py)                                                           | **OT-035**        |
+| **Version Validation**              | [`src/ot/version.py`](src/ot/version.py), [`src/ot/validator.py`](src/ot/validator.py)             | **OT-036**        |
+| **Project Initialization**          | [`src/ot/installation.py`](src/ot/installation.py), [`src/ot/cli.py`](src/ot/cli.py)               | **OT-037**        |
+| **Project Installation & Wrappers** | [`src/ot/installation.py`](src/ot/installation.py)                                                 | **OT-038**        |
+| **Version Downloads & Staging**     | [`src/ot/upgrade.py`](src/ot/upgrade.py), [`src/ot/cache.py`](src/ot/cache.py)                     | **OT-039**        |
+| **Transactional Upgrades**          | [`src/ot/upgrade.py`](src/ot/upgrade.py)                                                           | **OT-040**        |
+| **CLI Upgrade Command**             | [`src/ot/cli.py`](src/ot/cli.py)                                                                   | **OT-041**        |
+| **Cache Management**                | [`src/ot/cache.py`](src/ot/cache.py)                                                               | **OT-042**        |
+| **Download Verification**           | [`src/ot/cache.py`](src/ot/cache.py)                                                               | **OT-043**        |
+| **Release Pipeline**                | [`scripts/build-release`](scripts/build-release)                                                   | **OT-044**        |
 
 ---
 
@@ -39,6 +39,7 @@ PYTHONPATH=src python3 -m unittest discover -s tests
 ```
 
 Expected output:
+
 ```text
 .......................................................
 ----------------------------------------------------------------------
@@ -100,6 +101,7 @@ Build a standalone, executable `.zipapp` release bundle:
 ```
 
 Verify the generated output files in `dist/`:
+
 ```bash
 ls -lh dist/
 # Should contain:
@@ -109,6 +111,7 @@ ls -lh dist/
 ```
 
 Directly execute the created `.zipapp`:
+
 ```bash
 ./dist/ot-0.1.0.zipapp --version
 ```
@@ -139,12 +142,14 @@ python3 -m ot.cli init --name "Demo Project" --bundle-zipapp
 ```
 
 Verify that the initialization created:
+
 - `.ot/config.json` containing project metadata and version `0.1.0`
 - `.ot/bin/ot.zipapp` containing the executable binary
 - `.ot/templates/` with default task and meeting templates
 - `otw` (Unix wrapper script) and `otw.bat` (Windows wrapper script)
 
 Test invoking Open Tasks via the project wrapper:
+
 ```bash
 ./otw version
 ./otw task list
@@ -161,12 +166,14 @@ Check project and installed versions:
 ```
 
 Output:
+
 ```text
 Project configured version: 0.1.0
 Installed binary version:   0.1.0
 ```
 
 Run project validation (`ot check`) to ensure version consistency:
+
 ```bash
 ./otw check
 ```
@@ -195,7 +202,6 @@ cd /tmp/ot-demo-project
 Package a newer version `0.2.0` in the repository root:
 
 ```bash
-cd /Users/tom/Projects/OpenTasks
 ./scripts/package-release --version 0.2.0 --output dist/ot-0.2.0.zipapp
 ```
 
@@ -204,10 +210,11 @@ Test upgrading the demo project to `0.2.0`:
 ```bash
 cd /tmp/ot-demo-project
 # Upgrade using the newly packaged version artifact
-python3 -m ot.cli upgrade --version 0.2.0 --artifact /Users/tom/Projects/OpenTasks/dist/ot-0.2.0.zipapp
+python3 -m ot.cli upgrade --version 0.2.0 --artifact ./dist/ot-0.2.0.zipapp
 ```
 
 Verify:
+
 1. `config.json` updated `version` to `"0.2.0"`.
 2. `.ot/bin/ot.zipapp` updated to the `0.2.0` binary.
 3. Existing custom templates or task files were safely preserved.
@@ -229,6 +236,7 @@ print('Installed versions:', cm.list_cached_versions())
 ```
 
 Clean up temporary verification directory:
+
 ```bash
 rm -rf /tmp/ot-demo-project
 ```
